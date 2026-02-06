@@ -15,11 +15,22 @@ body {
   color: #1e293b;
 }
 
-.gadget-background { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
-.gadget { position: absolute; font-size: 3rem; opacity: 0.2; animation: float 20s linear infinite; }
+.gadget-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.gadget {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.2;
+  animation: float 20s linear infinite;
+}
 @keyframes float { from { transform: translateX(-20vw); } to { transform: translateX(120vw); } }
 
 header, section { position: relative; z-index: 1; }
+
 header { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 header h1 { font-size: clamp(3rem, 8vw, 5rem); color: #1d4ed8; }
 header p { font-size: 1.2rem; margin-bottom: 30px; }
@@ -57,16 +68,35 @@ button:hover { transform: translateY(2px); box-shadow: 0 4px 0 #1e40af; }
 .wrong-glow { box-shadow: 0 0 15px 5px #dc2626; }
 
 .explanation { margin-top: 15px; font-style: italic; color: #1e293b; }
+#feedback { font-weight: 700; font-size: 1.2rem; margin-top: 10px; }
+
 .controls { margin-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; }
+
 .result { text-align: center; }
 .result h2 { font-size: 2.5rem; color: #1d4ed8; }
+
 footer { text-align: center; padding: 20px; color: #475569; }
 </style>
 </head>
 <body>
 
 <div class="gadget-background">
-  <!-- gadgets emojis here (same as your original) -->
+  <div class="gadget" style="top:3%; font-size:2.4rem; animation-duration:28s;">📚</div>
+  <div class="gadget" style="top:8%; font-size:3.1rem; animation-duration:22s; animation-delay:-5s;">💻</div>
+  <div class="gadget" style="top:14%; font-size:2.8rem; animation-duration:30s; animation-delay:-10s;">🧠</div>
+  <div class="gadget" style="top:20%; font-size:3.5rem; animation-duration:26s;">🎓</div>
+  <div class="gadget" style="top:26%; font-size:2.6rem; animation-duration:24s; animation-delay:-8s;">📱</div>
+  <div class="gadget" style="top:32%; font-size:3.4rem; animation-duration:32s;">🖥️</div>
+  <div class="gadget" style="top:38%; font-size:2.7rem; animation-duration:20s; animation-delay:-12s;">🧮</div>
+  <div class="gadget" style="top:44%; font-size:3.1rem; animation-duration:29s;">📊</div>
+  <div class="gadget" style="top:50%; font-size:2.9rem; animation-duration:25s; animation-delay:-6s;">🧑‍💻</div>
+  <div class="gadget" style="top:56%; font-size:3.6rem; animation-duration:34s;">🖱️</div>
+  <div class="gadget" style="top:62%; font-size:2.4rem; animation-duration:21s; animation-delay:-9s;">🔌</div>
+  <div class="gadget" style="top:68%; font-size:3.3rem; animation-duration:27s;">💾</div>
+  <div class="gadget" style="top:74%; font-size:2.8rem; animation-duration:31s; animation-delay:-14s;">📂</div>
+  <div class="gadget" style="top:80%; font-size:3.5rem; animation-duration:36s;">📎</div>
+  <div class="gadget" style="top:86%; font-size:2.6rem; animation-duration:23s;">⌨️</div>
+  <div class="gadget" style="top:92%; font-size:3.2rem; animation-duration:33s; animation-delay:-11s;">🛜</div>
 </div>
 
 <header id="difficultyScreen">
@@ -81,6 +111,7 @@ footer { text-align: center; padding: 20px; color: #475569; }
   <div class="counter" id="counter"></div>
   <div class="question" id="question"></div>
   <div class="options" id="options"></div>
+  <div id="feedback"></div>
   <div class="explanation" id="explanation"></div>
   <div class="controls">
     <button id="backBtn">Back to Difficulty</button>
@@ -130,7 +161,7 @@ const questions = [
   {q:"Which key combination is used to copy text?", o:["Ctrl+V","Ctrl+C","Ctrl+X","Ctrl+Z"], a:1, l:"easy", e:"Ctrl+C copies selected content."},
   {q:"Which device prints documents?", o:["Scanner","Printer","Mouse","Monitor"], a:1, l:"easy", e:"Printers produce physical copies of documents."},
   {q:"Which is part of computer hardware?", o:["MS Word","CPU","Excel","Chrome"], a:1, l:"easy", e:"CPU is a hardware component."},
-    
+
   /* MEDIUM (10) */
   {q:"What is RAM?", o:["Permanent storage","Temporary memory","CPU","Output"], a:1, l:"medium", e:"RAM stores data temporarily for active processes."},
   {q:"What is phishing?", o:["Email scam","Virus","Backup","Firewall"], a:0, l:"medium", e:"Phishing is a type of online scam."},
@@ -162,7 +193,7 @@ const questions = [
   {q:"Which device allows wireless network access?", o:["Router","Keyboard","Mouse","Monitor"], a:0, l:"medium", e:"Routers provide wireless network access."},
   {q:"Which is a social media platform?", o:["Facebook","Word","Excel","Chrome"], a:0, l:"medium", e:"Facebook is a social media platform."},
   {q:"What is e-learning?", o:["Online learning","Offline class","Manual reading","Gaming"], a:0, l:"medium", e:"E-learning is online education."},
- 
+
   /* HARD (10) */
   {q:"What is firewall?", o:["Virus","Security system","Browser","OS"], a:1, l:"hard", e:"Firewalls protect networks."},
   {q:"What is encryption?", o:["Secure data","Delete data","Copy data","Share data"], a:0, l:"hard", e:"Encryption secures data."},
@@ -195,6 +226,7 @@ const questions = [
   {q:"Which is a VPN used for?", o:["Secure connection","Fast storage","Graphic design","Web browsing"], a:0, l:"hard", e:"VPN provides a secure connection over the internet."},
   {q:"Which is a network security method?", o:["Firewall","Keyboard","Monitor","Printer"], a:0, l:"hard", e:"Firewalls protect against unauthorized access."},
   {q:"Which technology stores data in multiple locations for safety?", o:["Cloud backup","Local storage","RAM","CPU"], a:0, l:"hard", e:"Cloud backup stores copies in multiple locations."}
+
 ];
 
 let filtered=[], index=0, score=0, currentLevel="", timer=15, timerInterval;
@@ -207,24 +239,19 @@ const counterEl=document.getElementById("counter");
 const scoreEl=document.getElementById("score");
 const difficultyScreen=document.getElementById("difficultyScreen");
 const explanationEl=document.getElementById("explanation");
+const feedbackEl=document.getElementById("feedback");
 
 // --- Difficulty selection
 document.querySelectorAll("[data-level]").forEach(btn=>{
   btn.onclick=()=>{
     currentLevel=btn.dataset.level;
-    startQuiz();
+    filtered = shuffleArray(questions.filter(q=>q.l===currentLevel)).slice(0,10);
+    index=score=0;
+    difficultyScreen.style.display="none";
+    quizBox.style.display="block";
+    loadQuestion();
   };
 });
-
-// --- Start Quiz
-function startQuiz(){
-  filtered = shuffleArray(questions.filter(q=>q.l===currentLevel)).slice(0,10);
-  index=score=0;
-  difficultyScreen.style.display="none";
-  resultBox.style.display="none";
-  quizBox.style.display="block";
-  loadQuestion();
-}
 
 // --- Timer
 function startTimer(){
@@ -244,32 +271,38 @@ function startTimer(){
 function loadQuestion(){
   const q=filtered[index];
   explanationEl.textContent="";
+  feedbackEl.textContent="";
   questionEl.textContent=q.q;
   optionsEl.innerHTML="";
   q.o.forEach((opt,i)=>{
     const b=document.createElement("button");
     b.textContent=opt;
-    b.onclick=(event)=>answerQuestion(i===q.a, q.a, q.e, event);
+    b.onclick=()=>answerQuestion(i===q.a, q.a, q.e);
     optionsEl.appendChild(b);
   });
   startTimer();
 }
 
 // --- Answer Logic
-function answerQuestion(correct, correctIndex, explanation, event){
+function answerQuestion(correct, correctIndex, explanation){
   clearInterval(timerInterval);
+
   Array.from(optionsEl.children).forEach((b,i)=>{
     b.disabled=true;
-    if(i===correctIndex){
-      b.classList.add("correct-glow"); // correct answer always glows green
-    }
+    if(i===correctIndex) b.classList.add("correct-glow");
+    else if(!correct && i!==correctIndex) b.classList.add("wrong-glow");
   });
-  if(!correct && event) event.target.classList.add("wrong-glow"); // wrong clicked button glows red
-  explanationEl.textContent=`Correct Answer: ${filtered[index].o[correctIndex]}. ${explanation}`;
+
+  feedbackEl.textContent = correct ? "✅ Correct!" : "❌ Wrong!";
+  explanationEl.textContent = `Correct Answer: ${filtered[index].o[correctIndex]}. ${explanation}`;
+
   if(correct) score++;
+
   setTimeout(()=>{
     index++;
-    index<filtered.length ? loadQuestion() : showResult();
+    feedbackEl.textContent = "";
+    explanationEl.textContent = "";
+    index<filtered.length?loadQuestion():showResult();
   },2500);
 }
 
@@ -281,8 +314,15 @@ function showResult(){
 }
 
 // --- Buttons
-document.getElementById("backBtn").onclick=startQuizBack;
-document.getElementById("restartBtn").onclick=startQuiz;
+document.getElementById("backBtn").onclick=()=>{
+  quizBox.style.display="none";
+  difficultyScreen.style.display="flex";
+};
+document.getElementById("restartBtn").onclick=()=>{
+  filtered = shuffleArray(questions.filter(q=>q.l===currentLevel)).slice(0,10);
+  index=score=0;
+  loadQuestion();
+};
 document.getElementById("restartAllBtn").onclick=()=>{
   resultBox.style.display="none";
   difficultyScreen.style.display="flex";
@@ -291,11 +331,6 @@ document.getElementById("restartAllBtn").onclick=()=>{
 // --- Shuffle Helper
 function shuffleArray(array){
   return array.sort(()=>Math.random()-0.5);
-}
-
-function startQuizBack(){
-  quizBox.style.display="none";
-  difficultyScreen.style.display="flex";
 }
 </script>
 </body>
