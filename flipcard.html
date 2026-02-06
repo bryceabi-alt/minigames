@@ -76,7 +76,7 @@ button:hover {
 
 /* QUIZ */
 .quiz-box {
-  max-width: 800px;
+  max-width: 700px;
   margin: 60px auto;
   background: white;
   padding: 40px;
@@ -91,11 +91,6 @@ button:hover {
   color: #2563eb;
 }
 
-.question {
-  font-size: 1.4rem;
-  margin-bottom: 20px;
-}
-
 .options button {
   width: 100%;
   margin: 10px 0;
@@ -105,22 +100,6 @@ button:hover {
 }
 .options button:hover {
   background: #dbeafe;
-}
-
-.controls {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-/* RESULT */
-.result {
-  text-align: center;
-}
-.result h2 {
-  font-size: 2.5rem;
-  color: #1d4ed8;
 }
 
 /* FLIP-CARD */
@@ -138,14 +117,45 @@ button:hover {
 .flip-card-front, .flip-card-back {
   position: absolute;
   width: 100%;
+  min-height: 200px; /* ensures same height */
   backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.flip-card-front {
+  background: #eff6ff;
+  border-radius: 20px;
+  padding: 20px;
 }
 .flip-card-back {
   transform: rotateY(180deg);
-  background: #f0f9ff;
-  padding: 20px;
+  background: #dbeafe;
   border-radius: 20px;
+  padding: 20px;
   text-align: center;
+}
+
+#timer {
+  margin-top: 10px;
+  font-weight: 600;
+  color: #ef4444;
+}
+
+.controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* RESULT */
+.result {
+  text-align: center;
+}
+.result h2 {
+  font-size: 2.5rem;
+  color: #1d4ed8;
 }
 
 footer {
@@ -201,7 +211,7 @@ footer {
     </div>
   </div>
 
-  <div id="timer" style="margin-top:10px; font-weight:600; color:#ef4444;"></div>
+  <div id="timer"></div>
 
   <div class="controls">
     <button id="backBtn">Back to Difficulty</button>
@@ -219,11 +229,11 @@ footer {
 
 <script>
 const questions = [
-{q:"What does ICT stand for?",o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"],a:0,l:"easy"},
-{q:"Which is an input device?",o:["Monitor","Keyboard","Printer","Speaker"],a:1,l:"easy"},
-{q:"Which device shows output?",o:["CPU","Keyboard","Monitor","Mouse"],a:2,l:"easy"},
-{q:"Which is hardware?",o:["Windows","Mouse","Google","Word"],a:1,l:"easy"},
-{q:"Which is software?",o:["Keyboard","Monitor","MS Word","CPU"],a:2,l:"easy"} // shortened for example
+  {q:"What does ICT stand for?", o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"], a:0, l:"easy"},
+  {q:"Which is an input device?", o:["Monitor","Keyboard","Printer","Speaker"], a:1, l:"easy"},
+  {q:"Which device shows output?", o:["CPU","Keyboard","Monitor","Mouse"], a:2, l:"easy"},
+  {q:"Which is hardware?", o:["Windows","Mouse","Google","Word"], a:1, l:"easy"},
+  {q:"Which is software?", o:["Keyboard","Monitor","MS Word","CPU"], a:2, l:"easy"}
 ];
 
 const hints = [
