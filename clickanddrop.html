@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICT Click & Drop</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+body{
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(135deg,#eef6ff,#dbeafe);
+  text-align:center;
+  margin:0;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+h1{color:#1d4ed8;margin-top:30px}
+p{max-width:900px;margin:10px auto 20px}
+
+/* CONTAINERS */
+.container{
+  display:flex;
+  justify-content:center;
+  gap:16px;
+  flex-wrap:wrap;
+  padding:10px;
+}
+
+/* DROP BOX */
+.box{
+  background:white;
+  padding:12px;
+  border-radius:16px;
+  min-height:180px;
+  width:46%;
+  box-shadow:0 12px 25px rgba(0,0,0,.12);
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.box h3{
+  margin:0 0 6px;
+  color:#2563eb;
+  font-size:1rem;
+}
+
+/* ITEMS (BIG BEFORE DROP) */
+.item{
+  padding:16px;
+  margin:8px;
+  background:#dbeafe;
+  border-radius:14px;
+  font-weight:700;
+  font-size:1rem;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+  cursor:pointer;
+}
+
+.item.selected{
+  background:#3b82f6;
+  color:white;
+}
+
+/* VERY SMALL ITEMS INSIDE DROP BOX */
+.box .item{
+  margin:0;
+  padding:4px 6px;
+  font-size:0.65rem;
+  line-height:1;
+  border-radius:6px;
+  box-shadow:none;
+  background:#e5edff;
+}
+
+/* RESULT COLORS */
+.correct{background:#dcfce7;border:2px solid #22c55e}
+.wrongItem{background:#fee2e2;border:2px solid #ef4444}
+
+#scoreBox{display:none;font-size:1.2rem;font-weight:700;color:#1e40af}
+#msg{font-size:1.2rem;margin-top:20px;color:#15803d;font-weight:700}
+
+button{
+  margin:20px;
+  padding:14px 30px;
+  border:none;
+  border-radius:14px;
+  background:#3b82f6;
+  color:white;
+  font-size:1rem;
+  cursor:pointer;
+  box-shadow:0 6px 0 #1e40af;
+}
+
+/* MOBILE TWEAKS */
+@media(max-width:600px){
+  .box{width:100%}
+  .item{width:92%;margin:10px auto}
+}
+</style>
+</head>
+
+<body>
+
+<h1>Click & Drop ICT</h1>
+<p>📘 Tap an item to select, then tap the correct category to drop your answer.</p>
+
+<p id="scoreBox">Score: <span id="score">0</span> / 20</p>
+
+<div class="container">
+  <div class="box" data-type="hardware"><h3>🖥️ Hardware</h3></div>
+  <div class="box" data-type="software"><h3>💾 Software</h3></div>
+  <div class="box" data-type="network"><h3>🌐 Network</h3></div>
+  <div class="box" data-type="storage"><h3>📂 Storage</h3></div>
+</div>
+
+<div class="container">
+  <div class="item" data-type="network">📶 Wi-Fi</div>
+  <div class="item" data-type="storage">⚡ SSD</div>
+  <div class="item" data-type="storage">💾 Flash Drive</div>
+  <div class="item" data-type="network">🔀 Switch</div>
+  <div class="item" data-type="hardware">🧠 CPU</div>
+  <div class="item" data-type="software">🪟 Windows</div>
+  <div class="item" data-type="software">📄 MS Word</div>
+  <div class="item" data-type="software">📊 Excel</div>
+  <div class="item" data-type="network">📡 Router</div>
+  <div class="item" data-type="hardware">🖥️ Monitor</div>
+  <div class="item" data-type="network">🌐 Modem</div>
+  <div class="item" data-type="storage">📀 Memory Card</div>
+  <div class="item" data-type="software">🌍 Chrome</div>
+  <div class="item" data-type="hardware">🖱️ Mouse</div>
+  <div class="item" data-type="hardware">🖨️ Printer</div>
+  <div class="item" data-type="software">📽️ PowerPoint</div>
+  <div class="item" data-type="network">🔗 LAN</div>
+  <div class="item" data-type="storage">💽 Hard Drive</div>
+  <div class="item" data-type="storage">☁️ Cloud Storage</div>
+  <div class="item" data-type="hardware">⌨️ Keyboard</div>
+</div>
+
+<p id="msg"></p>
+<button onclick="location.reload()">Restart Game</button>
+
+<script>
+let selectedItem=null;
+let placed=0, correct=0;
+
+document.querySelectorAll('.item').forEach(item=>{
+  item.addEventListener('click',()=>{
+    if(item.dataset.done) return;
+    document.querySelectorAll('.item').forEach(i=>i.classList.remove('selected'));
+    selectedItem=item;
+    item.classList.add('selected');
+  });
+});
+
+document.querySelectorAll('.box').forEach(box=>{
+  box.addEventListener('click',()=>{
+    if(!selectedItem) return;
+
+    selectedItem.dataset.done="true";
+    box.appendChild(selectedItem);
+
+    if(selectedItem.dataset.type===box.dataset.type){
+      selectedItem.dataset.correct="true";
+    }
+
+    selectedItem.classList.remove('selected');
+    selectedItem=null;
+    placed++;
+
+    if(placed===20) reveal();
+  });
+});
+
+function reveal(){
+  document.getElementById("scoreBox").style.display="block";
+  document.querySelectorAll(".item").forEach(i=>{
+    if(i.dataset.correct==="true"){
+      i.classList.add("correct");
+      correct++;
+    } else {
+      i.classList.add("wrongItem");
+    }
+  });
+  document.getElementById("score").textContent=correct;
+  document.getElementById("msg").textContent="🎉 Results revealed! Review your answers.";
+}
+</script>
+
+</body>
+</html>
