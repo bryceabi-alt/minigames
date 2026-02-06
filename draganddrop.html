@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICT Drag & Drop</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+body{
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(135deg,#eef6ff,#dbeafe);
+  text-align:center;
+  margin:0;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* BACKGROUND */
+.gadget-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.gadget {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.2;
+  animation: float 20s linear infinite;
+}
+.gadget:nth-child(n) { top: calc(var(--i) * 10%); }
+
+@keyframes float {
+  from { transform: translateX(-20vw); }
+  to { transform: translateX(120vw); }
+}
+
+header, section { position: relative; z-index: 1; }
+}
+
+/* CONTENT */
+h1{color:#1d4ed8;margin-top:30px;position:relative;z-index:1}
+p{max-width:900px;margin:10px auto 20px;position:relative;z-index:1}
+
+.container{
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  flex-wrap:wrap;
+  position:relative;
+  z-index:1;
+}
+
+/* DROP BOX */
+.box{
+  background:white;
+  padding:18px;
+  border-radius:16px;
+  min-height:220px;
+  width:240px;
+  box-shadow:0 12px 25px rgba(0,0,0,.12);
+  transition:.3s;
+}
+.box h3{margin-top:0;color:#2563eb}
+.box.hover{
+  border:2px dashed #3b82f6;
+  background:#eff6ff;
+}
+
+/* ITEMS */
+.item{
+  padding:12px;
+  margin:6px;
+  background:#dbeafe;
+  border-radius:10px;
+  cursor:grab;
+  font-weight:600;
+  box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+
+/* RUMBLE */
+@keyframes rumble{
+  0%{transform:translate(0,0)}
+  50%{transform:translate(1px,-1px)}
+  100%{transform:translate(0,0)}
+}
+.item:hover{animation:rumble .3s infinite}
+.item:active{cursor:grabbing}
+
+/* RESULTS */
+.correct{
+  background:#dcfce7;
+  border:2px solid #22c55e;
+}
+.wrongItem{
+  background:#fee2e2;
+  border:2px solid #ef4444;
+}
+
+/* SCORE */
+#scoreBox{
+  display:none;
+  font-size:1.2rem;
+  font-weight:700;
+  color:#1e40af;
+  position:relative;
+  z-index:1;
+}
+
+#msg{
+  font-size:1.3rem;
+  margin-top:20px;
+  color:#15803d;
+  font-weight:700;
+  position:relative;
+  z-index:1;
+}
+
+button{
+  margin:25px;
+  padding:14px 30px;
+  border:none;
+  border-radius:12px;
+  background:#3b82f6;
+  color:white;
+  font-size:1rem;
+  cursor:pointer;
+  box-shadow:0 6px 0 #1e40af;
+  position:relative;
+  z-index:1;
+}
+button:hover{
+  transform:translateY(2px);
+  box-shadow:0 4px 0 #1e40af;
+}
+
+/* ================= MOBILE FRIENDLY ================= */
+@media (max-width:768px){
+
+  h1{font-size:1.8rem}
+  p{font-size:.95rem;padding:0 15px}
+
+  .container{gap:16px}
+
+  .box{
+    width:90%;
+    min-height:180px;
+    padding:14px;
+  }
+
+  .item{
+    width:90%;
+    font-size:1rem;
+    padding:14px;
+    margin:8px auto;
+  }
+
+  .container:last-of-type{
+    flex-direction:column;
+    align-items:center;
+  }
+
+  button{
+    width:90%;
+    font-size:1rem;
+  }
+
+  .gadget{
+    font-size:2rem;
+    opacity:.12;
+  }
+}
+/* ================================================ */
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND ICONS -->
+<div class="gadget-background">
+  <div class="gadget" style="top:3%; font-size:2.4rem; animation-duration:28s;">📚</div>
+  <div class="gadget" style="top:8%; font-size:3.1rem; animation-duration:22s; animation-delay:-5s;">💻</div>
+  <div class="gadget" style="top:14%; font-size:2.8rem; animation-duration:30s; animation-delay:-10s;">🧠</div>
+  <div class="gadget" style="top:20%; font-size:3.5rem; animation-duration:26s;">🎓</div>
+  <div class="gadget" style="top:26%; font-size:2.6rem; animation-duration:24s; animation-delay:-8s;">📱</div>
+  <div class="gadget" style="top:32%; font-size:3.4rem; animation-duration:32s;">🖥️</div>
+  <div class="gadget" style="top:38%; font-size:2.7rem; animation-duration:20s; animation-delay:-12s;">🧮</div>
+  <div class="gadget" style="top:44%; font-size:3.1rem; animation-duration:29s;">📊</div>
+  <div class="gadget" style="top:50%; font-size:2.9rem; animation-duration:25s; animation-delay:-6s;">🧑‍💻</div>
+  <div class="gadget" style="top:56%; font-size:3.6rem; animation-duration:34s;">🖱️</div>
+  <div class="gadget" style="top:62%; font-size:2.4rem; animation-duration:21s; animation-delay:-9s;">🔌</div>
+  <div class="gadget" style="top:68%; font-size:3.3rem; animation-duration:27s;">💾</div>
+  <div class="gadget" style="top:74%; font-size:2.8rem; animation-duration:31s; animation-delay:-14s;">📂</div>
+  <div class="gadget" style="top:80%; font-size:3.5rem; animation-duration:36s;">📎</div>
+  <div class="gadget" style="top:86%; font-size:2.6rem; animation-duration:23s;">⌨️</div>
+  <div class="gadget" style="top:92%; font-size:3.2rem; animation-duration:33s; animation-delay:-11s;">🛜</div>
+</div>
+<h1>Drag & Drop ICT</h1>
+<p>📘 Drag each ICT item into the correct category.</p>
+
+<p id="scoreBox">Score: <span id="score">0</span> / 20</p>
+
+<div class="container">
+  <div class="box" data-type="hardware" ondrop="drop(event)" ondragover="allow(event)">🖥️ Hardware</div>
+  <div class="box" data-type="software" ondrop="drop(event)" ondragover="allow(event)">💾 Software</div>
+  <div class="box" data-type="network" ondrop="drop(event)" ondragover="allow(event)">🌐 Network</div>
+  <div class="box" data-type="storage" ondrop="drop(event)" ondragover="allow(event)">📂 Storage</div>
+</div>
+
+<!-- ITEMS --> <div class="container"> <div class="item" draggable="true" data-type="network" ondragstart="drag(event)">📶 Wi-Fi</div> <div class="item" draggable="true" data-type="storage" ondragstart="drag(event)">⚡ SSD</div> <div class="item" draggable="true" data-type="storage" ondragstart="drag(event)">💾 Flash Drive</div> <div class="item" draggable="true" data-type="network" ondragstart="drag(event)">🔀 Switch</div> <div class="item" draggable="true" data-type="hardware" ondragstart="drag(event)">🧠 CPU</div> <div class="item" draggable="true" data-type="software" ondragstart="drag(event)">🪟 Windows</div> <div class="item" draggable="true" data-type="software" ondragstart="drag(event)">📄 MS Word</div> <div class="item" draggable="true" data-type="software" ondragstart="drag(event)">📊 Excel</div> <div class="item" draggable="true" data-type="network" ondragstart="drag(event)">📡 Router</div> <div class="item" draggable="true" data-type="hardware" ondragstart="drag(event)">🖥️ Monitor</div> <div class="item" draggable="true" data-type="network" ondragstart="drag(event)">🌐 Modem</div> <div class="item" draggable="true" data-type="storage" ondragstart="drag(event)">📀 Memory Card</div> <div class="item" draggable="true" data-type="software" ondragstart="drag(event)">🌍 Chrome</div> <div class="item" draggable="true" data-type="hardware" ondragstart="drag(event)">🖱️ Mouse</div> <div class="item" draggable="true" data-type="hardware" ondragstart="drag(event)">🖨️ Printer</div> <div class="item" draggable="true" data-type="software" ondragstart="drag(event)">📽️ PowerPoint</div> <div class="item" draggable="true" data-type="network" ondragstart="drag(event)">🔗 LAN</div> <div class="item" draggable="true" data-type="storage" ondragstart="drag(event)">💽 Hard Drive</div> <div class="item" draggable="true" data-type="storage" ondragstart="drag(event)">☁️ Cloud Storage</div> <div class="item" draggable="true" data-type="hardware" ondragstart="drag(event)">⌨️ Keyboard</div> </div>
+
+<p id="msg"></p>
+<button onclick="location.reload()">Restart Game</button>
+
+<script>
+let placed=0, correct=0;
+
+function allow(e){e.preventDefault();}
+function drag(e){e.dataTransfer.setData("text",e.target.innerText);}
+
+function drop(e){
+  e.preventDefault();
+  const box=e.currentTarget;
+  const text=e.dataTransfer.getData("text");
+  const el=[...document.querySelectorAll(".item")].find(i=>i.innerText===text);
+  if(!el||el.dataset.done)return;
+
+  el.dataset.done="true";
+  el.dataset.correct=el.dataset.type===box.dataset.type;
+  box.appendChild(el);
+  placed++;
+
+  if(placed===10) reveal();
+}
+
+function reveal(){
+  document.getElementById("scoreBox").style.display="block";
+  document.querySelectorAll(".item").forEach(i=>{
+    if(i.dataset.correct==="true"){i.classList.add("correct");correct++}
+    else i.classList.add("wrongItem");
+  });
+  document.getElementById("score").textContent=correct;
+  document.getElementById("msg").textContent="🎉 Results revealed! Review your answers.";
+}
+</script>
+
+</body>
+</html>
