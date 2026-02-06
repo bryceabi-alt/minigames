@@ -26,7 +26,7 @@ body {
 }
 .gadget {
   position: absolute;
-  font-size: 3.5rem;
+  font-size: 3rem;
   opacity: 0.25;
   animation: spinSide 20s linear infinite;
 }
@@ -34,7 +34,6 @@ body {
   top: calc(var(--i) * 10%);
   animation-delay: calc(var(--i) * -2s);
 }
-
 @keyframes spinSide {
   0% { transform: translateX(-20vw) rotate(0deg); }
   100% { transform: translateX(120vw) rotate(360deg); }
@@ -48,86 +47,99 @@ header, section {
 
 /* HERO */
 header {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 40px 20px;
+  padding: 30px 15px;
 }
 
 header h1 {
-  font-size: clamp(3rem, 8vw, 5rem);
+  font-size: clamp(2rem, 7vw, 4rem);
   color: #1d4ed8;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 header p {
-  font-size: 1.2rem;
-  margin-bottom: 40px;
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  margin-bottom: 30px;
 }
 
 /* GAME GRID */
 .games {
-  max-width: 1000px;
-  margin: auto;
+  width: 100%;
+  max-width: 600px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 30px;
+  grid-template-columns: 1fr;
+  gap: 20px;
 }
 
 /* GAME CARD */
 .game-card {
   background: white;
-  padding: 30px;
+  padding: 20px;
   border-radius: 20px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .game-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
 }
 
 .game-icon {
-  font-size: 4rem;
-  margin-bottom: 15px;
+  font-size: 3rem;
+  margin-bottom: 10px;
 }
 
 .game-card h2 {
   color: #1d4ed8;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
+  font-size: 1.3rem;
 }
 
 .game-card p {
-  font-size: 1rem;
-  margin-bottom: 20px;
+  font-size: 0.95rem;
+  margin-bottom: 15px;
 }
 
 /* BUTTON */
 .play-btn {
   display: inline-block;
-  padding: 12px 30px;
-  font-size: 1rem;
+  padding: 10px 25px;
+  font-size: 0.95rem;
   background: #3b82f6;
   color: white;
   text-decoration: none;
   border-radius: 12px;
-  box-shadow: 0 6px 0 #1e40af;
+  box-shadow: 0 5px 0 #1e40af;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .play-btn:hover {
   transform: translateY(2px);
-  box-shadow: 0 4px 0 #1e40af;
+  box-shadow: 0 3px 0 #1e40af;
 }
 
+/* FOOTER */
 footer {
   text-align: center;
-  padding: 20px;
+  padding: 15px;
+  font-size: 0.9rem;
   color: #475569;
 }
+
+/* MEDIA QUERIES */
+@media (min-width: 500px) {
+  .games {
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  }
+}
+
 </style>
 </head>
 
@@ -157,14 +169,12 @@ footer {
       <div class="game-icon">🃏</div>
       <h2>Flip Card Game</h2>
       <p>Test your memory by matching cards as fast as possible.</p>
-
-      <!-- 🔗 PUT YOUR HTML LINK HERE -->
       <a href="https://bryceabi-alt.github.io/minigames/flipcard.html" class="play-btn">
         Play Game
       </a>
     </div>
 
-    <!-- PLACEHOLDER FOR FUTURE GAMES -->
+    <!-- COMING SOON -->
     <div class="game-card">
       <div class="game-icon">🧩</div>
       <h2>Coming Soon</h2>
@@ -181,6 +191,3 @@ footer {
 
 </body>
 </html>
-
-
-
