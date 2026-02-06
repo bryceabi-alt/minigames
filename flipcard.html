@@ -15,7 +15,6 @@ body {
   color: #1e293b;
 }
 
-/* BACKGROUND */
 .gadget-background {
   position: fixed;
   inset: 0;
@@ -28,35 +27,14 @@ body {
   opacity: 0.2;
   animation: float 20s linear infinite;
 }
-
-@keyframes float {
-  from { transform: translateX(-20vw); }
-  to { transform: translateX(120vw); }
-}
+@keyframes float { from { transform: translateX(-20vw); } to { transform: translateX(120vw); } }
 
 header, section { position: relative; z-index: 1; }
 
-/* HERO */
-header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
+header { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+header h1 { font-size: clamp(3rem, 8vw, 5rem); color: #1d4ed8; }
+header p { font-size: 1.2rem; margin-bottom: 30px; }
 
-header h1 {
-  font-size: clamp(3rem, 8vw, 5rem);
-  color: #1d4ed8;
-}
-
-header p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-}
-
-/* BUTTONS */
 button {
   padding: 14px 30px;
   font-size: 1rem;
@@ -67,13 +45,10 @@ button {
   cursor: pointer;
   margin: 8px;
   box-shadow: 0 6px 0 #1e40af;
+  transition: all 0.3s;
 }
-button:hover {
-  transform: translateY(2px);
-  box-shadow: 0 4px 0 #1e40af;
-}
+button:hover { transform: translateY(2px); box-shadow: 0 4px 0 #1e40af; }
 
-/* QUIZ */
 .quiz-box {
   max-width: 800px;
   margin: 60px auto;
@@ -84,62 +59,24 @@ button:hover {
   display: none;
 }
 
-.counter {
-  font-weight: 600;
-  margin-bottom: 15px;
-  color: #2563eb;
-}
+.counter { font-weight: 600; margin-bottom: 15px; color: #2563eb; }
+.question { font-size: 1.4rem; margin-bottom: 20px; }
+.options button { width: 100%; margin: 10px 0; background: #eff6ff; color: #1e293b; border: 2px solid #3b82f6; }
+.options button:hover { background: #dbeafe; }
 
-.question {
-  font-size: 1.4rem;
-  margin-bottom: 20px;
-}
+.correct-glow { box-shadow: 0 0 15px 5px #16a34a; }
+.wrong-glow { box-shadow: 0 0 15px 5px #dc2626; }
 
-.options button {
-  width: 100%;
-  margin: 10px 0;
-  background: #eff6ff;
-  color: #1e293b;
-  border: 2px solid #3b82f6;
-  transition: 0.3s;
-}
-.options button:hover {
-  background: #dbeafe;
-}
+.explanation { margin-top: 15px; font-style: italic; color: #1e293b; }
 
-.correct { background: #16a34a !important; color: white; border-color: #16a34a; }
-.wrong { background: #dc2626 !important; color: white; border-color: #dc2626; }
+.controls { margin-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; }
 
-.controls {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
+.result { text-align: center; }
+.result h2 { font-size: 2.5rem; color: #1d4ed8; }
 
-.explanation {
-  margin-top: 10px;
-  font-weight: 600;
-  color: #f59e0b;
-}
-
-/* RESULT */
-.result {
-  text-align: center;
-}
-.result h2 {
-  font-size: 2.5rem;
-  color: #1d4ed8;
-}
-
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #475569;
-}
+footer { text-align: center; padding: 20px; color: #475569; }
 </style>
 </head>
-
 <body>
 
 <div class="gadget-background">
@@ -173,7 +110,6 @@ footer {
   <div class="counter" id="counter"></div>
   <div class="question" id="question"></div>
   <div class="options" id="options"></div>
-  <p id="timer" style="font-weight:600;margin-top:10px;color:#dc2626;">Time left: 15s</p>
   <div class="explanation" id="explanation"></div>
   <div class="controls">
     <button id="backBtn">Back to Difficulty</button>
@@ -190,13 +126,46 @@ footer {
 <footer>© 2026 • Gamified Learning • ICT</footer>
 
 <script>
+// --- Questions
 const questions = [
-  {q:"What does ICT stand for?",o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"],a:0,l:"easy",e:"ICT stands for Information and Communication Technology."},
-  {q:"Which is an input device?",o:["Monitor","Keyboard","Printer","Speaker"],a:1,l:"easy",e:"Keyboard is an input device."},
-  {q:"Which device shows output?",o:["CPU","Keyboard","Monitor","Mouse"],a:2,l:"easy",e:"Monitor displays output."}
+  /* EASY (10) */
+  {q:"What does ICT stand for?", o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"], a:0, l:"easy", e:"ICT is the field that combines computing and communications."},
+  {q:"Which is an input device?", o:["Monitor","Keyboard","Printer","Speaker"], a:1, l:"easy", e:"Keyboard is used to input data."},
+  {q:"Which device shows output?", o:["CPU","Keyboard","Monitor","Mouse"], a:2, l:"easy", e:"Monitors display output."},
+  {q:"Which is hardware?", o:["Windows","Mouse","Google","Word"], a:1, l:"easy", e:"Hardware is the physical components."},
+  {q:"Which is software?", o:["Keyboard","Monitor","MS Word","CPU"], a:2, l:"easy", e:"Software refers to programs."},
+  {q:"Which prints documents?", o:["Scanner","Printer","Speaker","Mouse"], a:1, l:"easy", e:"Printer prints documents."},
+  {q:"Which is storage?", o:["CPU","RAM","Hard Drive","Monitor"], a:2, l:"easy", e:"Hard drives store data permanently."},
+  {q:"What key deletes text?", o:["Shift","Ctrl","Backspace","Alt"], a:2, l:"easy", e:"Backspace deletes text."},
+  {q:"Which is portable storage?", o:["RAM","CPU","Flash Drive","Monitor"], a:2, l:"easy", e:"Flash drives are portable storage."},
+  {q:"Which is output device?", o:["Keyboard","Mouse","Monitor","Scanner"], a:2, l:"easy", e:"Monitor shows output."},
+
+  /* MEDIUM (10) */
+  {q:"What is RAM?", o:["Permanent storage","Temporary memory","CPU","Output"], a:1, l:"medium", e:"RAM stores data temporarily for active processes."},
+  {q:"What is phishing?", o:["Email scam","Virus","Backup","Firewall"], a:0, l:"medium", e:"Phishing is a type of online scam."},
+  {q:"What does URL mean?", o:["Uniform Resource Locator","User Resource Link","Universal Route Line","Unified Reference"], a:0, l:"medium", e:"URL specifies a web page address."},
+  {q:"Which edits images?", o:["Word","Excel","Photoshop","Notepad"], a:2, l:"medium", e:"Photoshop edits images."},
+  {q:"Which is cloud storage?", o:["Flash Drive","RAM","Google Drive","CPU"], a:2, l:"medium", e:"Google Drive stores files online."},
+  {q:"Which is spreadsheet software?", o:["Word","Excel","PowerPoint","Paint"], a:1, l:"medium", e:"Excel is spreadsheet software."},
+  {q:"What is e-learning?", o:["Online learning","Offline class","Manual reading","Gaming"], a:0, l:"medium", e:"E-learning is online education."},
+  {q:"Which shortcut pastes?", o:["Ctrl+C","Ctrl+V","Ctrl+X","Ctrl+Z"], a:1, l:"medium", e:"Ctrl+V pastes content."},
+  {q:"What is backup?", o:["Extra copy","Delete","Hack","Encrypt"], a:0, l:"medium", e:"Backup is an extra copy of data."},
+  {q:"Which is ethical?", o:["Piracy","Hacking","Citing sources","Malware"], a:2, l:"medium", e:"Citing sources is ethical."},
+
+  /* HARD (10) */
+  {q:"What is firewall?", o:["Virus","Security system","Browser","OS"], a:1, l:"hard", e:"Firewalls protect networks."},
+  {q:"What is encryption?", o:["Secure data","Delete data","Copy data","Share data"], a:0, l:"hard", e:"Encryption secures data."},
+  {q:"What does IP address identify?", o:["Device location","File type","Password","Website name"], a:0, l:"hard", e:"IP address identifies a device on a network."},
+  {q:"Which is open-source OS?", o:["Windows","Linux","macOS","iOS"], a:1, l:"hard", e:"Linux is open-source."},
+  {q:"What is bandwidth?", o:["Internet capacity","Storage","CPU speed","RAM"], a:0, l:"hard", e:"Bandwidth is the internet capacity."},
+  {q:"What does HTTP stand for?", o:["HyperText Transfer Protocol","High Tool Transfer Program","Host Text Program","Hyper Tool Text"], a:0, l:"hard", e:"HTTP is the protocol for web pages."},
+  {q:"What is cloud computing?", o:["Online services","Offline storage","Hardware repair","Local apps"], a:0, l:"hard", e:"Cloud computing uses remote servers."},
+  {q:"What is 2FA?", o:["Extra security","Backup","Encryption","Antivirus"], a:0, l:"hard", e:"2FA adds extra login security."},
+  {q:"Which is strong password?", o:["123456","password","P@ss2024!","abc"], a:2, l:"hard", e:"Strong passwords have letters, numbers, and symbols."},
+  {q:"What is ethical ICT use?", o:["Hacking","Piracy","Citing sources","Spamming"], a:2, l:"hard", e:"Citing sources is ethical."}
 ];
 
-let filtered=[], index=0, score=0, currentLevel="", time=15, timerInterval;
+let filtered=[], index=0, score=0, currentLevel="", timer=15, timerInterval;
 
 const quizBox=document.getElementById("quizBox");
 const resultBox=document.getElementById("resultBox");
@@ -204,31 +173,39 @@ const questionEl=document.getElementById("question");
 const optionsEl=document.getElementById("options");
 const counterEl=document.getElementById("counter");
 const scoreEl=document.getElementById("score");
-const timerEl=document.getElementById("timer");
-const explanationEl=document.getElementById("explanation");
 const difficultyScreen=document.getElementById("difficultyScreen");
+const explanationEl=document.getElementById("explanation");
 
-function shuffleArray(arr){ return arr.sort(()=>Math.random()-0.5); }
-
+// --- Difficulty selection
 document.querySelectorAll("[data-level]").forEach(btn=>{
   btn.onclick=()=>{
     currentLevel=btn.dataset.level;
-    filtered=questions.filter(q=>q.l===currentLevel);
-    filtered=shuffleArray(filtered);
+    filtered = shuffleArray(questions.filter(q=>q.l===currentLevel)).slice(0,10);
     index=score=0;
     difficultyScreen.style.display="none";
     quizBox.style.display="block";
-    resetTimer();
     loadQuestion();
   };
 });
 
-function loadQuestion(){
+// --- Timer
+function startTimer(){
+  timer=15;
   clearInterval(timerInterval);
-  resetTimer();
-  explanationEl.textContent="";
+  timerInterval=setInterval(()=>{
+    timer--;
+    counterEl.textContent=`Question ${index+1} of ${filtered.length} | Time: ${timer}s`;
+    if(timer<=0){
+      clearInterval(timerInterval);
+      answerQuestion(false, filtered[index].a, filtered[index].e);
+    }
+  },1000);
+}
+
+// --- Load Question
+function loadQuestion(){
   const q=filtered[index];
-  counterEl.textContent=`Question ${index+1} of ${filtered.length}`;
+  explanationEl.textContent="";
   questionEl.textContent=q.q;
   optionsEl.innerHTML="";
   q.o.forEach((opt,i)=>{
@@ -240,29 +217,13 @@ function loadQuestion(){
   startTimer();
 }
 
-function startTimer(){
-  timerInterval=setInterval(()=>{
-    time--;
-    timerEl.textContent=`Time left: ${time}s`;
-    if(time<=0){
-      clearInterval(timerInterval);
-      answerQuestion(false, filtered[index].a, filtered[index].e);
-    }
-  },1000);
-}
-
-function resetTimer(){
-  clearInterval(timerInterval);
-  time=15;
-  timerEl.textContent=`Time left: ${time}s`;
-}
-
+// --- Answer Logic
 function answerQuestion(correct, correctIndex, explanation){
   clearInterval(timerInterval);
   Array.from(optionsEl.children).forEach((b,i)=>{
     b.disabled=true;
-    if(i===correctIndex) b.classList.add("correct");
-    else if(!correct && i!==correctIndex) b.classList.add("wrong");
+    if(i===correctIndex) b.classList.add("correct-glow");
+    else if(!correct && i!==correctIndex) b.classList.add("wrong-glow");
   });
   explanationEl.textContent=`Correct Answer: ${filtered[index].o[correctIndex]}. ${explanation}`;
   if(correct) score++;
@@ -272,28 +233,32 @@ function answerQuestion(correct, correctIndex, explanation){
   },2500);
 }
 
+// --- Result
 function showResult(){
   quizBox.style.display="none";
   resultBox.style.display="block";
   scoreEl.textContent=`${score} / ${filtered.length}`;
 }
 
+// --- Buttons
 document.getElementById("backBtn").onclick=()=>{
-  clearInterval(timerInterval);
   quizBox.style.display="none";
   difficultyScreen.style.display="flex";
 };
 document.getElementById("restartBtn").onclick=()=>{
-  filtered=shuffleArray(filtered);
+  filtered = shuffleArray(questions.filter(q=>q.l===currentLevel)).slice(0,10);
   index=score=0;
-  resetTimer();
   loadQuestion();
 };
 document.getElementById("restartAllBtn").onclick=()=>{
   resultBox.style.display="none";
   difficultyScreen.style.display="flex";
 };
-</script>
 
+// --- Shuffle Helper
+function shuffleArray(array){
+  return array.sort(()=>Math.random()-0.5);
+}
+</script>
 </body>
 </html>
