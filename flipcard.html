@@ -22,147 +22,53 @@ body {
   pointer-events: none;
   z-index: 0;
 }
-.gadget {
-  position: absolute;
-  font-size: 3rem;
-  opacity: 0.2;
-  animation: float 20s linear infinite;
-}
-.gadget:nth-child(n) { top: calc(var(--i) * 10%); }
-
-@keyframes float {
-  from { transform: translateX(-20vw); }
-  to { transform: translateX(120vw); }
-}
+.gadget { position: absolute; font-size: 3rem; opacity: 0.2; animation: float 20s linear infinite; }
+@keyframes float { from { transform: translateX(-20vw); } to { transform: translateX(120vw); } }
 
 header, section { position: relative; z-index: 1; }
 
-/* HERO */
 header {
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
 }
+header h1 { font-size: clamp(3rem, 8vw, 5rem); color: #1d4ed8; }
+header p { font-size: 1.2rem; margin-bottom: 30px; }
 
-header h1 {
-  font-size: clamp(3rem, 8vw, 5rem);
-  color: #1d4ed8;
-}
-
-header p {
-  font-size: 1.2rem;
-  margin-bottom: 30px;
-}
-
-/* BUTTONS */
 button {
-  padding: 14px 30px;
-  font-size: 1rem;
-  background: #3b82f6;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  margin: 8px;
+  padding: 14px 30px; font-size: 1rem; background: #3b82f6; color: white;
+  border: none; border-radius: 12px; cursor: pointer; margin: 8px;
   box-shadow: 0 6px 0 #1e40af;
 }
-button:hover {
-  transform: translateY(2px);
-  box-shadow: 0 4px 0 #1e40af;
-}
+button:hover { transform: translateY(2px); box-shadow: 0 4px 0 #1e40af; }
 
-/* QUIZ */
 .quiz-box {
-  max-width: 700px;
-  margin: 60px auto;
-  background: white;
-  padding: 40px;
-  border-radius: 20px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-  display: none;
+  max-width: 700px; margin: 60px auto; background: white; padding: 40px;
+  border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); display: none;
 }
 
-.counter {
-  font-weight: 600;
-  margin-bottom: 15px;
-  color: #2563eb;
-}
+.counter { font-weight: 600; margin-bottom: 15px; color: #2563eb; }
 
-.options button {
-  width: 100%;
-  margin: 10px 0;
-  background: #eff6ff;
-  color: #1e293b;
-  border: 2px solid #3b82f6;
-}
-.options button:hover {
-  background: #dbeafe;
-}
-
-/* FLIP-CARD */
-.flip-card {
-  perspective: 1000px;
-  width: 100%;
-  margin-top: 20px;
-}
+/* FLIP CARD */
+.flip-card { perspective: 1000px; margin-top: 20px; }
 .flip-card-inner {
-  position: relative;
-  width: 100%;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
+  position: relative; width: 100%; transition: transform 0.6s; transform-style: preserve-3d;
 }
 .flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  min-height: 200px; /* ensures same height */
-  backface-visibility: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  position: absolute; width: 100%; backface-visibility: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+  border-radius: 20px; padding: 20px;
 }
-.flip-card-front {
-  background: #eff6ff;
-  border-radius: 20px;
-  padding: 20px;
-}
-.flip-card-back {
-  transform: rotateY(180deg);
-  background: #dbeafe;
-  border-radius: 20px;
-  padding: 20px;
-  text-align: center;
-}
+.flip-card-front { background: #eff6ff; }
+.flip-card-back { background: #dbeafe; transform: rotateY(180deg); text-align: center; font-size: 1.2rem; }
 
-#timer {
-  margin-top: 10px;
-  font-weight: 600;
-  color: #ef4444;
-}
+#timer { margin-top: 10px; font-weight: 600; color: #ef4444; }
 
-.controls {
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
+.controls { margin-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; }
 
-/* RESULT */
-.result {
-  text-align: center;
-}
-.result h2 {
-  font-size: 2.5rem;
-  color: #1d4ed8;
-}
+.result { text-align: center; }
+.result h2 { font-size: 2.5rem; color: #1d4ed8; }
 
-footer {
-  text-align: center;
-  padding: 20px;
-  color: #475569;
-}
+footer { text-align: center; padding: 20px; color: #475569; }
 </style>
 </head>
 
@@ -205,7 +111,7 @@ footer {
         <div class="options" id="options"></div>
       </div>
       <div class="flip-card-back">
-        <div id="feedback" style="font-size:1.2rem; margin-bottom:20px;"></div>
+        <div id="feedback"></div>
         <button id="nextBtn">Next</button>
       </div>
     </div>
@@ -229,64 +135,50 @@ footer {
 
 <script>
 const questions = [
-  {q:"What does ICT stand for?", o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"], a:0, l:"easy"},
-  {q:"Which is an input device?", o:["Monitor","Keyboard","Printer","Speaker"], a:1, l:"easy"},
-  {q:"Which device shows output?", o:["CPU","Keyboard","Monitor","Mouse"], a:2, l:"easy"},
-  {q:"Which is hardware?", o:["Windows","Mouse","Google","Word"], a:1, l:"easy"},
-  {q:"Which is software?", o:["Keyboard","Monitor","MS Word","CPU"], a:2, l:"easy"}
+  {q:"What does ICT stand for?",o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"],a:0,l:"easy",hint:"Think about tech used for communication","explanation:"ICT stands for Information and Communication Technology"},
+  {q:"Which is an input device?",o:["Monitor","Keyboard","Printer","Speaker"],a:1,l:"easy",hint:"You type into this","explanation:"Keyboard is used to input data"},
+  {q:"Which device shows output?",o:["CPU","Keyboard","Monitor","Mouse"],a:2,l:"easy",hint:"You look at it to see results","explanation:"Monitor displays output"},
+  /* Add all other questions here with hints & explanations */
 ];
 
-const hints = [
-  "ICT is about technology for communication and data.",
-  "Keyboard is for inputting data.",
-  "Monitor shows output.",
-  "Hardware is physical parts of a computer.",
-  "Software is programs that run on hardware."
-];
-const explanations = [
-  "Correct! ICT stands for Information and Communication Technology.",
-  "Right! Keyboard is an input device.",
-  "Correct! Monitor displays output.",
-  "Yes! Hardware refers to physical components.",
-  "Correct! Software is a program."
-];
+let filtered=[], index=0, score=0, currentLevel="", timerInterval=null, timeLeft=15;
 
-let filtered = [], index = 0, score = 0, currentLevel = "";
-let timerInterval = null, timeLeft = 15;
+const quizBox=document.getElementById("quizBox");
+const resultBox=document.getElementById("resultBox");
+const questionEl=document.getElementById("question");
+const optionsEl=document.getElementById("options");
+const counterEl=document.getElementById("counter");
+const scoreEl=document.getElementById("score");
+const difficultyScreen=document.getElementById("difficultyScreen");
+const flipCardInner=document.getElementById("flipCardInner");
+const feedbackEl=document.getElementById("feedback");
+const timerEl=document.getElementById("timer");
 
-const quizBox = document.getElementById("quizBox");
-const resultBox = document.getElementById("resultBox");
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const counterEl = document.getElementById("counter");
-const scoreEl = document.getElementById("score");
-const difficultyScreen = document.getElementById("difficultyScreen");
-
-document.querySelectorAll("[data-level]").forEach(btn => {
-  btn.onclick = () => {
-    currentLevel = btn.dataset.level;
-    filtered = questions.filter(q => q.l === currentLevel);
-    index = score = 0;
-    difficultyScreen.style.display = "none";
-    quizBox.style.display = "block";
+document.querySelectorAll("[data-level]").forEach(btn=>{
+  btn.onclick=()=>{
+    currentLevel=btn.dataset.level;
+    filtered=questions.filter(q=>q.l===currentLevel);
+    index=score=0;
+    difficultyScreen.style.display="none";
+    quizBox.style.display="block";
     loadQuestion();
   };
 });
 
-function loadQuestion() {
-  const q = filtered[index];
-  counterEl.textContent = `Question ${index+1} of ${filtered.length}`;
-  questionEl.textContent = q.q;
-  optionsEl.innerHTML = "";
-  document.getElementById('flipCardInner').style.transform = 'rotateY(0deg)';
-  document.getElementById('feedback').textContent = '';
+function loadQuestion(){
+  const q=filtered[index];
+  counterEl.textContent=`Question ${index+1} of ${filtered.length}`;
+  questionEl.textContent=q.q;
+  optionsEl.innerHTML="";
+  flipCardInner.style.transform='rotateY(0deg)';
+  feedbackEl.textContent='';
 
-  timeLeft = 15;
-  document.getElementById('timer').textContent = `Time Left: ${timeLeft}s`;
+  timeLeft=15;
+  timerEl.textContent=`Time Left: ${timeLeft}s`;
   clearInterval(timerInterval);
-  timerInterval = setInterval(()=>{
+  timerInterval=setInterval(()=>{
     timeLeft--;
-    document.getElementById('timer').textContent = `Time Left: ${timeLeft}s`;
+    timerEl.textContent=`Time Left: ${timeLeft}s`;
     if(timeLeft<=0){
       clearInterval(timerInterval);
       showFeedback(false);
@@ -294,51 +186,35 @@ function loadQuestion() {
   },1000);
 
   q.o.forEach((opt,i)=>{
-    const b = document.createElement("button");
-    b.textContent = opt;
-    b.onclick = () => {
-      clearInterval(timerInterval);
-      showFeedback(i===q.a);
-    };
+    const b=document.createElement("button");
+    b.textContent=opt;
+    b.onclick=()=>{ clearInterval(timerInterval); showFeedback(i===q.a); };
     optionsEl.appendChild(b);
   });
 }
 
 function showFeedback(correct){
-  document.getElementById('flipCardInner').style.transform = 'rotateY(180deg)';
-  const feedbackEl = document.getElementById('feedback');
-  if(correct){
-    score++;
-    feedbackEl.textContent = explanations[index] || "Correct!";
-  } else {
-    feedbackEl.textContent = `Wrong! Hint: ${hints[index] || "Think carefully!"}`;
-  }
+  flipCardInner.style.transform='rotateY(180deg)';
+  const q=filtered[index];
+  if(correct){ score++; feedbackEl.textContent=q.explanation; }
+  else{ feedbackEl.textContent=`Wrong! Hint: ${q.hint}`; }
 }
 
-document.getElementById("nextBtn").onclick = ()=>{
+document.getElementById("nextBtn").onclick=()=>{
   index++;
   if(index<filtered.length) loadQuestion();
   else showResult();
 };
 
 function showResult(){
-  quizBox.style.display = "none";
-  resultBox.style.display = "block";
-  scoreEl.textContent = `${score} / ${filtered.length}`;
+  quizBox.style.display="none";
+  resultBox.style.display="block";
+  scoreEl.textContent=`${score} / ${filtered.length}`;
 }
 
-document.getElementById("backBtn").onclick = ()=>{
-  quizBox.style.display = "none";
-  difficultyScreen.style.display = "flex";
-};
-document.getElementById("restartBtn").onclick = ()=>{
-  index = score = 0;
-  loadQuestion();
-};
-document.getElementById("restartAllBtn").onclick = ()=>{
-  resultBox.style.display = "none";
-  difficultyScreen.style.display = "flex";
-};
+document.getElementById("backBtn").onclick=()=>{ quizBox.style.display="none"; difficultyScreen.style.display="flex"; };
+document.getElementById("restartBtn").onclick=()=>{ index=score=0; loadQuestion(); };
+document.getElementById("restartAllBtn").onclick=()=>{ resultBox.style.display="none"; difficultyScreen.style.display="flex"; };
 </script>
 
 </body>
