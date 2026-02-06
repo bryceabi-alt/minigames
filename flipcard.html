@@ -77,9 +77,9 @@ button:hover {
 /* QUIZ */
 .quiz-box {
   max-width: 800px;
-  margin: 40px auto;
+  margin: 60px auto;
   background: white;
-  padding: 30px;
+  padding: 40px;
   border-radius: 20px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.1);
   display: none;
@@ -87,14 +87,8 @@ button:hover {
 
 .counter {
   font-weight: 600;
-  margin-bottom: 10px;
-  color: #2563eb;
-}
-
-.timer {
-  font-weight: 600;
   margin-bottom: 15px;
-  color: #dc2626;
+  color: #2563eb;
 }
 
 .question {
@@ -111,12 +105,6 @@ button:hover {
 }
 .options button:hover {
   background: #dbeafe;
-}
-
-.explanation {
-  margin-top: 15px;
-  font-style: italic;
-  color: #16a34a;
 }
 
 .controls {
@@ -174,11 +162,8 @@ footer {
 
 <section class="quiz-box" id="quizBox">
   <div class="counter" id="counter"></div>
-  <div class="timer" id="timer"></div>
   <div class="question" id="question"></div>
   <div class="options" id="options"></div>
-  <div class="explanation" id="explanation"></div>
-
   <div class="controls">
     <button id="backBtn">Back to Difficulty</button>
     <button id="restartBtn">Restart</button>
@@ -195,30 +180,70 @@ footer {
 
 <script>
 const questions = [
-  {q:"What does ICT stand for?",o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"],a:0,l:"easy", e:"ICT stands for Information and Communication Technology."},
-  {q:"Which is an input device?",o:["Monitor","Keyboard","Printer","Speaker"],a:1,l:"easy", e:"Keyboard is an input device."},
-  {q:"Which device shows output?",o:["CPU","Keyboard","Monitor","Mouse"],a:2,l:"easy", e:"Monitor is an output device."},
-  {q:"Which is hardware?",o:["Windows","Mouse","Google","Word"],a:1,l:"easy", e:"Hardware is the physical device like Mouse."},
-  {q:"Which is software?",o:["Keyboard","Monitor","MS Word","CPU"],a:2,l:"easy", e:"MS Word is software."}
+/* EASY 30 */
+{q:"What does ICT stand for?",o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"],a:0,l:"easy",e:"ICT stands for Information and Communication Technology."},
+{q:"Which is an input device?",o:["Monitor","Keyboard","Printer","Speaker"],a:1,l:"easy",e:"Keyboard is an input device."},
+{q:"Which device shows output?",o:["CPU","Keyboard","Monitor","Mouse"],a:2,l:"easy",e:"Monitor is an output device."},
+{q:"Which is hardware?",o:["Windows","Mouse","Google","Word"],a:1,l:"easy",e:"Hardware is physical devices like Mouse."},
+{q:"Which is software?",o:["Keyboard","Monitor","MS Word","CPU"],a:2,l:"easy",e:"MS Word is software."},
+{q:"Which prints documents?",o:["Scanner","Printer","Speaker","Mouse"],a:1,l:"easy",e:"Printer prints documents."},
+{q:"What is used to browse the web?",o:["Browser","Compiler","Editor","Driver"],a:0,l:"easy",e:"A browser is used to browse the web."},
+{q:"Which is storage?",o:["CPU","RAM","Hard Drive","Monitor"],a:2,l:"easy",e:"Hard Drive is permanent storage."},
+{q:"Which is an OS?",o:["Windows","Google","Zoom","Facebook"],a:0,l:"easy",e:"Windows is an operating system."},
+{q:"Which key deletes text?",o:["Shift","Ctrl","Backspace","Alt"],a:2,l:"easy",e:"Backspace deletes text."},
+{q:"What is email used for?",o:["Gaming","Communication","Editing","Coding"],a:1,l:"easy",e:"Email is used for communication."},
+{q:"Which is portable storage?",o:["RAM","CPU","Flash Drive","Monitor"],a:2,l:"easy",e:"Flash Drive is portable storage."},
+{q:"Which connects to internet?",o:["Modem","Printer","Speaker","Mouse"],a:0,l:"easy",e:"Modem connects to internet."},
+{q:"Which is a search engine?",o:["Google","Excel","Word","Zoom"],a:0,l:"easy",e:"Google is a search engine."},
+{q:"What does CPU do?",o:["Process data","Store files","Print","Display"],a:0,l:"easy",e:"CPU processes data."},
+{q:"Which is ICT in school?",o:["Notebook","Chalk","E-learning","Ballpen"],a:2,l:"easy",e:"E-learning is ICT in school."},
+{q:"Which is output device?",o:["Keyboard","Mouse","Monitor","Scanner"],a:2,l:"easy",e:"Monitor is an output device."},
+{q:"What is a laptop?",o:["Software","Portable computer","Input","Output"],a:1,l:"easy",e:"Laptop is a portable computer."},
+{q:"Which is permanent storage?",o:["RAM","Cache","Hard Drive","CPU"],a:2,l:"easy",e:"Hard Drive is permanent storage."},
+{q:"Which icon deletes files?",o:["Folder","Recycle Bin","Desktop","This PC"],a:1,l:"easy",e:"Recycle Bin deletes files."},
+/* MEDIUM 30 */
+{q:"What is RAM?",o:["Permanent storage","Temporary memory","CPU","Output"],a:1,l:"medium",e:"RAM is temporary memory."},
+{q:"What is phishing?",o:["Email scam","Virus","Backup","Firewall"],a:0,l:"medium",e:"Phishing is an email scam."},
+{q:"What does URL mean?",o:["Uniform Resource Locator","User Resource Link","Universal Route Line","Unified Reference"],a:0,l:"medium",e:"URL stands for Uniform Resource Locator."},
+{q:"Which edits images?",o:["Word","Excel","Photoshop","Notepad"],a:2,l:"medium",e:"Photoshop edits images."},
+{q:"Which is cloud storage?",o:["Flash Drive","RAM","Google Drive","CPU"],a:2,l:"medium",e:"Google Drive is cloud storage."},
+{q:"What is malware?",o:["Useful software","Virus","Hardware","OS"],a:1,l:"medium",e:"Malware is malicious software."},
+{q:"Which is spreadsheet software?",o:["Word","Excel","PowerPoint","Paint"],a:1,l:"medium",e:"Excel is spreadsheet software."},
+{q:"What does OS do?",o:["Manage hardware","Browse web","Design","Print"],a:0,l:"medium",e:"OS manages hardware and software."},
+{q:"Which is NOT OS?",o:["Windows","Linux","Android","Chrome"],a:3,l:"medium",e:"Chrome is a browser, not OS."},
+{q:"What does HTML stand for?",o:["HyperText Markup Language","HighText Machine Language","Hyper Tool ML","Host Transfer ML"],a:0,l:"medium",e:"HTML stands for HyperText Markup Language."},
+/* HARD 30 */
+{q:"What is firewall?",o:["Virus","Security system","Browser","OS"],a:1,l:"hard",e:"Firewall is a security system."},
+{q:"What is encryption?",o:["Secure data","Delete data","Copy data","Share data"],a:0,l:"hard",e:"Encryption secures data."},
+{q:"What does IP address identify?",o:["Device location","File type","Password","Website name"],a:0,l:"hard",e:"IP address identifies device location."},
+{q:"Which is open-source OS?",o:["Windows","Linux","macOS","iOS"],a:1,l:"hard",e:"Linux is open-source."},
+{q:"What is bandwidth?",o:["Internet capacity","Storage","CPU speed","RAM"],a:0,l:"hard",e:"Bandwidth is internet capacity."},
+{q:"What does HTTP stand for?",o:["HyperText Transfer Protocol","High Tool Transfer Program","Host Text Program","Hyper Tool Text"],a:0,l:"hard",e:"HTTP stands for HyperText Transfer Protocol."}
 ];
 
+// GLOBAL VARS
 let filtered=[], index=0, score=0, currentLevel="", timerInterval;
-const TIME_LIMIT = 15;
+const TIME_LIMIT=15;
 
 const quizBox=document.getElementById("quizBox");
 const resultBox=document.getElementById("resultBox");
 const questionEl=document.getElementById("question");
 const optionsEl=document.getElementById("options");
 const counterEl=document.getElementById("counter");
-const timerEl=document.getElementById("timer");
-const explanationEl=document.getElementById("explanation");
 const scoreEl=document.getElementById("score");
 const difficultyScreen=document.getElementById("difficultyScreen");
 
+const explanationEl=document.createElement("p");
+explanationEl.style.marginTop="15px";
+explanationEl.style.color="#1d4ed8";
+quizBox.appendChild(explanationEl);
+
+// DIFFICULTY SELECT
 document.querySelectorAll("[data-level]").forEach(btn=>{
   btn.onclick=()=>{
     currentLevel=btn.dataset.level;
     filtered=questions.filter(q=>q.l===currentLevel);
+    filtered=shuffleArray(filtered);
     index=score=0;
     difficultyScreen.style.display="none";
     quizBox.style.display="block";
@@ -226,6 +251,10 @@ document.querySelectorAll("[data-level]").forEach(btn=>{
   };
 });
 
+// SHUFFLE
+function shuffleArray(arr){ return arr.sort(()=>Math.random()-0.5); }
+
+// LOAD QUESTION
 function loadQuestion(){
   clearInterval(timerInterval);
   const q=filtered[index];
@@ -233,21 +262,26 @@ function loadQuestion(){
   questionEl.textContent=q.q;
   optionsEl.innerHTML="";
   explanationEl.textContent="";
-  
+
   q.o.forEach((opt,i)=>{
     const b=document.createElement("button");
     b.textContent=opt;
     b.onclick=()=>answerQuestion(i===q.a,q.e);
     optionsEl.appendChild(b);
   });
-  
+
   startTimer();
 }
 
+// TIMER
 function startTimer(){
   let time=TIME_LIMIT;
+  let timerEl=document.createElement("p");
+  timerEl.style.marginTop="10px";
+  timerEl.style.fontWeight="600";
+  quizBox.insertBefore(timerEl, explanationEl);
   timerEl.textContent=`Time left: ${time}s`;
-  timerInterval = setInterval(()=>{
+  timerInterval=setInterval(()=>{
     time--;
     timerEl.textContent=`Time left: ${time}s`;
     if(time<=0){
@@ -257,25 +291,26 @@ function startTimer(){
   },1000);
 }
 
+// ANSWER
 function answerQuestion(correct, explanation){
   clearInterval(timerInterval);
   explanationEl.textContent=explanation;
   if(correct) score++;
-  // Disable buttons
   Array.from(optionsEl.children).forEach(b=>b.disabled=true);
-  // Move to next question after 2s
   setTimeout(()=>{
     index++;
     index<filtered.length?loadQuestion():showResult();
   },2000);
 }
 
+// SHOW RESULT
 function showResult(){
   quizBox.style.display="none";
   resultBox.style.display="block";
   scoreEl.textContent=`${score} / ${filtered.length}`;
 }
 
+// BUTTONS
 document.getElementById("backBtn").onclick=()=>{
   clearInterval(timerInterval);
   quizBox.style.display="none";
@@ -283,6 +318,7 @@ document.getElementById("backBtn").onclick=()=>{
 };
 
 document.getElementById("restartBtn").onclick=()=>{
+  filtered=shuffleArray(filtered);
   index=score=0;
   loadQuestion();
 };
