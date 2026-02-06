@@ -28,7 +28,6 @@ body {
   opacity: 0.2;
   animation: float 20s linear infinite;
 }
-.gadget:nth-child(n) { top: calc(var(--i) * 10%); }
 
 @keyframes float {
   from { transform: translateX(-20vw); }
@@ -102,16 +101,26 @@ button:hover {
   background: #eff6ff;
   color: #1e293b;
   border: 2px solid #3b82f6;
+  transition: 0.3s;
 }
 .options button:hover {
   background: #dbeafe;
 }
+
+.correct { background: #16a34a !important; color: white; border-color: #16a34a; }
+.wrong { background: #dc2626 !important; color: white; border-color: #dc2626; }
 
 .controls {
   margin-top: 20px;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+
+.explanation {
+  margin-top: 10px;
+  font-weight: 600;
+  color: #f59e0b;
 }
 
 /* RESULT */
@@ -164,8 +173,8 @@ footer {
   <div class="counter" id="counter"></div>
   <div class="question" id="question"></div>
   <div class="options" id="options"></div>
-  <!-- Timer -->
   <p id="timer" style="font-weight:600;margin-top:10px;color:#dc2626;">Time left: 15s</p>
+  <div class="explanation" id="explanation"></div>
   <div class="controls">
     <button id="backBtn">Back to Difficulty</button>
     <button id="restartBtn">Restart</button>
@@ -182,31 +191,10 @@ footer {
 
 <script>
 const questions = [
-/* EASY (30) */
-{q:"What does ICT stand for?",o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"],a:0,l:"easy"},
-{q:"Which is an input device?",o:["Monitor","Keyboard","Printer","Speaker"],a:1,l:"easy"},
-{q:"Which device shows output?",o:["CPU","Keyboard","Monitor","Mouse"],a:2,l:"easy"},
-{q:"Which is hardware?",o:["Windows","Mouse","Google","Word"],a:1,l:"easy"},
-{q:"Which is software?",o:["Keyboard","Monitor","MS Word","CPU"],a:2,l:"easy"},
-{q:"Which prints documents?",o:["Scanner","Printer","Speaker","Mouse"],a:1,l:"easy"},
-{q:"What is used to browse the web?",o:["Browser","Compiler","Editor","Driver"],a:0,l:"easy"},
-{q:"Which is storage?",o:["CPU","RAM","Hard Drive","Monitor"],a:2,l:"easy"},
-{q:"Which is an OS?",o:["Windows","Google","Zoom","Facebook"],a:0,l:"easy"},
-{q:"Which key deletes text?",o:["Shift","Ctrl","Backspace","Alt"],a:2,l:"easy"},
-{q:"What is email used for?",o:["Gaming","Communication","Editing","Coding"],a:1,l:"easy"},
-{q:"Which is portable storage?",o:["RAM","CPU","Flash Drive","Monitor"],a:2,l:"easy"},
-{q:"Which connects to internet?",o:["Modem","Printer","Speaker","Mouse"],a:0,l:"easy"},
-{q:"Which is a search engine?",o:["Google","Excel","Word","Zoom"],a:0,l:"easy"},
-{q:"What does CPU do?",o:["Process data","Store files","Print","Display"],a:0,l:"easy"},
-{q:"Which is ICT in school?",o:["Notebook","Chalk","E-learning","Ballpen"],a:2,l:"easy"},
-{q:"Which is output device?",o:["Keyboard","Mouse","Monitor","Scanner"],a:2,l:"easy"},
-{q:"What is a laptop?",o:["Software","Portable computer","Input","Output"],a:1,l:"easy"},
-{q:"Which is permanent storage?",o:["RAM","Cache","Hard Drive","CPU"],a:2,l:"easy"},
-{q:"Which icon deletes files?",o:["Folder","Recycle Bin","Desktop","This PC"],a:1,l:"easy"},
-/* ADD 12 MORE EASY QUESTIONS TO REACH 30 */
+  {q:"What does ICT stand for?",o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"],a:0,l:"easy",e:"ICT stands for Information and Communication Technology."},
+  {q:"Which is an input device?",o:["Monitor","Keyboard","Printer","Speaker"],a:1,l:"easy",e:"Keyboard is an input device."},
+  {q:"Which device shows output?",o:["CPU","Keyboard","Monitor","Mouse"],a:2,l:"easy",e:"Monitor displays output."}
 ];
-
-/* MEDIUM (30) and HARD (30) fill similarly */
 
 let filtered=[], index=0, score=0, currentLevel="", time=15, timerInterval;
 
@@ -217,12 +205,11 @@ const optionsEl=document.getElementById("options");
 const counterEl=document.getElementById("counter");
 const scoreEl=document.getElementById("score");
 const timerEl=document.getElementById("timer");
+const explanationEl=document.getElementById("explanation");
 const difficultyScreen=document.getElementById("difficultyScreen");
 
-// Shuffle array helper
 function shuffleArray(arr){ return arr.sort(()=>Math.random()-0.5); }
 
-// Start Quiz
 document.querySelectorAll("[data-level]").forEach(btn=>{
   btn.onclick=()=>{
     currentLevel=btn.dataset.level;
@@ -236,10 +223,10 @@ document.querySelectorAll("[data-level]").forEach(btn=>{
   };
 });
 
-// Load Question
 function loadQuestion(){
   clearInterval(timerInterval);
   resetTimer();
+  explanationEl.textContent="";
   const q=filtered[index];
   counterEl.textContent=`Question ${index+1} of ${filtered.length}`;
   questionEl.textContent=q.q;
@@ -247,50 +234,50 @@ function loadQuestion(){
   q.o.forEach((opt,i)=>{
     const b=document.createElement("button");
     b.textContent=opt;
-    b.onclick=()=>answerQuestion(i===q.a, q.o[q.a]);
+    b.onclick=()=>answerQuestion(i===q.a, q.a, q.e);
     optionsEl.appendChild(b);
   });
   startTimer();
 }
 
-// Start Timer
 function startTimer(){
   timerInterval=setInterval(()=>{
     time--;
     timerEl.textContent=`Time left: ${time}s`;
     if(time<=0){
       clearInterval(timerInterval);
-      answerQuestion(false, filtered[index].o[filtered[index].a]);
+      answerQuestion(false, filtered[index].a, filtered[index].e);
     }
   },1000);
 }
 
-// Reset Timer
 function resetTimer(){
   clearInterval(timerInterval);
   time=15;
   timerEl.textContent=`Time left: ${time}s`;
 }
 
-// Answer Question
-function answerQuestion(correct, correctAnswer){
+function answerQuestion(correct, correctIndex, explanation){
   clearInterval(timerInterval);
+  Array.from(optionsEl.children).forEach((b,i)=>{
+    b.disabled=true;
+    if(i===correctIndex) b.classList.add("correct");
+    else if(!correct && i!==correctIndex) b.classList.add("wrong");
+  });
+  explanationEl.textContent=`Correct Answer: ${filtered[index].o[correctIndex]}. ${explanation}`;
   if(correct) score++;
-  Array.from(optionsEl.children).forEach(b=>b.disabled=true);
   setTimeout(()=>{
     index++;
     index<filtered.length?loadQuestion():showResult();
-  },2000);
+  },2500);
 }
 
-// Show Result
 function showResult(){
   quizBox.style.display="none";
   resultBox.style.display="block";
   scoreEl.textContent=`${score} / ${filtered.length}`;
 }
 
-// Controls
 document.getElementById("backBtn").onclick=()=>{
   clearInterval(timerInterval);
   quizBox.style.display="none";
