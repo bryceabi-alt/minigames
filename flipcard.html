@@ -1,22 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gamified Lesson Quizzes</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #f8fafc, #e0f2fe);
+  color: #1e293b;
+}
+
+/* BACKGROUND */
+.gadget-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.gadget {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.2;
+  animation: float 20s linear infinite;
+}
+.gadget:nth-child(n) { top: calc(var(--i) * 10%); }
+
+@keyframes float {
+  from { transform: translateX(-20vw); }
+  to { transform: translateX(120vw); }
+}
+
+header, section { position: relative; z-index: 1; }
+
+/* HERO */
+header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+header h1 {
+  font-size: clamp(3rem, 8vw, 5rem);
+  color: #1d4ed8;
+}
+
+header p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+/* BUTTONS */
+button {
+  padding: 14px 30px;
+  font-size: 1rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin: 8px;
+  box-shadow: 0 6px 0 #1e40af;
+}
+button:hover {
+  transform: translateY(2px);
+  box-shadow: 0 4px 0 #1e40af;
+}
+
+/* QUIZ */
+.quiz-box {
+  max-width: 800px;
+  margin: 60px auto;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  display: none;
+}
+
+.counter {
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #2563eb;
+}
+
+.question {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+.options button {
+  width: 100%;
+  margin: 10px 0;
+  background: #eff6ff;
+  color: #1e293b;
+  border: 2px solid #3b82f6;
+}
+.options button:hover {
+  background: #dbeafe;
+}
+
+.controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* RESULT */
+.result {
+  text-align: center;
+}
+.result h2 {
+  font-size: 2.5rem;
+  color: #1d4ed8;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #475569;
+}
+</style>
+</head>
+
+<body>
+
+<div class="gadget-background">
+  <div class="gadget" style="top:3%; font-size:2.4rem; animation-duration:28s;">📚</div>
+  <div class="gadget" style="top:8%; font-size:3.1rem; animation-duration:22s; animation-delay:-5s;">💻</div>
+  <div class="gadget" style="top:14%; font-size:2.8rem; animation-duration:30s; animation-delay:-10s;">🧠</div>
+  <div class="gadget" style="top:20%; font-size:3.5rem; animation-duration:26s;">🎓</div>
+  <div class="gadget" style="top:26%; font-size:2.6rem; animation-duration:24s; animation-delay:-8s;">📱</div>
+  <div class="gadget" style="top:32%; font-size:3.4rem; animation-duration:32s;">🖥️</div>
+  <div class="gadget" style="top:38%; font-size:2.7rem; animation-duration:20s; animation-delay:-12s;">🧮</div>
+  <div class="gadget" style="top:44%; font-size:3.1rem; animation-duration:29s;">📊</div>
+  <div class="gadget" style="top:50%; font-size:2.9rem; animation-duration:25s; animation-delay:-6s;">🧑‍💻</div>
+  <div class="gadget" style="top:56%; font-size:3.6rem; animation-duration:34s;">🖱️</div>
+  <div class="gadget" style="top:62%; font-size:2.4rem; animation-duration:21s; animation-delay:-9s;">🔌</div>
+  <div class="gadget" style="top:68%; font-size:3.3rem; animation-duration:27s;">💾</div>
+  <div class="gadget" style="top:74%; font-size:2.8rem; animation-duration:31s; animation-delay:-14s;">📂</div>
+  <div class="gadget" style="top:80%; font-size:3.5rem; animation-duration:36s;">📎</div>
+  <div class="gadget" style="top:86%; font-size:2.6rem; animation-duration:23s;">⌨️</div>
+  <div class="gadget" style="top:92%; font-size:3.2rem; animation-duration:33s; animation-delay:-11s;">🛜</div>
+</div>
+<header id="difficultyScreen">
+  <h1>Gamified Lesson Quizzes</h1>
+  <p>Select Difficulty</p>
+  <button data-level="easy">Easy</button>
+  <button data-level="medium">Medium</button>
+  <button data-level="hard">Hard</button>
+</header>
+
 <section class="quiz-box" id="quizBox">
   <div class="counter" id="counter"></div>
-
-  <div class="flip-card">
-    <div class="flip-card-inner" id="flipCardInner">
-      <!-- Question side -->
-      <div class="flip-card-front">
-        <div class="question" id="question"></div>
-        <div class="options" id="options"></div>
-      </div>
-      <!-- Feedback side -->
-      <div class="flip-card-back">
-        <div id="feedback" style="font-size:1.2rem; margin-bottom:20px;"></div>
-        <button id="nextBtn">Next</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="timer" style="margin-top:10px; font-weight:600; color:#ef4444;"></div>
+  <div class="question" id="question"></div>
+  <div class="options" id="options"></div>
 
   <div class="controls">
     <button id="backBtn">Back to Difficulty</button>
@@ -24,168 +170,144 @@
   </div>
 </section>
 
-<style>
-.flip-card { perspective: 1000px; width: 100%; margin-top: 20px; }
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  transition: transform 0.6s;
-  transform-style: preserve-3d;
-}
-.flip-card-front, .flip-card-back {
-  position: absolute;
-  width: 100%;
-  backface-visibility: hidden;
-}
-.flip-card-back {
-  transform: rotateY(180deg);
-  background: #f0f9ff;
-  padding: 20px;
-  border-radius: 20px;
-  text-align: center;
-}
-</style>
+<section class="quiz-box result" id="resultBox">
+  <h2>Quiz Complete 🎉</h2>
+  <p>Your Score: <span id="score"></span></p>
+  <button id="restartAllBtn">Back to Difficulty</button>
+</section>
+
+<footer>© 2026 • Gamified Learning • ICT</footer>
 
 <script>
-const hints = [
-  "ICT is about technology for communication and data.",
-  "Keyboard is for inputting data.",
-  "Monitor shows output from computer.",
-  "Hardware is physical parts of a computer.",
-  "Software is programs that run on hardware.",
-  "Printer prints documents.",
-  "Browser is used to browse the web.",
-  "Hard Drive stores data permanently.",
-  "Windows is an operating system.",
-  "Backspace deletes text.",
-  "Email is for communication.",
-  "Flash Drive is portable storage.",
-  "Modem connects to internet.",
-  "Google is a search engine.",
-  "CPU processes data.",
-  "E-learning is ICT in school.",
-  "Monitor is output device.",
-  "Laptop is portable computer.",
-  "Hard Drive is permanent storage.",
-  "Recycle Bin deletes files."
+const questions = [
+/* EASY (20) */
+{q:"What does ICT stand for?",o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"],a:0,l:"easy"},
+{q:"Which is an input device?",o:["Monitor","Keyboard","Printer","Speaker"],a:1,l:"easy"},
+{q:"Which device shows output?",o:["CPU","Keyboard","Monitor","Mouse"],a:2,l:"easy"},
+{q:"Which is hardware?",o:["Windows","Mouse","Google","Word"],a:1,l:"easy"},
+{q:"Which is software?",o:["Keyboard","Monitor","MS Word","CPU"],a:2,l:"easy"},
+{q:"Which prints documents?",o:["Scanner","Printer","Speaker","Mouse"],a:1,l:"easy"},
+{q:"What is used to browse the web?",o:["Browser","Compiler","Editor","Driver"],a:0,l:"easy"},
+{q:"Which is storage?",o:["CPU","RAM","Hard Drive","Monitor"],a:2,l:"easy"},
+{q:"Which is an OS?",o:["Windows","Google","Zoom","Facebook"],a:0,l:"easy"},
+{q:"Which key deletes text?",o:["Shift","Ctrl","Backspace","Alt"],a:2,l:"easy"},
+{q:"What is email used for?",o:["Gaming","Communication","Editing","Coding"],a:1,l:"easy"},
+{q:"Which is portable storage?",o:["RAM","CPU","Flash Drive","Monitor"],a:2,l:"easy"},
+{q:"Which connects to internet?",o:["Modem","Printer","Speaker","Mouse"],a:0,l:"easy"},
+{q:"Which is a search engine?",o:["Google","Excel","Word","Zoom"],a:0,l:"easy"},
+{q:"What does CPU do?",o:["Process data","Store files","Print","Display"],a:0,l:"easy"},
+{q:"Which is ICT in school?",o:["Notebook","Chalk","E-learning","Ballpen"],a:2,l:"easy"},
+{q:"Which is output device?",o:["Keyboard","Mouse","Monitor","Scanner"],a:2,l:"easy"},
+{q:"What is a laptop?",o:["Software","Portable computer","Input","Output"],a:1,l:"easy"},
+{q:"Which is permanent storage?",o:["RAM","Cache","Hard Drive","CPU"],a:2,l:"easy"},
+{q:"Which icon deletes files?",o:["Folder","Recycle Bin","Desktop","This PC"],a:1,l:"easy"},
+
+/* MEDIUM (20) */
+{q:"What is RAM?",o:["Permanent storage","Temporary memory","CPU","Output"],a:1,l:"medium"},
+{q:"What is phishing?",o:["Email scam","Virus","Backup","Firewall"],a:0,l:"medium"},
+{q:"What does URL mean?",o:["Uniform Resource Locator","User Resource Link","Universal Route Line","Unified Reference"],a:0,l:"medium"},
+{q:"Which edits images?",o:["Word","Excel","Photoshop","Notepad"],a:2,l:"medium"},
+{q:"Which is cloud storage?",o:["Flash Drive","RAM","Google Drive","CPU"],a:2,l:"medium"},
+{q:"What is malware?",o:["Useful software","Virus","Hardware","OS"],a:1,l:"medium"},
+{q:"Which is spreadsheet software?",o:["Word","Excel","PowerPoint","Paint"],a:1,l:"medium"},
+{q:"What does OS do?",o:["Manage hardware","Browse web","Design","Print"],a:0,l:"medium"},
+{q:"Which is NOT OS?",o:["Windows","Linux","Android","Chrome"],a:3,l:"medium"},
+{q:"What does HTML stand for?",o:["HyperText Markup Language","HighText Machine Language","Hyper Tool ML","Host Transfer ML"],a:0,l:"medium"},
+{q:"What is cybersecurity?",o:["System protection","Programming","Design","Editing"],a:0,l:"medium"},
+{q:"Which connects networks?",o:["Router","Monitor","Keyboard","Printer"],a:0,l:"medium"},
+{q:"Which file is image?",o:[".mp3",".jpg",".exe",".docx"],a:1,l:"medium"},
+{q:"What is digital literacy?",o:["ICT skills","Typing","Gaming","Coding only"],a:0,l:"medium"},
+{q:"What is e-learning?",o:["Online learning","Offline class","Manual reading","Gaming"],a:0,l:"medium"},
+{q:"Which shortcut pastes?",o:["Ctrl+C","Ctrl+V","Ctrl+X","Ctrl+Z"],a:1,l:"medium"},
+{q:"What is data?",o:["Raw facts","Hardware","Virus","Software"],a:0,l:"medium"},
+{q:"What is backup?",o:["Extra copy","Delete","Hack","Encrypt"],a:0,l:"medium"},
+{q:"Which is ethical?",o:["Piracy","Hacking","Citing sources","Malware"],a:2,l:"medium"},
+{q:"What is LAN?",o:["Local Area Network","Large Area Network","Linked Area Node","Long Access Net"],a:0,l:"medium"},
+
+/* HARD (20) */
+{q:"What is firewall?",o:["Virus","Security system","Browser","OS"],a:1,l:"hard"},
+{q:"What is encryption?",o:["Secure data","Delete data","Copy data","Share data"],a:0,l:"hard"},
+{q:"What does IP address identify?",o:["Device location","File type","Password","Website name"],a:0,l:"hard"},
+{q:"Which is open-source OS?",o:["Windows","Linux","macOS","iOS"],a:1,l:"hard"},
+{q:"What is bandwidth?",o:["Internet capacity","Storage","CPU speed","RAM"],a:0,l:"hard"},
+{q:"What does HTTP stand for?",o:["HyperText Transfer Protocol","High Tool Transfer Program","Host Text Program","Hyper Tool Text"],a:0,l:"hard"},
+{q:"What is cloud computing?",o:["Online services","Offline storage","Hardware repair","Local apps"],a:0,l:"hard"},
+{q:"What is 2FA?",o:["Extra security","Backup","Encryption","Antivirus"],a:0,l:"hard"},
+{q:"Which is strong password?",o:["123456","password","P@ss2024!","abc"],a:2,l:"hard"},
+{q:"What is database?",o:["Organized data","Virus","Bug","Hardware"],a:0,l:"hard"},
+{q:"Which is programming language?",o:["HTML","Python","Word","Photoshop"],a:1,l:"hard"},
+{q:"What is plagiarism?",o:["Copying without credit","Research","Sharing","Coding"],a:0,l:"hard"},
+{q:"What is network topology?",o:["Network layout","Internet speed","Security","Data size"],a:0,l:"hard"},
+{q:"Which protocol is for email?",o:["SMTP","HTTP","FTP","IP"],a:0,l:"hard"},
+{q:"What is virtualization?",o:["Virtual systems","Delete OS","Backup","Install apps"],a:0,l:"hard"},
+{q:"What is AI?",o:["Artificial Intelligence","Auto Internet","Advanced Info","Applied Input"],a:0,l:"hard"},
+{q:"What does SSD stand for?",o:["Solid State Drive","Secure Storage Disk","Super Speed Drive","System Storage Data"],a:0,l:"hard"},
+{q:"What is ethical ICT use?",o:["Hacking","Piracy","Citing sources","Spamming"],a:2,l:"hard"},
+{q:"What is data privacy?",o:["Protect info","Share info","Delete info","Hack info"],a:0,l:"hard"},
+{q:"Role of ICT in education?",o:["Enhances learning","Replaces teachers","Limits access","Entertainment"],a:0,l:"hard"}
 ];
 
-const explanations = [
-  "Correct! ICT stands for Information and Communication Technology.",
-  "Right! Keyboard is an input device.",
-  "Correct! Monitor displays output.",
-  "Yes! Hardware refers to physical components.",
-  "Correct! Software is a program.",
-  "Yes! Printer prints documents.",
-  "Correct! Browsers are used to navigate the web.",
-  "Right! Hard drives provide storage.",
-  "Correct! Windows is an operating system.",
-  "Yes! Backspace deletes text.",
-  "Correct! Email is used for communication.",
-  "Right! Flash drives are portable storage.",
-  "Correct! Modems connect devices to the internet.",
-  "Yes! Google is a search engine.",
-  "Correct! CPU processes data.",
-  "Right! E-learning is ICT in school.",
-  "Correct! Monitor is an output device.",
-  "Yes! Laptops are portable computers.",
-  "Correct! Hard drives provide permanent storage.",
-  "Right! Recycle Bin deletes files."
-];
+let filtered=[], index=0, score=0, currentLevel="";
 
-let filtered = [], index = 0, score = 0, currentLevel = "";
-let timerInterval = null, timeLeft = 15;
+const quizBox=document.getElementById("quizBox");
+const resultBox=document.getElementById("resultBox");
+const questionEl=document.getElementById("question");
+const optionsEl=document.getElementById("options");
+const counterEl=document.getElementById("counter");
+const scoreEl=document.getElementById("score");
+const difficultyScreen=document.getElementById("difficultyScreen");
 
-const quizBox = document.getElementById("quizBox");
-const resultBox = document.getElementById("resultBox");
-const questionEl = document.getElementById("question");
-const optionsEl = document.getElementById("options");
-const counterEl = document.getElementById("counter");
-const scoreEl = document.getElementById("score");
-const difficultyScreen = document.getElementById("difficultyScreen");
-
-document.querySelectorAll("[data-level]").forEach(btn => {
-  btn.onclick = () => {
-    currentLevel = btn.dataset.level;
-    filtered = questions.filter(q => q.l === currentLevel);
-    index = score = 0;
-    difficultyScreen.style.display = "none";
-    quizBox.style.display = "block";
+document.querySelectorAll("[data-level]").forEach(btn=>{
+  btn.onclick=()=>{
+    currentLevel=btn.dataset.level;
+    filtered=questions.filter(q=>q.l===currentLevel);
+    index=score=0;
+    difficultyScreen.style.display="none";
+    quizBox.style.display="block";
     loadQuestion();
-    quizBox.scrollIntoView({ behavior: "smooth" });
+    quizBox.scrollIntoView({behavior:"smooth"});
   };
 });
 
-function loadQuestion() {
-  const q = filtered[index];
-  counterEl.textContent = `Question ${index + 1} of ${filtered.length}`;
-  questionEl.textContent = q.q;
-  optionsEl.innerHTML = "";
-  document.getElementById('flipCardInner').style.transform = 'rotateY(0deg)';
-  document.getElementById('feedback').textContent = '';
-
-  // Timer
-  timeLeft = 15;
-  document.getElementById('timer').textContent = `Time Left: ${timeLeft}s`;
-  clearInterval(timerInterval);
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    document.getElementById('timer').textContent = `Time Left: ${timeLeft}s`;
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      showFeedback(false);
-    }
-  }, 1000);
-
-  q.o.forEach((opt, i) => {
-    const b = document.createElement("button");
-    b.textContent = opt;
-    b.onclick = () => {
-      clearInterval(timerInterval);
-      showFeedback(i === q.a);
-    };
+function loadQuestion(){
+  const q=filtered[index];
+  counterEl.textContent=`Question ${index+1} of ${filtered.length}`;
+  questionEl.textContent=q.q;
+  optionsEl.innerHTML="";
+  q.o.forEach((opt,i)=>{
+    const b=document.createElement("button");
+    b.textContent=opt;
+    b.onclick=()=>{ if(i===q.a) score++; next(); };
     optionsEl.appendChild(b);
   });
 }
 
-function showFeedback(correct) {
-  const q = filtered[index];
-  const feedbackEl = document.getElementById('feedback');
-  document.getElementById('flipCardInner').style.transform = 'rotateY(180deg)';
-  if (correct) {
-    score++;
-    feedbackEl.textContent = explanations[index] || "Correct!";
-  } else {
-    feedbackEl.textContent = `Wrong! Hint: ${hints[index] || "Think carefully!"}`;
-  }
-}
-
-document.getElementById("nextBtn").onclick = () => {
+function next(){
   index++;
-  if (index < filtered.length) loadQuestion();
-  else showResult();
-};
-
-function showResult() {
-  quizBox.style.display = "none";
-  resultBox.style.display = "block";
-  scoreEl.textContent = `${score} / ${filtered.length}`;
+  index<filtered.length?loadQuestion():showResult();
 }
 
-// Controls
-document.getElementById("backBtn").onclick = () => {
-  quizBox.style.display = "none";
-  difficultyScreen.style.display = "flex";
+function showResult(){
+  quizBox.style.display="none";
+  resultBox.style.display="block";
+  scoreEl.textContent=`${score} / ${filtered.length}`;
+}
+
+document.getElementById("backBtn").onclick=()=>{
+  quizBox.style.display="none";
+  difficultyScreen.style.display="flex";
 };
 
-document.getElementById("restartBtn").onclick = () => {
-  index = score = 0;
+document.getElementById("restartBtn").onclick=()=>{
+  index=score=0;
   loadQuestion();
 };
 
-document.getElementById("restartAllBtn").onclick = () => {
-  resultBox.style.display = "none";
-  difficultyScreen.style.display = "flex";
+document.getElementById("restartAllBtn").onclick=()=>{
+  resultBox.style.display="none";
+  difficultyScreen.style.display="flex";
 };
 </script>
 
+</body>
+</html>
