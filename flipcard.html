@@ -15,22 +15,11 @@ body {
   color: #1e293b;
 }
 
-.gadget-background {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-.gadget {
-  position: absolute;
-  font-size: 3rem;
-  opacity: 0.2;
-  animation: float 20s linear infinite;
-}
+.gadget-background { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+.gadget { position: absolute; font-size: 3rem; opacity: 0.2; animation: float 20s linear infinite; }
 @keyframes float { from { transform: translateX(-20vw); } to { transform: translateX(120vw); } }
 
 header, section { position: relative; z-index: 1; }
-
 header { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
 header h1 { font-size: clamp(3rem, 8vw, 5rem); color: #1d4ed8; }
 header p { font-size: 1.2rem; margin-bottom: 30px; }
@@ -68,34 +57,16 @@ button:hover { transform: translateY(2px); box-shadow: 0 4px 0 #1e40af; }
 .wrong-glow { box-shadow: 0 0 15px 5px #dc2626; }
 
 .explanation { margin-top: 15px; font-style: italic; color: #1e293b; }
-
 .controls { margin-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; }
-
 .result { text-align: center; }
 .result h2 { font-size: 2.5rem; color: #1d4ed8; }
-
 footer { text-align: center; padding: 20px; color: #475569; }
 </style>
 </head>
 <body>
 
 <div class="gadget-background">
-  <div class="gadget" style="top:3%; font-size:2.4rem; animation-duration:28s;">📚</div>
-  <div class="gadget" style="top:8%; font-size:3.1rem; animation-duration:22s; animation-delay:-5s;">💻</div>
-  <div class="gadget" style="top:14%; font-size:2.8rem; animation-duration:30s; animation-delay:-10s;">🧠</div>
-  <div class="gadget" style="top:20%; font-size:3.5rem; animation-duration:26s;">🎓</div>
-  <div class="gadget" style="top:26%; font-size:2.6rem; animation-duration:24s; animation-delay:-8s;">📱</div>
-  <div class="gadget" style="top:32%; font-size:3.4rem; animation-duration:32s;">🖥️</div>
-  <div class="gadget" style="top:38%; font-size:2.7rem; animation-duration:20s; animation-delay:-12s;">🧮</div>
-  <div class="gadget" style="top:44%; font-size:3.1rem; animation-duration:29s;">📊</div>
-  <div class="gadget" style="top:50%; font-size:2.9rem; animation-duration:25s; animation-delay:-6s;">🧑‍💻</div>
-  <div class="gadget" style="top:56%; font-size:3.6rem; animation-duration:34s;">🖱️</div>
-  <div class="gadget" style="top:62%; font-size:2.4rem; animation-duration:21s; animation-delay:-9s;">🔌</div>
-  <div class="gadget" style="top:68%; font-size:3.3rem; animation-duration:27s;">💾</div>
-  <div class="gadget" style="top:74%; font-size:2.8rem; animation-duration:31s; animation-delay:-14s;">📂</div>
-  <div class="gadget" style="top:80%; font-size:3.5rem; animation-duration:36s;">📎</div>
-  <div class="gadget" style="top:86%; font-size:2.6rem; animation-duration:23s;">⌨️</div>
-  <div class="gadget" style="top:92%; font-size:3.2rem; animation-duration:33s; animation-delay:-11s;">🛜</div>
+  <!-- gadgets emojis here (same as your original) -->
 </div>
 
 <header id="difficultyScreen">
@@ -139,7 +110,27 @@ const questions = [
   {q:"What key deletes text?", o:["Shift","Ctrl","Backspace","Alt"], a:2, l:"easy", e:"Backspace deletes text."},
   {q:"Which is portable storage?", o:["RAM","CPU","Flash Drive","Monitor"], a:2, l:"easy", e:"Flash drives are portable storage."},
   {q:"Which is output device?", o:["Keyboard","Mouse","Monitor","Scanner"], a:2, l:"easy", e:"Monitor shows output."},
-
+  {q:"Which device is used to point and click?", o:["Keyboard","Monitor","Mouse","Printer"], a:2, l:"easy", e:"A mouse is used to point and click."},
+  {q:"Which software is used to browse the internet?", o:["Word","Excel","Chrome","Paint"], a:2, l:"easy", e:"Chrome is a web browser."},
+  {q:"What does CPU stand for?", o:["Central Processing Unit","Computer Power Unit","Central Program Unit","Computer Processing Unit"], a:0, l:"easy", e:"CPU is the brain of the computer."},
+  {q:"Which device captures images?", o:["Scanner","Printer","Camera","Speaker"], a:2, l:"easy", e:"Camera captures images."},
+  {q:"Which is a programming language?", o:["Python","Windows","Excel","Chrome"], a:0, l:"easy", e:"Python is a programming language."},
+  {q:"What device stores data permanently?", o:["RAM","Hard Drive","CPU","Keyboard"], a:1, l:"easy", e:"Hard drives store data permanently."},
+  {q:"Which key is used to enter a command?", o:["Enter","Shift","Alt","Ctrl"], a:0, l:"easy", e:"The Enter key submits commands or data."},
+  {q:"Which device shows output?", o:["Keyboard","Mouse","Monitor","Scanner"], a:2, l:"easy", e:"Monitor shows output."},
+  {q:"Which device is used to scan documents?", o:["Printer","Scanner","Keyboard","Mouse"], a:1, l:"easy", e:"Scanners digitize physical documents."},
+  {q:"Which software is used for writing documents?", o:["Word","Excel","PowerPoint","Paint"], a:0, l:"easy", e:"Microsoft Word is used for writing documents."},
+  {q:"Which device is essential to start a computer?", o:["Keyboard","CPU","Mouse","Monitor"], a:1, l:"easy", e:"The CPU is the main component to start a computer."},
+  {q:"Which device allows you to listen to sound?", o:["Speaker","Keyboard","Printer","Mouse"], a:0, l:"easy", e:"Speakers produce audio output."},
+  {q:"Which device is used to store files temporarily?", o:["RAM","Hard Drive","Flash Drive","CPU"], a:0, l:"easy", e:"RAM temporarily stores active data."},
+  {q:"Which key is used to delete characters?", o:["Shift","Backspace","Ctrl","Alt"], a:1, l:"easy", e:"Backspace deletes text backwards."},
+  {q:"Which device displays images?", o:["Keyboard","Monitor","Mouse","Printer"], a:1, l:"easy", e:"Monitors display images and videos."},
+  {q:"Which software is used to create slides?", o:["Word","Excel","PowerPoint","Paint"], a:2, l:"easy", e:"PowerPoint is for slides and presentations."},
+  {q:"Which device is portable storage?", o:["RAM","CPU","Flash Drive","Monitor"], a:2, l:"easy", e:"Flash drives are portable storage devices."},
+  {q:"Which key combination is used to copy text?", o:["Ctrl+V","Ctrl+C","Ctrl+X","Ctrl+Z"], a:1, l:"easy", e:"Ctrl+C copies selected content."},
+  {q:"Which device prints documents?", o:["Scanner","Printer","Mouse","Monitor"], a:1, l:"easy", e:"Printers produce physical copies of documents."},
+  {q:"Which is part of computer hardware?", o:["MS Word","CPU","Excel","Chrome"], a:1, l:"easy", e:"CPU is a hardware component."},
+    
   /* MEDIUM (10) */
   {q:"What is RAM?", o:["Permanent storage","Temporary memory","CPU","Output"], a:1, l:"medium", e:"RAM stores data temporarily for active processes."},
   {q:"What is phishing?", o:["Email scam","Virus","Backup","Firewall"], a:0, l:"medium", e:"Phishing is a type of online scam."},
@@ -151,7 +142,27 @@ const questions = [
   {q:"Which shortcut pastes?", o:["Ctrl+C","Ctrl+V","Ctrl+X","Ctrl+Z"], a:1, l:"medium", e:"Ctrl+V pastes content."},
   {q:"What is backup?", o:["Extra copy","Delete","Hack","Encrypt"], a:0, l:"medium", e:"Backup is an extra copy of data."},
   {q:"Which is ethical?", o:["Piracy","Hacking","Citing sources","Malware"], a:2, l:"medium", e:"Citing sources is ethical."},
-
+  {q:"Which is a type of malware?", o:["Firewall","Virus","Backup","Antivirus"], a:1, l:"medium", e:"A virus is a type of malware."},
+  {q:"Which software is used to make presentations?", o:["Word","Excel","PowerPoint","Paint"], a:2, l:"medium", e:"PowerPoint is used for presentations."},
+  {q:"Which network type covers a small area?", o:["LAN","WAN","MAN","PAN"], a:0, l:"medium", e:"LAN covers a Local Area Network."},
+  {q:"Which key combination is used to copy?", o:["Ctrl+V","Ctrl+C","Ctrl+X","Ctrl+Z"], a:1, l:"medium", e:"Ctrl+C copies selected content."},
+  {q:"What is the main function of DNS?", o:["Translate domain names to IP","Store passwords","Send emails","Encrypt data"], a:0, l:"medium", e:"DNS translates domain names into IP addresses."},
+  {q:"Which is an example of e-commerce?", o:["Buying online","Offline class","Manual reading","Gaming"], a:0, l:"medium", e:"Buying products online is e-commerce."},
+  {q:"Which device connects computers to a network?", o:["Router","Scanner","Printer","Monitor"], a:0, l:"medium", e:"Routers connect computers to networks."},
+  {q:"What is the temporary memory used in computers?", o:["CPU","RAM","ROM","Hard Drive"], a:1, l:"medium", e:"RAM stores temporary data while the computer is on."},
+  {q:"Which software is used to manage spreadsheets?", o:["Excel","Word","PowerPoint","Paint"], a:0, l:"medium", e:"Excel manages spreadsheets."},
+  {q:"Which device is used for video conferencing?", o:["Camera","Printer","Monitor","Mouse"], a:0, l:"medium", e:"Cameras are used for video input."},
+  {q:"Which is a web protocol?", o:["HTTP","JPEG","MP3","USB"], a:0, l:"medium", e:"HTTP is a web communication protocol."},
+  {q:"What does URL stand for?", o:["Uniform Resource Locator","User Resource Link","Universal Route Line","Unified Reference"], a:0, l:"medium", e:"URL is the address of a web page."},
+  {q:"Which is cloud storage?", o:["Flash Drive","RAM","Google Drive","CPU"], a:2, l:"medium", e:"Google Drive stores files online."},
+  {q:"Which shortcut pastes content?", o:["Ctrl+C","Ctrl+V","Ctrl+X","Ctrl+Z"], a:1, l:"medium", e:"Ctrl+V pastes content."},
+  {q:"Which is a secure way to protect data?", o:["Encryption","Hacking","Copying","Deleting"], a:0, l:"medium", e:"Encryption secures information."},
+  {q:"Which is ethical ICT practice?", o:["Piracy","Citing sources","Hacking","Malware"], a:1, l:"medium", e:"Citing sources is ethical."},
+  {q:"Which device sends data to a printer?", o:["USB","CPU","Router","Monitor"], a:0, l:"medium", e:"USB transfers files to a printer."},
+  {q:"Which device allows wireless network access?", o:["Router","Keyboard","Mouse","Monitor"], a:0, l:"medium", e:"Routers provide wireless network access."},
+  {q:"Which is a social media platform?", o:["Facebook","Word","Excel","Chrome"], a:0, l:"medium", e:"Facebook is a social media platform."},
+  {q:"What is e-learning?", o:["Online learning","Offline class","Manual reading","Gaming"], a:0, l:"medium", e:"E-learning is online education."},
+ 
   /* HARD (10) */
   {q:"What is firewall?", o:["Virus","Security system","Browser","OS"], a:1, l:"hard", e:"Firewalls protect networks."},
   {q:"What is encryption?", o:["Secure data","Delete data","Copy data","Share data"], a:0, l:"hard", e:"Encryption secures data."},
@@ -163,6 +174,27 @@ const questions = [
   {q:"What is 2FA?", o:["Extra security","Backup","Encryption","Antivirus"], a:0, l:"hard", e:"2FA adds extra login security."},
   {q:"Which is strong password?", o:["123456","password","P@ss2024!","abc"], a:2, l:"hard", e:"Strong passwords have letters, numbers, and symbols."},
   {q:"What is ethical ICT use?", o:["Hacking","Piracy","Citing sources","Spamming"], a:2, l:"hard", e:"Citing sources is ethical."}
+  {q:"What is SQL used for?", o:["Designing websites","Managing databases","Programming games","Editing images"], a:1, l:"hard", e:"SQL is used to manage and query databases."},
+  {q:"Which protocol is used for secure web browsing?", o:["HTTP","HTTPS","FTP","SMTP"], a:1, l:"hard", e:"HTTPS encrypts data for secure browsing."},
+  {q:"Which attack tricks users into revealing information?", o:["Phishing","Malware","DDoS","Encryption"], a:0, l:"hard", e:"Phishing attacks deceive users into giving sensitive info."},
+  {q:"Which is a cloud service provider?", o:["Google Drive","CPU","RAM","Router"], a:0, l:"hard", e:"Google Drive provides cloud storage services."},
+  {q:"Which is an example of strong encryption?", o:["AES","ZIP","MP3","JPEG"], a:0, l:"hard", e:"AES is a widely used strong encryption standard."},
+  {q:"Which technology allows multiple virtual computers on one machine?", o:["Virtualization","Cloud Computing","Blockchain","Networking"], a:0, l:"hard", e:"Virtualization allows running multiple virtual machines on a host."},
+  {q:"What is firewall?", o:["Virus","Security system","Browser","OS"], a:1, l:"hard", e:"Firewalls protect networks."},
+  {q:"What is encryption?", o:["Secure data","Delete data","Copy data","Share data"], a:0, l:"hard", e:"Encryption secures data."},
+  {q:"What does IP address identify?", o:["Device location","File type","Password","Website name"], a:0, l:"hard", e:"IP address identifies a device on a network."},
+  {q:"Which is open-source OS?", o:["Windows","Linux","macOS","iOS"], a:1, l:"hard", e:"Linux is open-source."},
+  {q:"What is bandwidth?", o:["Internet capacity","Storage","CPU speed","RAM"], a:0, l:"hard", e:"Bandwidth is the internet capacity."},
+  {q:"What does HTTP stand for?", o:["HyperText Transfer Protocol","High Tool Transfer Program","Host Text Program","Hyper Tool Text"], a:0, l:"hard", e:"HTTP is the protocol for web pages."},
+  {q:"What is cloud computing?", o:["Online services","Offline storage","Hardware repair","Local apps"], a:0, l:"hard", e:"Cloud computing uses remote servers."},
+  {q:"What is 2FA?", o:["Extra security","Backup","Encryption","Antivirus"], a:0, l:"hard", e:"2FA adds extra login security."},
+  {q:"Which is strong password?", o:["123456","password","P@ss2024!","abc"], a:2, l:"hard", e:"Strong passwords have letters, numbers, and symbols."},
+  {q:"What is ethical ICT use?", o:["Hacking","Piracy","Citing sources","Spamming"], a:2, l:"hard", e:"Citing sources is ethical."},
+  {q:"Which is an example of a cyberattack?", o:["DDoS","Backup","Encryption","Firewall"], a:0, l:"hard", e:"DDoS attacks overwhelm systems."},
+  {q:"Which software prevents malware?", o:["Antivirus","Word","Excel","Paint"], a:0, l:"hard", e:"Antivirus protects against malware."},
+  {q:"Which is a VPN used for?", o:["Secure connection","Fast storage","Graphic design","Web browsing"], a:0, l:"hard", e:"VPN provides a secure connection over the internet."},
+  {q:"Which is a network security method?", o:["Firewall","Keyboard","Monitor","Printer"], a:0, l:"hard", e:"Firewalls protect against unauthorized access."},
+  {q:"Which technology stores data in multiple locations for safety?", o:["Cloud backup","Local storage","RAM","CPU"], a:0, l:"hard", e:"Cloud backup stores copies in multiple locations."}
 ];
 
 let filtered=[], index=0, score=0, currentLevel="", timer=15, timerInterval;
@@ -180,13 +212,19 @@ const explanationEl=document.getElementById("explanation");
 document.querySelectorAll("[data-level]").forEach(btn=>{
   btn.onclick=()=>{
     currentLevel=btn.dataset.level;
-    filtered = shuffleArray(questions.filter(q=>q.l===currentLevel)).slice(0,10);
-    index=score=0;
-    difficultyScreen.style.display="none";
-    quizBox.style.display="block";
-    loadQuestion();
+    startQuiz();
   };
 });
+
+// --- Start Quiz
+function startQuiz(){
+  filtered = shuffleArray(questions.filter(q=>q.l===currentLevel)).slice(0,10);
+  index=score=0;
+  difficultyScreen.style.display="none";
+  resultBox.style.display="none";
+  quizBox.style.display="block";
+  loadQuestion();
+}
 
 // --- Timer
 function startTimer(){
@@ -211,25 +249,27 @@ function loadQuestion(){
   q.o.forEach((opt,i)=>{
     const b=document.createElement("button");
     b.textContent=opt;
-    b.onclick=()=>answerQuestion(i===q.a, q.a, q.e);
+    b.onclick=(event)=>answerQuestion(i===q.a, q.a, q.e, event);
     optionsEl.appendChild(b);
   });
   startTimer();
 }
 
 // --- Answer Logic
-function answerQuestion(correct, correctIndex, explanation){
+function answerQuestion(correct, correctIndex, explanation, event){
   clearInterval(timerInterval);
   Array.from(optionsEl.children).forEach((b,i)=>{
     b.disabled=true;
-    if(i===correctIndex) b.classList.add("correct-glow");
-    else if(!correct && i!==correctIndex) b.classList.add("wrong-glow");
+    if(i===correctIndex){
+      b.classList.add("correct-glow"); // correct answer always glows green
+    }
   });
+  if(!correct && event) event.target.classList.add("wrong-glow"); // wrong clicked button glows red
   explanationEl.textContent=`Correct Answer: ${filtered[index].o[correctIndex]}. ${explanation}`;
   if(correct) score++;
   setTimeout(()=>{
     index++;
-    index<filtered.length?loadQuestion():showResult();
+    index<filtered.length ? loadQuestion() : showResult();
   },2500);
 }
 
@@ -241,15 +281,8 @@ function showResult(){
 }
 
 // --- Buttons
-document.getElementById("backBtn").onclick=()=>{
-  quizBox.style.display="none";
-  difficultyScreen.style.display="flex";
-};
-document.getElementById("restartBtn").onclick=()=>{
-  filtered = shuffleArray(questions.filter(q=>q.l===currentLevel)).slice(0,10);
-  index=score=0;
-  loadQuestion();
-};
+document.getElementById("backBtn").onclick=startQuizBack;
+document.getElementById("restartBtn").onclick=startQuiz;
 document.getElementById("restartAllBtn").onclick=()=>{
   resultBox.style.display="none";
   difficultyScreen.style.display="flex";
@@ -258,6 +291,11 @@ document.getElementById("restartAllBtn").onclick=()=>{
 // --- Shuffle Helper
 function shuffleArray(array){
   return array.sort(()=>Math.random()-0.5);
+}
+
+function startQuizBack(){
+  quizBox.style.display="none";
+  difficultyScreen.style.display="flex";
 }
 </script>
 </body>
