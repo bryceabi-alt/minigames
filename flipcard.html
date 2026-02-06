@@ -1,31 +1,134 @@
-<section class="quiz-box" id="quizBox">
-  <div class="counter" id="counter"></div>
-
-  <div class="flip-card">
-    <div class="flip-card-inner" id="flipCardInner">
-      <!-- Question side -->
-      <div class="flip-card-front">
-        <div class="question" id="question"></div>
-        <div class="options" id="options"></div>
-      </div>
-      <!-- Feedback side -->
-      <div class="flip-card-back">
-        <div id="feedback" style="font-size:1.2rem; margin-bottom:20px;"></div>
-        <button id="nextBtn">Next</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="timer" style="margin-top:10px; font-weight:600; color:#ef4444;"></div>
-
-  <div class="controls">
-    <button id="backBtn">Back to Difficulty</button>
-    <button id="restartBtn">Restart</button>
-  </div>
-</section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gamified Lesson Quizzes</title>
 
 <style>
-.flip-card { perspective: 1000px; width: 100%; margin-top: 20px; }
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #f8fafc, #e0f2fe);
+  color: #1e293b;
+}
+
+/* BACKGROUND */
+.gadget-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.gadget {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0.2;
+  animation: float 20s linear infinite;
+}
+.gadget:nth-child(n) { top: calc(var(--i) * 10%); }
+
+@keyframes float {
+  from { transform: translateX(-20vw); }
+  to { transform: translateX(120vw); }
+}
+
+header, section { position: relative; z-index: 1; }
+
+/* HERO */
+header {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+header h1 {
+  font-size: clamp(3rem, 8vw, 5rem);
+  color: #1d4ed8;
+}
+
+header p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+}
+
+/* BUTTONS */
+button {
+  padding: 14px 30px;
+  font-size: 1rem;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  margin: 8px;
+  box-shadow: 0 6px 0 #1e40af;
+}
+button:hover {
+  transform: translateY(2px);
+  box-shadow: 0 4px 0 #1e40af;
+}
+
+/* QUIZ */
+.quiz-box {
+  max-width: 800px;
+  margin: 60px auto;
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  display: none;
+}
+
+.counter {
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #2563eb;
+}
+
+.question {
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+.options button {
+  width: 100%;
+  margin: 10px 0;
+  background: #eff6ff;
+  color: #1e293b;
+  border: 2px solid #3b82f6;
+}
+.options button:hover {
+  background: #dbeafe;
+}
+
+.controls {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* RESULT */
+.result {
+  text-align: center;
+}
+.result h2 {
+  font-size: 2.5rem;
+  color: #1d4ed8;
+}
+
+/* FLIP-CARD */
+.flip-card {
+  perspective: 1000px;
+  width: 100%;
+  margin-top: 20px;
+}
 .flip-card-inner {
   position: relative;
   width: 100%;
@@ -44,53 +147,98 @@
   border-radius: 20px;
   text-align: center;
 }
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #475569;
+}
 </style>
+</head>
+
+<body>
+
+<div class="gadget-background">
+  <div class="gadget" style="top:3%; font-size:2.4rem; animation-duration:28s;">📚</div>
+  <div class="gadget" style="top:8%; font-size:3.1rem; animation-duration:22s; animation-delay:-5s;">💻</div>
+  <div class="gadget" style="top:14%; font-size:2.8rem; animation-duration:30s; animation-delay:-10s;">🧠</div>
+  <div class="gadget" style="top:20%; font-size:3.5rem; animation-duration:26s;">🎓</div>
+  <div class="gadget" style="top:26%; font-size:2.6rem; animation-duration:24s; animation-delay:-8s;">📱</div>
+  <div class="gadget" style="top:32%; font-size:3.4rem; animation-duration:32s;">🖥️</div>
+  <div class="gadget" style="top:38%; font-size:2.7rem; animation-duration:20s; animation-delay:-12s;">🧮</div>
+  <div class="gadget" style="top:44%; font-size:3.1rem; animation-duration:29s;">📊</div>
+  <div class="gadget" style="top:50%; font-size:2.9rem; animation-duration:25s; animation-delay:-6s;">🧑‍💻</div>
+  <div class="gadget" style="top:56%; font-size:3.6rem; animation-duration:34s;">🖱️</div>
+  <div class="gadget" style="top:62%; font-size:2.4rem; animation-duration:21s; animation-delay:-9s;">🔌</div>
+  <div class="gadget" style="top:68%; font-size:3.3rem; animation-duration:27s;">💾</div>
+  <div class="gadget" style="top:74%; font-size:2.8rem; animation-duration:31s; animation-delay:-14s;">📂</div>
+  <div class="gadget" style="top:80%; font-size:3.5rem; animation-duration:36s;">📎</div>
+  <div class="gadget" style="top:86%; font-size:2.6rem; animation-duration:23s;">⌨️</div>
+  <div class="gadget" style="top:92%; font-size:3.2rem; animation-duration:33s; animation-delay:-11s;">🛜</div>
+</div>
+
+<header id="difficultyScreen">
+  <h1>Gamified Lesson Quizzes</h1>
+  <p>Select Difficulty</p>
+  <button data-level="easy">Easy</button>
+  <button data-level="medium">Medium</button>
+  <button data-level="hard">Hard</button>
+</header>
+
+<section class="quiz-box" id="quizBox">
+  <div class="counter" id="counter"></div>
+
+  <div class="flip-card">
+    <div class="flip-card-inner" id="flipCardInner">
+      <div class="flip-card-front">
+        <div class="question" id="question"></div>
+        <div class="options" id="options"></div>
+      </div>
+      <div class="flip-card-back">
+        <div id="feedback" style="font-size:1.2rem; margin-bottom:20px;"></div>
+        <button id="nextBtn">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="timer" style="margin-top:10px; font-weight:600; color:#ef4444;"></div>
+
+  <div class="controls">
+    <button id="backBtn">Back to Difficulty</button>
+    <button id="restartBtn">Restart</button>
+  </div>
+</section>
+
+<section class="quiz-box result" id="resultBox">
+  <h2>Quiz Complete 🎉</h2>
+  <p>Your Score: <span id="score"></span></p>
+  <button id="restartAllBtn">Back to Difficulty</button>
+</section>
+
+<footer>© 2026 • Gamified Learning • ICT</footer>
 
 <script>
+const questions = [
+{q:"What does ICT stand for?",o:["Information and Communication Technology","Internet Computer Tool","International Coding Tech","Information Control Tool"],a:0,l:"easy"},
+{q:"Which is an input device?",o:["Monitor","Keyboard","Printer","Speaker"],a:1,l:"easy"},
+{q:"Which device shows output?",o:["CPU","Keyboard","Monitor","Mouse"],a:2,l:"easy"},
+{q:"Which is hardware?",o:["Windows","Mouse","Google","Word"],a:1,l:"easy"},
+{q:"Which is software?",o:["Keyboard","Monitor","MS Word","CPU"],a:2,l:"easy"} // shortened for example
+];
+
 const hints = [
   "ICT is about technology for communication and data.",
   "Keyboard is for inputting data.",
-  "Monitor shows output from computer.",
+  "Monitor shows output.",
   "Hardware is physical parts of a computer.",
-  "Software is programs that run on hardware.",
-  "Printer prints documents.",
-  "Browser is used to browse the web.",
-  "Hard Drive stores data permanently.",
-  "Windows is an operating system.",
-  "Backspace deletes text.",
-  "Email is for communication.",
-  "Flash Drive is portable storage.",
-  "Modem connects to internet.",
-  "Google is a search engine.",
-  "CPU processes data.",
-  "E-learning is ICT in school.",
-  "Monitor is output device.",
-  "Laptop is portable computer.",
-  "Hard Drive is permanent storage.",
-  "Recycle Bin deletes files."
+  "Software is programs that run on hardware."
 ];
-
 const explanations = [
   "Correct! ICT stands for Information and Communication Technology.",
   "Right! Keyboard is an input device.",
   "Correct! Monitor displays output.",
   "Yes! Hardware refers to physical components.",
-  "Correct! Software is a program.",
-  "Yes! Printer prints documents.",
-  "Correct! Browsers are used to navigate the web.",
-  "Right! Hard drives provide storage.",
-  "Correct! Windows is an operating system.",
-  "Yes! Backspace deletes text.",
-  "Correct! Email is used for communication.",
-  "Right! Flash drives are portable storage.",
-  "Correct! Modems connect devices to the internet.",
-  "Yes! Google is a search engine.",
-  "Correct! CPU processes data.",
-  "Right! E-learning is ICT in school.",
-  "Correct! Monitor is an output device.",
-  "Yes! Laptops are portable computers.",
-  "Correct! Hard drives provide permanent storage.",
-  "Right! Recycle Bin deletes files."
+  "Correct! Software is a program."
 ];
 
 let filtered = [], index = 0, score = 0, currentLevel = "";
@@ -112,47 +260,44 @@ document.querySelectorAll("[data-level]").forEach(btn => {
     difficultyScreen.style.display = "none";
     quizBox.style.display = "block";
     loadQuestion();
-    quizBox.scrollIntoView({ behavior: "smooth" });
   };
 });
 
 function loadQuestion() {
   const q = filtered[index];
-  counterEl.textContent = `Question ${index + 1} of ${filtered.length}`;
+  counterEl.textContent = `Question ${index+1} of ${filtered.length}`;
   questionEl.textContent = q.q;
   optionsEl.innerHTML = "";
   document.getElementById('flipCardInner').style.transform = 'rotateY(0deg)';
   document.getElementById('feedback').textContent = '';
 
-  // Timer
   timeLeft = 15;
   document.getElementById('timer').textContent = `Time Left: ${timeLeft}s`;
   clearInterval(timerInterval);
-  timerInterval = setInterval(() => {
+  timerInterval = setInterval(()=>{
     timeLeft--;
     document.getElementById('timer').textContent = `Time Left: ${timeLeft}s`;
-    if (timeLeft <= 0) {
+    if(timeLeft<=0){
       clearInterval(timerInterval);
       showFeedback(false);
     }
-  }, 1000);
+  },1000);
 
-  q.o.forEach((opt, i) => {
+  q.o.forEach((opt,i)=>{
     const b = document.createElement("button");
     b.textContent = opt;
     b.onclick = () => {
       clearInterval(timerInterval);
-      showFeedback(i === q.a);
+      showFeedback(i===q.a);
     };
     optionsEl.appendChild(b);
   });
 }
 
-function showFeedback(correct) {
-  const q = filtered[index];
-  const feedbackEl = document.getElementById('feedback');
+function showFeedback(correct){
   document.getElementById('flipCardInner').style.transform = 'rotateY(180deg)';
-  if (correct) {
+  const feedbackEl = document.getElementById('feedback');
+  if(correct){
     score++;
     feedbackEl.textContent = explanations[index] || "Correct!";
   } else {
@@ -160,31 +305,31 @@ function showFeedback(correct) {
   }
 }
 
-document.getElementById("nextBtn").onclick = () => {
+document.getElementById("nextBtn").onclick = ()=>{
   index++;
-  if (index < filtered.length) loadQuestion();
+  if(index<filtered.length) loadQuestion();
   else showResult();
 };
 
-function showResult() {
+function showResult(){
   quizBox.style.display = "none";
   resultBox.style.display = "block";
   scoreEl.textContent = `${score} / ${filtered.length}`;
 }
 
-// Controls
-document.getElementById("backBtn").onclick = () => {
+document.getElementById("backBtn").onclick = ()=>{
   quizBox.style.display = "none";
   difficultyScreen.style.display = "flex";
 };
-
-document.getElementById("restartBtn").onclick = () => {
+document.getElementById("restartBtn").onclick = ()=>{
   index = score = 0;
   loadQuestion();
 };
-
-document.getElementById("restartAllBtn").onclick = () => {
+document.getElementById("restartAllBtn").onclick = ()=>{
   resultBox.style.display = "none";
   difficultyScreen.style.display = "flex";
 };
 </script>
+
+</body>
+</html>
