@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini Game Selector</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* GLOBAL */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(180deg, #f8fafc, #e0f2fe);
+  color: #1e293b;
+  overflow-x: hidden;
+}
+
+/* FLOATING EMOJIS */
+.gadget-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.gadget {
+  position: absolute;
+  font-size: 3.5rem;
+  opacity: 0.25;
+  animation: spinSide 20s linear infinite;
+}
+.gadget:nth-child(n){
+  top: calc(var(--i) * 10%);
+  animation-delay: calc(var(--i) * -2s);
+}
+
+@keyframes spinSide {
+  0% { transform: translateX(-20vw) rotate(0deg); }
+  100% { transform: translateX(120vw) rotate(360deg); }
+}
+
+/* CONTENT */
+header, section {
+  position: relative;
+  z-index: 1;
+}
+
+/* HERO */
+header {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+header h1 {
+  font-size: clamp(3rem, 8vw, 5rem);
+  color: #1d4ed8;
+  margin-bottom: 20px;
+}
+
+header p {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+}
+
+/* GAME GRID */
+.games {
+  max-width: 1000px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+/* GAME CARD */
+.game-card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-8px);
+}
+
+.game-icon {
+  font-size: 4rem;
+  margin-bottom: 15px;
+}
+
+.game-card h2 {
+  color: #1d4ed8;
+  margin-bottom: 10px;
+}
+
+.game-card p {
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+/* BUTTON */
+.play-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  font-size: 1rem;
+  background: #3b82f6;
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  box-shadow: 0 6px 0 #1e40af;
+}
+
+.play-btn:hover {
+  transform: translateY(2px);
+  box-shadow: 0 4px 0 #1e40af;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #475569;
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND -->
+<div class="gadget-background">
+  <div class="gadget" style="--i:1">🃏</div>
+  <div class="gadget" style="--i:2">🎮</div>
+  <div class="gadget" style="--i:3">🧠</div>
+  <div class="gadget" style="--i:4">📚</div>
+  <div class="gadget" style="--i:5">🎯</div>
+  <div class="gadget" style="--i:6">📝</div>
+  <div class="gadget" style="--i:7">🎲</div>
+  <div class="gadget" style="--i:8">📖</div>
+</div>
+
+<!-- HERO -->
+<header>
+  <h1>Choose Your Mini Game 🎮</h1>
+  <p>Pick a game, have fun, and learn smarter!</p>
+
+  <section class="games">
+
+    <!-- FLIP CARD GAME -->
+    <div class="game-card">
+      <div class="game-icon">🃏</div>
+      <h2>Flip Card Game</h2>
+      <p>Test your memory by matching cards as fast as possible.</p>
+
+      <!-- 🔗 PUT YOUR HTML LINK HERE -->
+      <a href="https://ares-ict.github.io/offlineontrackwebsite/alden.html" class="play-btn">
+        Play Game
+      </a>
+    </div>
+
+    <!-- PLACEHOLDER FOR FUTURE GAMES -->
+    <div class="game-card">
+      <div class="game-icon">🧩</div>
+      <h2>Coming Soon</h2>
+      <p>More exciting mini-games will be added soon.</p>
+      <a href="#" class="play-btn">Locked</a>
+    </div>
+
+  </section>
+</header>
+
+<footer>
+  © 2026 • Gamified Learning • ICT • Ares
+</footer>
+
+</body>
+</html>
+
