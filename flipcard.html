@@ -1,18 +1,22 @@
 <section class="quiz-box" id="quizBox">
   <div class="counter" id="counter"></div>
+
   <div class="flip-card">
     <div class="flip-card-inner" id="flipCardInner">
+      <!-- Question side -->
       <div class="flip-card-front">
         <div class="question" id="question"></div>
         <div class="options" id="options"></div>
       </div>
-      <div class="flip-card-back" id="flipCardBack">
-        <div id="feedback"></div>
+      <!-- Feedback side -->
+      <div class="flip-card-back">
+        <div id="feedback" style="font-size:1.2rem; margin-bottom:20px;"></div>
         <button id="nextBtn">Next</button>
       </div>
     </div>
   </div>
-  <div class="timer" id="timer" style="margin-top:10px; font-weight:600; color:#ef4444;"></div>
+
+  <div id="timer" style="margin-top:10px; font-weight:600; color:#ef4444;"></div>
 
   <div class="controls">
     <button id="backBtn">Back to Difficulty</button>
@@ -21,13 +25,7 @@
 </section>
 
 <style>
-/* Flip card styles */
-.flip-card {
-  background-color: transparent;
-  width: 100%;
-  perspective: 1000px;
-  margin-top:20px;
-}
+.flip-card { perspective: 1000px; width: 100%; margin-top: 20px; }
 .flip-card-inner {
   position: relative;
   width: 100%;
@@ -42,9 +40,9 @@
 .flip-card-back {
   transform: rotateY(180deg);
   background: #f0f9ff;
-  padding:20px;
-  border-radius:20px;
-  text-align:center;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
 }
 </style>
 
@@ -53,21 +51,21 @@ const hints = [
   "ICT is about technology for communication and data.",
   "Keyboard is for inputting data.",
   "Monitor shows output from computer.",
-  "Hardware is the physical components.",
-  "Software is programs running on hardware.",
-  "Printer produces physical copies.",
-  "Browser is for internet navigation.",
-  "Hard drive stores data permanently.",
+  "Hardware is physical parts of a computer.",
+  "Software is programs that run on hardware.",
+  "Printer prints documents.",
+  "Browser is used to browse the web.",
+  "Hard Drive stores data permanently.",
   "Windows is an operating system.",
   "Backspace deletes text.",
   "Email is for communication.",
-  "Flash drives are portable storage.",
-  "Modem connects to the internet.",
+  "Flash Drive is portable storage.",
+  "Modem connects to internet.",
   "Google is a search engine.",
   "CPU processes data.",
-  "ICT in school is usually e-learning.",
+  "E-learning is ICT in school.",
   "Monitor is output device.",
-  "Laptop is a portable computer.",
+  "Laptop is portable computer.",
   "Hard Drive is permanent storage.",
   "Recycle Bin deletes files."
 ];
@@ -95,75 +93,99 @@ const explanations = [
   "Right! Recycle Bin deletes files."
 ];
 
-let filtered=[], index=0, score=0, currentLevel="", timerInterval=0, timeLeft=15;
+let filtered = [], index = 0, score = 0, currentLevel = "";
+let timerInterval = null, timeLeft = 15;
 
-function loadQuestion(){
-  const q=filtered[index];
-  counterEl.textContent=`Question ${index+1} of ${filtered.length}`;
-  questionEl.textContent=q.q;
-  optionsEl.innerHTML="";
-  document.getElementById('flipCardInner').style.transform='rotateY(0deg)';
-  document.getElementById('feedback').textContent='';
+const quizBox = document.getElementById("quizBox");
+const resultBox = document.getElementById("resultBox");
+const questionEl = document.getElementById("question");
+const optionsEl = document.getElementById("options");
+const counterEl = document.getElementById("counter");
+const scoreEl = document.getElementById("score");
+const difficultyScreen = document.getElementById("difficultyScreen");
 
-  timeLeft=15;
-  document.getElementById('timer').textContent=`Time Left: ${timeLeft}s`;
+document.querySelectorAll("[data-level]").forEach(btn => {
+  btn.onclick = () => {
+    currentLevel = btn.dataset.level;
+    filtered = questions.filter(q => q.l === currentLevel);
+    index = score = 0;
+    difficultyScreen.style.display = "none";
+    quizBox.style.display = "block";
+    loadQuestion();
+    quizBox.scrollIntoView({ behavior: "smooth" });
+  };
+});
+
+function loadQuestion() {
+  const q = filtered[index];
+  counterEl.textContent = `Question ${index + 1} of ${filtered.length}`;
+  questionEl.textContent = q.q;
+  optionsEl.innerHTML = "";
+  document.getElementById('flipCardInner').style.transform = 'rotateY(0deg)';
+  document.getElementById('feedback').textContent = '';
+
+  // Timer
+  timeLeft = 15;
+  document.getElementById('timer').textContent = `Time Left: ${timeLeft}s`;
   clearInterval(timerInterval);
-  timerInterval = setInterval(()=>{
+  timerInterval = setInterval(() => {
     timeLeft--;
-    document.getElementById('timer').textContent=`Time Left: ${timeLeft}s`;
-    if(timeLeft<=0){
+    document.getElementById('timer').textContent = `Time Left: ${timeLeft}s`;
+    if (timeLeft <= 0) {
       clearInterval(timerInterval);
       showFeedback(false);
     }
-  },1000);
+  }, 1000);
 
-  q.o.forEach((opt,i)=>{
-    const b=document.createElement("button");
-    b.textContent=opt;
-    b.onclick=()=>{ 
+  q.o.forEach((opt, i) => {
+    const b = document.createElement("button");
+    b.textContent = opt;
+    b.onclick = () => {
       clearInterval(timerInterval);
-      showFeedback(i===q.a);
+      showFeedback(i === q.a);
     };
     optionsEl.appendChild(b);
   });
 }
 
-function showFeedback(correct){
-  const q=filtered[index];
-  const feedbackEl=document.getElementById('feedback');
-  document.getElementById('flipCardInner').style.transform='rotateY(180deg)';
-  if(correct){
+function showFeedback(correct) {
+  const q = filtered[index];
+  const feedbackEl = document.getElementById('feedback');
+  document.getElementById('flipCardInner').style.transform = 'rotateY(180deg)';
+  if (correct) {
     score++;
     feedbackEl.textContent = explanations[index] || "Correct!";
-  }else{
+  } else {
     feedbackEl.textContent = `Wrong! Hint: ${hints[index] || "Think carefully!"}`;
   }
 }
 
-document.getElementById("nextBtn").onclick=()=>{
+document.getElementById("nextBtn").onclick = () => {
   index++;
-  index<filtered.length?loadQuestion():showResult();
+  if (index < filtered.length) loadQuestion();
+  else showResult();
 };
 
-function showResult(){
-  quizBox.style.display="none";
-  resultBox.style.display="block";
-  scoreEl.textContent=`${score} / ${filtered.length}`;
+function showResult() {
+  quizBox.style.display = "none";
+  resultBox.style.display = "block";
+  scoreEl.textContent = `${score} / ${filtered.length}`;
 }
 
-document.getElementById("backBtn").onclick=()=>{
-  quizBox.style.display="none";
-  difficultyScreen.style.display="flex";
+// Controls
+document.getElementById("backBtn").onclick = () => {
+  quizBox.style.display = "none";
+  difficultyScreen.style.display = "flex";
 };
 
-document.getElementById("restartBtn").onclick=()=>{
-  index=score=0;
+document.getElementById("restartBtn").onclick = () => {
+  index = score = 0;
   loadQuestion();
 };
 
-document.getElementById("restartAllBtn").onclick=()=>{
-  resultBox.style.display="none";
-  difficultyScreen.style.display="flex";
+document.getElementById("restartAllBtn").onclick = () => {
+  resultBox.style.display = "none";
+  difficultyScreen.style.display = "flex";
 };
 </script>
 
