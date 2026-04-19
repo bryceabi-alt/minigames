@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gamified Lesson Quizzes</title>
+<title>ICT Gamified Quizzes</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
@@ -20,6 +20,8 @@
   --title:clamp(2.2rem,7vw,4.5rem);
 }
 
+*{scroll-behavior:smooth}
+
 body{
   margin:0;
   font-family:'Poppins',sans-serif;
@@ -29,10 +31,8 @@ body{
 }
 
 .gadget-background{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:0;
+  position:fixed; inset:0;
+  pointer-events:none; z-index:0;
   overflow:hidden;
 }
 .gadget{
@@ -51,15 +51,14 @@ header,section,footer{position:relative;z-index:1}
 header{
   min-height:100vh;
   padding:var(--pad);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
   text-align:center;
 }
 header h1{
   font-size:var(--title);
   color:#1d4ed8;
+  margin-bottom:10px;
 }
 header p{
   font-size:var(--text);
@@ -78,15 +77,17 @@ button{
   cursor:pointer;
   margin:10px 0;
   box-shadow:0 6px 0 #1e40af;
-  transition:transform .1s ease;
+  transition:transform .1s ease, box-shadow .1s ease;
+  font-family:'Poppins',sans-serif;
+  font-weight:600;
 }
+button:hover:not(:disabled){transform:translateY(-1px);}
 button:active{
   transform:translateY(2px);
   box-shadow:0 4px 0 #1e40af;
 }
 button:disabled{
-  opacity:.5;
-  cursor:not-allowed;
+  opacity:.5; cursor:not-allowed;
 }
 
 .quiz-box{
@@ -101,26 +102,19 @@ button:disabled{
 }
 
 .counter{
-  font-weight:600;
-  margin-bottom:8px;
-  font-size:var(--text);
-  color:#2563eb;
+  font-weight:600; margin-bottom:8px;
+  font-size:var(--text); color:#2563eb;
   text-align:center;
 }
-
 #attempts{
   font-size:clamp(.9rem,3vw,1.05rem);
-  color:#475569;
-  text-align:center;
+  color:#475569; text-align:center;
   margin-bottom:16px;
 }
-
 .question{
   font-size:var(--question);
-  margin-bottom:22px;
-  text-align:center;
+  margin-bottom:22px; text-align:center;
 }
-
 .options button{
   background:#eff6ff;
   color:#1e293b;
@@ -134,22 +128,16 @@ button:disabled{
 #feedback{
   font-weight:700;
   font-size:clamp(1.1rem,3.5vw,1.3rem);
-  margin-top:14px;
-  text-align:center;
+  margin-top:14px; text-align:center;
 }
-
 .explanation{
-  margin-top:10px;
-  font-style:italic;
-  font-size:var(--text);
-  text-align:center;
+  margin-top:10px; font-style:italic;
+  font-size:var(--text); text-align:center;
 }
 
 .controls{
-  margin-top:26px;
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
+  margin-top:26px; display:flex;
+  gap:12px; flex-wrap:wrap;
   justify-content:center;
 }
 .controls button{flex:0 0 240px}
@@ -161,8 +149,7 @@ button:disabled{
 }
 
 footer{
-  text-align:center;
-  padding:20px;
+  text-align:center; padding:20px;
   font-size:clamp(.85rem,2.5vw,.95rem);
   color:#475569;
 }
@@ -184,8 +171,7 @@ footer{
   margin-top:0;
 }
 .auth-box input {
-  width:100%;
-  max-width:360px;
+  width:100%; max-width:360px;
   padding:var(--btn-pad);
   font-size:var(--btn-font);
   border:2px solid #3b82f6;
@@ -210,91 +196,67 @@ footer{
   padding:6px !important;
 }
 .auth-error {
-  color:#dc2626;
-  font-weight:600;
-  margin-top:10px;
-  min-height:24px;
+  color:#dc2626; font-weight:600;
+  margin-top:10px; min-height:24px;
 }
 .auth-info {
-  color:#16a34a;
-  font-weight:600;
-  margin-top:10px;
-  min-height:24px;
+  color:#16a34a; font-weight:600;
+  margin-top:10px; min-height:24px;
 }
 
 .remember-row {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
+  display:flex; align-items:center;
+  justify-content:center; gap:8px;
   margin:10px 0;
-  font-size:.95rem;
-  color:#475569;
+  font-size:.95rem; color:#475569;
 }
 .remember-row input[type="checkbox"]{
   width:18px; height:18px;
-  max-width:18px;
-  margin:0;
-  cursor:pointer;
+  max-width:18px; margin:0; cursor:pointer;
 }
 
 .password-wrapper{position:relative; display:inline-block; width:100%; max-width:360px;}
 .password-wrapper input{padding-right:50px !important;}
 .toggle-pass{
-  position:absolute;
-  right:10px;
-  top:50%;
-  transform:translateY(-50%);
-  background:transparent;
-  border:none;
-  font-size:1.3rem;
-  cursor:pointer;
+  position:absolute; right:10px;
+  top:50%; transform:translateY(-50%);
+  background:transparent; border:none;
+  font-size:1.3rem; cursor:pointer;
   padding:4px 8px !important;
-  width:auto !important;
-  max-width:none !important;
-  margin:0 !important;
-  box-shadow:none !important;
+  width:auto !important; max-width:none !important;
+  margin:0 !important; box-shadow:none !important;
   color:#64748b;
 }
 
 .leaderboard {
-  width:100%;
-  max-width:1000px;
-  margin:20px auto;
-  background:#fff;
+  width:100%; max-width:1000px;
+  margin:20px auto; background:#fff;
   padding:var(--pad);
   border-radius:var(--radius);
   box-shadow:0 20px 40px rgba(0,0,0,.1);
 }
 .leaderboard h2 {
-  color:#1d4ed8;
-  text-align:center;
+  color:#1d4ed8; text-align:center;
   margin-top:0;
 }
 .leaderboard table {
-  width:100%;
-  border-collapse:collapse;
-  margin-top:14px;
-  font-size:var(--text);
+  width:100%; border-collapse:collapse;
+  margin-top:14px; font-size:var(--text);
 }
 .leaderboard th, .leaderboard td {
-  padding:10px;
-  border-bottom:1px solid #e2e8f0;
+  padding:10px; border-bottom:1px solid #e2e8f0;
   text-align:center;
 }
 .leaderboard th {
-  background:#dbeafe;
-  color:#1d4ed8;
+  background:#dbeafe; color:#1d4ed8;
 }
 .leaderboard tr:nth-child(1) td { background:#fef3c7; font-weight:700; }
 .leaderboard tr:nth-child(2) td { background:#f1f5f9; font-weight:600; }
 .leaderboard tr:nth-child(3) td { background:#fde68a; }
 
 .teacher-panel, .quiz-list-box, .admin-panel {
-  width:100%;
-  max-width:1100px;
-  margin:20px auto;
-  background:#fff;
+  width:100%; max-width:1100px;
+  margin:20px auto; background:#fff;
   padding:var(--pad);
   border-radius:var(--radius);
   box-shadow:0 20px 40px rgba(0,0,0,.1);
@@ -303,26 +265,20 @@ footer{
 .teacher-panel h2, .quiz-list-box h2, .admin-panel h2 { color:#1d4ed8; text-align:center; margin-top:0; }
 
 .q-editor {
-  background:#f8fafc;
-  padding:16px;
-  border-radius:var(--radius);
-  margin:12px 0;
+  background:#f8fafc; padding:16px;
+  border-radius:var(--radius); margin:12px 0;
   border:2px solid #e2e8f0;
 }
 .q-editor input, .q-editor select, .q-editor textarea {
-  width:100%;
-  padding:10px;
+  width:100%; padding:10px;
   font-size:1rem;
   border:1px solid #cbd5e1;
-  border-radius:8px;
-  margin:4px 0;
+  border-radius:8px; margin:4px 0;
   font-family:'Poppins',sans-serif;
 }
 .q-editor label {
-  font-weight:600;
-  font-size:.9rem;
-  color:#475569;
-  display:block;
+  font-weight:600; font-size:.9rem;
+  color:#475569; display:block;
   margin-top:8px;
 }
 .small-btn {
@@ -346,15 +302,12 @@ footer{
   background:#7c3aed !important;
   box-shadow:0 6px 0 #5b21b6 !important;
 }
+
 .top-nav {
-  position:fixed;
-  top:10px;
-  right:10px;
-  z-index:10;
-  display:flex;
-  align-items:center;
-  gap:6px;
-  background:rgba(255,255,255,.9);
+  position:fixed; top:10px; right:10px;
+  z-index:10; display:flex;
+  align-items:center; gap:6px;
+  background:rgba(255,255,255,.95);
   backdrop-filter:blur(8px);
   padding:6px 10px;
   border-radius:var(--radius);
@@ -367,111 +320,102 @@ footer{
   margin:0 !important;
 }
 .user-badge{
-  font-size:.85rem;
-  color:#1d4ed8;
-  font-weight:600;
-  padding:0 8px;
-  max-width:180px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  font-size:.85rem; color:#1d4ed8;
+  font-weight:600; padding:0 8px;
+  max-width:180px; white-space:nowrap;
+  overflow:hidden; text-overflow:ellipsis;
 }
-.user-badge.admin{
-  color:#7c3aed;
-}
+.user-badge.admin{color:#7c3aed;}
 
 .quiz-card {
   background:#f8fafc;
   border:2px solid #e2e8f0;
   padding:16px;
   border-radius:var(--radius);
-  margin:12px 0;
-  text-align:left;
+  margin:12px 0; text-align:left;
+  transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+.quiz-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 10px 25px rgba(0,0,0,.08);
+  border-color:#3b82f6;
 }
 .quiz-card h3 {
   margin:0 0 6px 0;
   color:#1d4ed8;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:wrap;
 }
 .quiz-card p { margin:4px 0; font-size:.95rem; color:#475569; }
 .quiz-card .link-box {
-  background:#dbeafe;
-  padding:8px 12px;
-  border-radius:8px;
-  word-break:break-all;
-  font-family:monospace;
-  font-size:.85rem;
+  background:#dbeafe; padding:8px 12px;
+  border-radius:8px; word-break:break-all;
+  font-family:monospace; font-size:.85rem;
   margin:8px 0;
 }
 .quiz-card .card-actions {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:10px;
+  display:flex; gap:8px;
+  flex-wrap:wrap; margin-top:10px;
 }
 .quiz-card .card-actions button {
   flex:1 1 120px;
-  max-width:180px;
-  margin:0;
+  max-width:180px; margin:0;
   padding:10px !important;
   font-size:.9rem !important;
 }
 
+/* Big start quiz button on student cards */
+.student-quiz-card{
+  cursor:pointer;
+  background:linear-gradient(135deg,#ffffff,#f0f9ff);
+}
+.student-quiz-card .start-big{
+  background:#16a34a !important;
+  box-shadow:0 6px 0 #166534 !important;
+  font-size:1.05rem !important;
+  padding:14px !important;
+  max-width:100% !important;
+  flex:1 1 100% !important;
+}
+.badge{
+  display:inline-block;
+  font-size:.75rem;
+  padding:3px 8px;
+  border-radius:999px;
+  font-weight:600;
+}
+.badge-public{background:#dcfce7; color:#166534;}
+.badge-code{background:#fef9c3; color:#854d0e;}
+.badge-new{background:#dbeafe; color:#1e40af; animation:pulse 2s infinite;}
+@keyframes pulse{
+  0%,100%{opacity:1}
+  50%{opacity:.6}
+}
+
 .quiz-meta-box {
-  background:#eff6ff;
-  padding:16px;
+  background:#eff6ff; padding:16px;
   border-radius:var(--radius);
-  border:2px solid #3b82f6;
-  margin:12px 0;
+  border:2px solid #3b82f6; margin:12px 0;
 }
 .quiz-meta-box input, .quiz-meta-box textarea {
-  width:100%;
-  padding:10px;
+  width:100%; padding:10px;
   font-size:1rem;
   border:1px solid #cbd5e1;
-  border-radius:8px;
-  margin:4px 0;
+  border-radius:8px; margin:4px 0;
   font-family:'Poppins',sans-serif;
 }
 .quiz-meta-box label {
-  font-weight:600;
-  color:#1d4ed8;
-  display:block;
-  margin-top:8px;
-}
-
-.access-code-box {
-  width:100%;
-  max-width:500px;
-  margin:20px auto;
-  background:#fff;
-  padding:var(--pad);
-  border-radius:var(--radius);
-  box-shadow:0 20px 40px rgba(0,0,0,.1);
-  display:none;
-  text-align:center;
-}
-.access-code-box input {
-  width:100%;
-  max-width:360px;
-  padding:var(--btn-pad);
-  font-size:var(--btn-font);
-  border:2px solid #3b82f6;
-  border-radius:var(--radius);
-  margin:8px 0;
-  font-family:'Poppins',sans-serif;
-  text-align:center;
-  letter-spacing:3px;
-  text-transform:uppercase;
+  font-weight:600; color:#1d4ed8;
+  display:block; margin-top:8px;
 }
 
 .email-modal {
-  position:fixed;
-  inset:0;
+  position:fixed; inset:0;
   background:rgba(0,0,0,.6);
-  z-index:100;
-  display:none;
-  justify-content:center;
-  align-items:center;
+  z-index:100; display:none;
+  justify-content:center; align-items:center;
   padding:20px;
 }
 .email-modal.active{display:flex;}
@@ -479,8 +423,7 @@ footer{
   background:#fff;
   border-radius:var(--radius);
   padding:var(--pad);
-  max-width:500px;
-  width:100%;
+  max-width:500px; width:100%;
   box-shadow:0 30px 60px rgba(0,0,0,.3);
   animation:slideIn .3s ease;
 }
@@ -495,52 +438,31 @@ footer{
   border-radius:var(--radius) var(--radius) 0 0;
   border-bottom:3px solid #3b82f6;
 }
-.email-header h3 {
-  margin:0;
-  color:#1d4ed8;
-  font-size:1.3rem;
-}
-.email-header p {
-  margin:4px 0 0;
-  font-size:.9rem;
-  color:#475569;
-}
+.email-header h3 { margin:0; color:#1d4ed8; font-size:1.3rem;}
+.email-header p { margin:4px 0 0; font-size:.9rem; color:#475569;}
 .email-body p{margin:10px 0; font-size:.95rem;}
 .reset-token-display {
-  background:#1e293b;
-  color:#fbbf24;
-  padding:16px;
-  border-radius:8px;
-  font-family:monospace;
-  font-size:1.4rem;
-  letter-spacing:4px;
-  text-align:center;
-  font-weight:700;
-  margin:14px 0;
+  background:#1e293b; color:#fbbf24;
+  padding:16px; border-radius:8px;
+  font-family:monospace; font-size:1.4rem;
+  letter-spacing:4px; text-align:center;
+  font-weight:700; margin:14px 0;
   word-break:break-all;
 }
 
 .toast-container{
-  position:fixed;
-  top:80px;
-  right:20px;
-  z-index:200;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+  position:fixed; top:80px; right:20px;
+  z-index:200; display:flex;
+  flex-direction:column; gap:10px;
   pointer-events:none;
 }
 .toast{
-  background:#1e293b;
-  color:#fff;
-  padding:12px 20px;
-  border-radius:12px;
-  font-size:.95rem;
-  font-weight:600;
+  background:#1e293b; color:#fff;
+  padding:12px 20px; border-radius:12px;
+  font-size:.95rem; font-weight:600;
   box-shadow:0 8px 20px rgba(0,0,0,.2);
   animation:toastIn .3s ease;
-  max-width:320px;
-  pointer-events:auto;
+  max-width:320px; pointer-events:auto;
 }
 .toast.success{background:#16a34a;}
 .toast.error{background:#dc2626;}
@@ -556,19 +478,14 @@ footer{
 }
 
 .loading-overlay{
-  position:fixed;
-  inset:0;
+  position:fixed; inset:0;
   background:rgba(248,250,252,.95);
-  z-index:300;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  gap:20px;
+  z-index:300; display:flex;
+  justify-content:center; align-items:center;
+  flex-direction:column; gap:20px;
 }
 .spinner{
-  width:60px;
-  height:60px;
+  width:60px; height:60px;
   border:6px solid #dbeafe;
   border-top-color:#1d4ed8;
   border-radius:50%;
@@ -588,23 +505,37 @@ footer{
   font-weight:600;
 }
 
-/* Admin specific styles */
+/* Admin */
 .admin-header{
   background:linear-gradient(135deg,#7c3aed,#5b21b6);
-  color:#fff;
-  padding:20px;
+  color:#fff; padding:20px;
   border-radius:var(--radius);
-  margin-bottom:20px;
-  text-align:center;
+  margin-bottom:20px; text-align:center;
+  position:relative;
 }
 .admin-header h2{color:#fff !important; margin:0;}
 .admin-header p{color:#e9d5ff; margin:6px 0 0;}
+.live-indicator{
+  position:absolute; top:12px; right:14px;
+  background:#16a34a; color:#fff;
+  padding:4px 10px; border-radius:999px;
+  font-size:.75rem; font-weight:700;
+  display:flex; align-items:center; gap:6px;
+}
+.live-dot{
+  width:8px; height:8px;
+  background:#fff; border-radius:50%;
+  animation:livePulse 1.2s infinite;
+}
+@keyframes livePulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.4;transform:scale(1.3)}
+}
 
 .admin-stats{
   display:grid;
   grid-template-columns:repeat(auto-fit, minmax(160px,1fr));
-  gap:12px;
-  margin:16px 0;
+  gap:12px; margin:16px 0;
 }
 .stat-card{
   background:#f3e8ff;
@@ -612,28 +543,25 @@ footer{
   padding:16px;
   border-radius:var(--radius);
   text-align:center;
+  transition:transform .15s ease;
 }
+.stat-card:hover{transform:translateY(-3px);}
 .stat-card .num{
-  font-size:2rem;
-  font-weight:700;
+  font-size:2rem; font-weight:700;
   color:#6b21a8;
 }
 .stat-card .label{
-  font-size:.85rem;
-  color:#475569;
+  font-size:.85rem; color:#475569;
   font-weight:600;
 }
 
 .admin-tabs{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  justify-content:center;
+  display:flex; gap:6px;
+  flex-wrap:wrap; justify-content:center;
   margin:16px 0;
 }
 .admin-tabs button{
-  flex:1 1 140px;
-  max-width:200px;
+  flex:1 1 140px; max-width:200px;
   padding:10px !important;
   font-size:.95rem !important;
   background:#cbd5e1 !important;
@@ -649,10 +577,8 @@ footer{
 .admin-section.active{display:block;}
 
 .data-table{
-  width:100%;
-  border-collapse:collapse;
-  margin-top:14px;
-  font-size:.9rem;
+  width:100%; border-collapse:collapse;
+  margin-top:14px; font-size:.9rem;
   background:#fff;
 }
 .data-table th, .data-table td{
@@ -661,21 +587,13 @@ footer{
   text-align:left;
 }
 .data-table th{
-  background:#f3e8ff;
-  color:#6b21a8;
-  font-weight:700;
-  position:sticky;
-  top:0;
+  background:#f3e8ff; color:#6b21a8;
+  font-weight:700; position:sticky; top:0;
 }
 .data-table tr:hover{background:#faf5ff;}
-.data-table .action-cell{
-  display:flex;
-  gap:4px;
-  flex-wrap:wrap;
-}
+.data-table .action-cell{display:flex; gap:4px; flex-wrap:wrap;}
 .data-table .action-cell button{
-  width:auto;
-  max-width:none;
+  width:auto; max-width:none;
   padding:6px 10px !important;
   font-size:.8rem !important;
   margin:0 !important;
@@ -685,18 +603,50 @@ footer{
   overflow-x:auto;
   border-radius:var(--radius);
   border:1px solid #e2e8f0;
+  max-height:500px;
+  overflow-y:auto;
 }
 
 .search-box{
-  width:100%;
-  max-width:400px;
-  padding:10px;
-  font-size:1rem;
+  width:100%; max-width:400px;
+  padding:10px; font-size:1rem;
   border:2px solid #a855f7;
   border-radius:10px;
-  margin:10px auto;
-  display:block;
+  margin:10px auto; display:block;
   font-family:'Poppins',sans-serif;
+}
+
+.empty-state{
+  text-align:center; padding:40px 20px;
+  color:#94a3b8;
+}
+.empty-state .icon{font-size:3rem;}
+.empty-state h3{color:#64748b; margin:10px 0;}
+
+/* Manual code fallback panel */
+.code-fallback{
+  margin:18px auto 6px;
+  max-width:500px;
+  background:#fffbeb;
+  border:2px dashed #f59e0b;
+  padding:14px;
+  border-radius:var(--radius);
+  text-align:center;
+}
+.code-fallback input{
+  width:100%; max-width:280px;
+  padding:10px; font-size:1rem;
+  border:2px solid #f59e0b;
+  border-radius:10px;
+  margin:8px 0; letter-spacing:3px;
+  text-transform:uppercase;
+  text-align:center;
+  font-family:'Poppins',sans-serif;
+}
+.code-fallback button{
+  background:#f59e0b !important;
+  box-shadow:0 4px 0 #b45309 !important;
+  max-width:280px;
 }
 
 @media(min-width:1024px){
@@ -705,10 +655,7 @@ footer{
     flex-direction:column;
     align-items:center;
   }
-  .options button{
-    width:80%;
-    max-width:520px;
-  }
+  .options button{ width:80%; max-width:520px; }
 }
 @media(max-width:500px){
   .top-nav{top:5px;right:5px;padding:4px 8px;}
@@ -716,6 +663,7 @@ footer{
   .top-nav button{font-size:.8rem !important;padding:6px 10px !important;}
   .data-table{font-size:.8rem;}
   .data-table th, .data-table td{padding:6px 4px;}
+  .live-indicator{position:static;margin-top:10px;display:inline-flex;}
 }
 </style>
 </head>
@@ -730,22 +678,22 @@ footer{
 <div class="toast-container" id="toastContainer"></div>
 
 <div class="gadget-background">
-  <div class="gadget" style="top:3%; font-size:2.4rem; animation-duration:28s;">📚</div>
-  <div class="gadget" style="top:8%; font-size:3.1rem; animation-duration:22s; animation-delay:-5s;">💻</div>
-  <div class="gadget" style="top:14%; font-size:2.8rem; animation-duration:30s; animation-delay:-10s;">🧠</div>
-  <div class="gadget" style="top:20%; font-size:3.5rem; animation-duration:26s;">🎓</div>
-  <div class="gadget" style="top:26%; font-size:2.6rem; animation-duration:24s; animation-delay:-8s;">📱</div>
-  <div class="gadget" style="top:32%; font-size:3.4rem; animation-duration:32s;">🖥️</div>
-  <div class="gadget" style="top:38%; font-size:2.7rem; animation-duration:20s; animation-delay:-12s;">🧮</div>
-  <div class="gadget" style="top:44%; font-size:3.1rem; animation-duration:29s;">📊</div>
-  <div class="gadget" style="top:50%; font-size:2.9rem; animation-duration:25s; animation-delay:-6s;">🧑‍💻</div>
-  <div class="gadget" style="top:56%; font-size:3.6rem; animation-duration:34s;">🖱️</div>
-  <div class="gadget" style="top:62%; font-size:2.4rem; animation-duration:21s; animation-delay:-9s;">🔌</div>
-  <div class="gadget" style="top:68%; font-size:3.3rem; animation-duration:27s;">💾</div>
-  <div class="gadget" style="top:74%; font-size:2.8rem; animation-duration:31s; animation-delay:-14s;">📂</div>
-  <div class="gadget" style="top:80%; font-size:3.5rem; animation-duration:36s;">📎</div>
-  <div class="gadget" style="top:86%; font-size:2.6rem; animation-duration:23s;">⌨️</div>
-  <div class="gadget" style="top:92%; font-size:3.2rem; animation-duration:33s; animation-delay:-11s;">🛜</div>
+  <div class="gadget" style="top:3%;  animation-duration:28s;">📚</div>
+  <div class="gadget" style="top:8%;  animation-duration:22s; animation-delay:-5s;">💻</div>
+  <div class="gadget" style="top:14%; animation-duration:30s; animation-delay:-10s;">🧠</div>
+  <div class="gadget" style="top:20%; animation-duration:26s;">🎓</div>
+  <div class="gadget" style="top:26%; animation-duration:24s; animation-delay:-8s;">📱</div>
+  <div class="gadget" style="top:32%; animation-duration:32s;">🖥️</div>
+  <div class="gadget" style="top:38%; animation-duration:20s; animation-delay:-12s;">🧮</div>
+  <div class="gadget" style="top:44%; animation-duration:29s;">📊</div>
+  <div class="gadget" style="top:50%; animation-duration:25s; animation-delay:-6s;">🧑‍💻</div>
+  <div class="gadget" style="top:56%; animation-duration:34s;">🖱️</div>
+  <div class="gadget" style="top:62%; animation-duration:21s; animation-delay:-9s;">🔌</div>
+  <div class="gadget" style="top:68%; animation-duration:27s;">💾</div>
+  <div class="gadget" style="top:74%; animation-duration:31s; animation-delay:-14s;">📂</div>
+  <div class="gadget" style="top:80%; animation-duration:36s;">📎</div>
+  <div class="gadget" style="top:86%; animation-duration:23s;">⌨️</div>
+  <div class="gadget" style="top:92%; animation-duration:33s; animation-delay:-11s;">🛜</div>
 </div>
 
 <div class="top-nav" id="topNav" style="display:none;">
@@ -797,6 +745,7 @@ footer{
   <button class="auth-toggle" id="teacherToggle">Don't have an account? Register</button>
   <button class="back-btn" id="teacherBack">⬅ Back</button>
   <div class="auth-error" id="teacherError"></div>
+  <div class="auth-info" id="teacherInfo"></div>
 </section>
 
 <!-- FORGOT PASSWORD -->
@@ -866,24 +815,24 @@ footer{
   <div class="auth-error" id="studentError"></div>
 </section>
 
-<!-- STUDENT: QUIZ CODE/LINK ENTRY -->
-<section class="access-code-box" id="accessCodeBox">
-  <h2 style="color:#1d4ed8;">Join a Quiz</h2>
-  <p>Enter the quiz code from your teacher, or browse public quizzes below.</p>
-  <input type="text" id="accessCodeInput" placeholder="QUIZ CODE" maxlength="8">
-  <button id="joinByCodeBtn">🔑 Join Quiz</button>
-  <button id="browsePublicBtn" class="auth-toggle">📂 Browse Public Quizzes</button>
-  <button class="back-btn" id="accessCodeBack">⬅ Back</button>
-  <div class="auth-error" id="accessCodeError"></div>
-</section>
-
-<!-- STUDENT: PUBLIC QUIZ LIST -->
+<!-- STUDENT: QUIZ LIST -->
 <section class="quiz-list-box" id="publicQuizzesBox">
-  <h2>📂 Available Quizzes</h2>
-  <p style="text-align:center;">Choose a quiz made by a teacher</p>
+  <h2>📚 Available Quizzes</h2>
+  <p style="text-align:center;">Click on any quiz below to start playing!</p>
+  <input type="text" class="search-box" id="studentQuizSearch" placeholder="🔍 Search for a quiz...">
   <div id="publicQuizzesList"></div>
+
+  <!-- Secret code fallback for private quizzes -->
+  <div class="code-fallback">
+    <p style="margin:0 0 4px;font-weight:600;color:#92400e;">🔒 Got a private quiz code?</p>
+    <p style="margin:0 0 6px;font-size:.85rem;color:#78350f;">Enter it here to access a code-only quiz.</p>
+    <input type="text" id="accessCodeInput" placeholder="QUIZ CODE" maxlength="8">
+    <button id="joinByCodeBtn">🔑 Unlock Quiz</button>
+    <div class="auth-error" id="accessCodeError" style="margin-top:6px;"></div>
+  </div>
+
   <div class="controls">
-    <button class="back-btn" id="publicQuizzesBack">⬅ Back</button>
+    <button class="back-btn" id="publicQuizzesBack">⬅ Logout</button>
   </div>
 </section>
 
@@ -943,7 +892,7 @@ footer{
   </div>
   <div id="myQuizzesList"></div>
   <div class="controls">
-    <button class="back-btn" id="teacherDashBack">⬅ Back to Role Select</button>
+    <button class="back-btn" id="teacherDashBack">⬅ Logout</button>
   </div>
 </section>
 
@@ -979,15 +928,16 @@ footer{
   <div class="controls">
     <button id="saveAllBtn" class="success-btn">💾 Save All Changes</button>
     <button id="previewQuizBtn">👁️ Preview as Student</button>
-    <button class="back-btn" id="editorBack">⬅ Back to My Quizzes</button>
+    <button class="back-btn" id="editorBack">⬅ Back</button>
   </div>
 </section>
 
 <!-- ADMIN DASHBOARD -->
 <section class="admin-panel" id="adminDashboard">
   <div class="admin-header">
+    <div class="live-indicator"><span class="live-dot"></span> LIVE</div>
     <h2>🛡️ Admin Control Panel</h2>
-    <p>Full system monitoring & management</p>
+    <p>Full system monitoring & management · Auto-refreshing</p>
   </div>
 
   <div class="admin-stats" id="adminStats"></div>
@@ -999,11 +949,11 @@ footer{
     <button data-tab="scores">🏆 All Scores</button>
   </div>
 
-  <!-- TEACHERS TAB -->
   <div class="admin-section active" id="adminTeachers">
     <h3 style="color:#6b21a8;">Manage Teacher Accounts</h3>
     <input type="text" class="search-box" id="teacherSearch" placeholder="🔍 Search teachers by email or name...">
     <div class="controls">
+      <button class="success-btn small-btn" id="addTeacherBtn">➕ Create Teacher</button>
       <button class="delete-btn small-btn" id="deleteAllTeachersBtn">🗑 Delete ALL Teachers</button>
     </div>
     <div class="table-wrapper">
@@ -1013,6 +963,7 @@ footer{
             <th>Email</th>
             <th>Display Name</th>
             <th>Quizzes</th>
+            <th>Registered</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -1021,7 +972,6 @@ footer{
     </div>
   </div>
 
-  <!-- STUDENTS TAB -->
   <div class="admin-section" id="adminStudents">
     <h3 style="color:#6b21a8;">Manage Student Accounts</h3>
     <input type="text" class="search-box" id="studentSearch" placeholder="🔍 Search students by name...">
@@ -1036,6 +986,7 @@ footer{
             <th>Name</th>
             <th>Quizzes Taken</th>
             <th>Total Attempts</th>
+            <th>Registered</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -1044,7 +995,6 @@ footer{
     </div>
   </div>
 
-  <!-- QUIZZES TAB -->
   <div class="admin-section" id="adminQuizzes">
     <h3 style="color:#6b21a8;">Manage All Quizzes</h3>
     <input type="text" class="search-box" id="quizSearch" placeholder="🔍 Search quizzes by title...">
@@ -1060,6 +1010,7 @@ footer{
             <th>Code</th>
             <th>Visibility</th>
             <th>Qs</th>
+            <th>Scores</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -1068,7 +1019,6 @@ footer{
     </div>
   </div>
 
-  <!-- SCORES TAB -->
   <div class="admin-section" id="adminScores">
     <h3 style="color:#6b21a8;">All Quiz Scores / Leaderboard</h3>
     <input type="text" class="search-box" id="scoreSearch" placeholder="🔍 Search by student or quiz...">
@@ -1093,6 +1043,7 @@ footer{
   </div>
 
   <div class="controls" style="margin-top:24px;">
+    <button id="refreshAdminBtn" class="small-btn">🔄 Refresh Now</button>
     <button class="back-btn" id="adminDashBack">⬅ Logout Admin</button>
   </div>
 </section>
@@ -1128,48 +1079,81 @@ const defaultQuestions = [
   {q:"What is ethical ICT use?",o:["Hacking","Piracy","Citing sources","Spamming"],a:2,l:"hard",e:"Citing sources is ethical."}
 ];
 
-let teachers    = JSON.parse(localStorage.getItem('ict_teachers'))       || {};
-let quizzes     = JSON.parse(localStorage.getItem('ict_quizzes'))        || {};
-let students    = JSON.parse(localStorage.getItem('ict_students_v2'))    || {};
-let leaderboard = JSON.parse(localStorage.getItem('ict_leaderboard_v2')) || [];
-let resetTokens = JSON.parse(localStorage.getItem('ict_reset_tokens'))   || {};
-
+// ============ STORAGE KEYS ============
+const K_TEACHERS = 'ict_teachers_v3';
+const K_QUIZZES = 'ict_quizzes_v3';
+const K_STUDENTS = 'ict_students_v3';
+const K_LEADERBOARD = 'ict_leaderboard_v3';
+const K_RESETS = 'ict_reset_tokens_v3';
 const SESSION_KEY = 'ict_session_v3';
-const SCREEN_KEY  = 'ict_last_screen_v3';
+const SCREEN_KEY = 'ict_last_screen_v3';
 const QUIZ_STATE_KEY = 'ict_active_quiz_v3';
 
+// ============ DATA LOAD (always fresh from storage) ============
+function loadData(){
+  return {
+    teachers: JSON.parse(localStorage.getItem(K_TEACHERS) || '{}'),
+    quizzes:  JSON.parse(localStorage.getItem(K_QUIZZES)  || '{}'),
+    students: JSON.parse(localStorage.getItem(K_STUDENTS) || '{}'),
+    leaderboard: JSON.parse(localStorage.getItem(K_LEADERBOARD) || '[]'),
+    resetTokens: JSON.parse(localStorage.getItem(K_RESETS) || '{}')
+  };
+}
+
+// Migrate from older keys if present (one-time)
+(function migrateOldKeys(){
+  const oldTeachers=localStorage.getItem('ict_teachers');
+  const oldQuizzes=localStorage.getItem('ict_quizzes');
+  const oldStudents=localStorage.getItem('ict_students_v2');
+  const oldLB=localStorage.getItem('ict_leaderboard_v2');
+  const oldRT=localStorage.getItem('ict_reset_tokens');
+  if(oldTeachers && !localStorage.getItem(K_TEACHERS)) localStorage.setItem(K_TEACHERS, oldTeachers);
+  if(oldQuizzes && !localStorage.getItem(K_QUIZZES)) localStorage.setItem(K_QUIZZES, oldQuizzes);
+  if(oldStudents && !localStorage.getItem(K_STUDENTS)) localStorage.setItem(K_STUDENTS, oldStudents);
+  if(oldLB && !localStorage.getItem(K_LEADERBOARD)) localStorage.setItem(K_LEADERBOARD, oldLB);
+  if(oldRT && !localStorage.getItem(K_RESETS)) localStorage.setItem(K_RESETS, oldRT);
+})();
+
+let { teachers, quizzes, students, leaderboard, resetTokens } = loadData();
+
+// Re-sync helper used before any admin render
+function refreshData(){
+  const d=loadData();
+  teachers=d.teachers;
+  quizzes=d.quizzes;
+  students=d.students;
+  leaderboard=d.leaderboard;
+  resetTokens=d.resetTokens;
+}
+
+function saveTeachers(){ localStorage.setItem(K_TEACHERS, JSON.stringify(teachers)); }
+function saveQuizzes(){ localStorage.setItem(K_QUIZZES, JSON.stringify(quizzes)); }
+function saveStudents(){ localStorage.setItem(K_STUDENTS, JSON.stringify(students)); }
+function saveLeaderboard(){ localStorage.setItem(K_LEADERBOARD, JSON.stringify(leaderboard)); }
+function saveResetTokens(){ localStorage.setItem(K_RESETS, JSON.stringify(resetTokens)); }
+
+// ============ SESSION ============
 let currentUser = null;
 let isRegistering = false;
 let currentQuizId = null;
 let editingQuizId = null;
 let isPreviewMode = false;
+let editorFromAdmin = false;
 let currentAdminTab = 'teachers';
-
-function saveTeachers(){ localStorage.setItem('ict_teachers', JSON.stringify(teachers)); }
-function saveQuizzes(){ localStorage.setItem('ict_quizzes', JSON.stringify(quizzes)); }
-function saveStudents(){ localStorage.setItem('ict_students_v2', JSON.stringify(students)); }
-function saveLeaderboard(){ localStorage.setItem('ict_leaderboard_v2', JSON.stringify(leaderboard)); }
-function saveResetTokens(){ localStorage.setItem('ict_reset_tokens', JSON.stringify(resetTokens)); }
+let adminRefreshInterval = null;
 
 function saveSession(remember){
   if(!currentUser) return;
   const data=JSON.stringify({user:currentUser, savedAt:Date.now()});
   localStorage.removeItem(SESSION_KEY);
   sessionStorage.removeItem(SESSION_KEY);
-  if(remember){
-    localStorage.setItem(SESSION_KEY, data);
-  } else {
-    sessionStorage.setItem(SESSION_KEY, data);
-  }
+  if(remember) localStorage.setItem(SESSION_KEY, data);
+  else sessionStorage.setItem(SESSION_KEY, data);
 }
 function loadSession(){
-  let raw = localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY);
+  let raw=localStorage.getItem(SESSION_KEY)||sessionStorage.getItem(SESSION_KEY);
   if(!raw) return null;
-  try{
-    const parsed=JSON.parse(raw);
-    if(parsed && parsed.user) return parsed.user;
-  }catch(e){}
-  return null;
+  try{const p=JSON.parse(raw); return p?.user||null;}catch(e){return null;}
 }
 function clearSession(){
   localStorage.removeItem(SESSION_KEY);
@@ -1178,13 +1162,13 @@ function clearSession(){
   localStorage.removeItem(QUIZ_STATE_KEY);
 }
 function saveScreen(name, extra){
-  const s={name, extra:extra||null, ts:Date.now()};
-  localStorage.setItem(SCREEN_KEY, JSON.stringify(s));
+  localStorage.setItem(SCREEN_KEY, JSON.stringify({name, extra:extra||null, ts:Date.now()}));
 }
 function loadScreen(){
-  try{ return JSON.parse(localStorage.getItem(SCREEN_KEY)); }catch(e){ return null; }
+  try{return JSON.parse(localStorage.getItem(SCREEN_KEY));}catch(e){return null;}
 }
 
+// ============ TOAST ============
 function toast(msg, type){
   const c=document.getElementById("toastContainer");
   const el=document.createElement("div");
@@ -1196,94 +1180,72 @@ function toast(msg, type){
 
 function genId(){ return 'q_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 function genCode(){
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let c = '';
-  do {
-    c = '';
-    for(let i=0;i<6;i++) c += chars[Math.floor(Math.random()*chars.length)];
-  } while(Object.values(quizzes).some(q=>q.code===c));
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let c='';
+  do{ c=''; for(let i=0;i<6;i++) c+=chars[Math.floor(Math.random()*chars.length)]; }
+  while(Object.values(quizzes).some(q=>q.code===c));
   return c;
 }
 function genResetToken(){
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
-  let t = '';
-  for(let i=0;i<8;i++) t += chars[Math.floor(Math.random()*chars.length)];
+  const chars='ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
+  let t=''; for(let i=0;i<8;i++) t+=chars[Math.floor(Math.random()*chars.length)];
   return t;
 }
 
+// Seed sample quiz on first run
 if(Object.keys(quizzes).length===0){
-  const sampleId = genId();
-  quizzes[sampleId] = {
-    id: sampleId, code: genCode(),
-    title: "ICT Basics (Sample)",
-    desc: "Demo quiz with default ICT questions.",
-    ownerEmail: "system@gmail.com", ownerName: "System",
-    visibility: "public",
-    questions: JSON.parse(JSON.stringify(defaultQuestions)),
-    createdAt: new Date().toISOString()
+  const sampleId=genId();
+  quizzes[sampleId]={
+    id:sampleId, code:genCode(),
+    title:"ICT Basics (Sample)",
+    desc:"Demo quiz with default ICT questions.",
+    ownerEmail:"system@gmail.com", ownerName:"System",
+    visibility:"public",
+    questions:JSON.parse(JSON.stringify(defaultQuestions)),
+    createdAt:new Date().toISOString()
   };
   saveQuizzes();
 }
 
-let filtered=[],index=0,score=0,currentLevel="",timer=15,timerInterval;
-let attempts = 0;
+let filtered=[], index=0, score=0, currentLevel="", timer=15, timerInterval;
+let attempts=0;
 
-const quizBox=document.getElementById("quizBox"),
-resultBox=document.getElementById("resultBox"),
-questionEl=document.getElementById("question"),
-optionsEl=document.getElementById("options"),
-counterEl=document.getElementById("counter"),
-scoreEl=document.getElementById("score"),
-difficultyScreen=document.getElementById("difficultyScreen"),
-explanationEl=document.getElementById("explanation"),
-feedbackEl=document.getElementById("feedback"),
-attemptsEl=document.getElementById("attempts"),
-finalAttemptsEl=document.getElementById("finalAttempts"),
-roleScreen=document.getElementById("roleScreen"),
-teacherAuth=document.getElementById("teacherAuth"),
-studentAuth=document.getElementById("studentAuth"),
-adminAuth=document.getElementById("adminAuth"),
-leaderboardBox=document.getElementById("leaderboardBox"),
-teacherPanel=document.getElementById("teacherPanel"),
-teacherDashboard=document.getElementById("teacherDashboard"),
-adminDashboard=document.getElementById("adminDashboard"),
-accessCodeBox=document.getElementById("accessCodeBox"),
-publicQuizzesBox=document.getElementById("publicQuizzesBox"),
-forgotPasswordBox=document.getElementById("forgotPasswordBox"),
-resetPasswordBox=document.getElementById("resetPasswordBox"),
-topNav=document.getElementById("topNav"),
-welcomeMsg=document.getElementById("welcomeMsg"),
-quizTitleHeader=document.getElementById("quizTitleHeader"),
-userBadge=document.getElementById("userBadge");
+const $=(id)=>document.getElementById(id);
+const quizBox=$("quizBox"), resultBox=$("resultBox"),
+questionEl=$("question"), optionsEl=$("options"),
+counterEl=$("counter"), scoreEl=$("score"),
+difficultyScreen=$("difficultyScreen"),
+explanationEl=$("explanation"), feedbackEl=$("feedback"),
+attemptsEl=$("attempts"), finalAttemptsEl=$("finalAttempts"),
+roleScreen=$("roleScreen"), teacherAuth=$("teacherAuth"),
+studentAuth=$("studentAuth"), adminAuth=$("adminAuth"),
+leaderboardBox=$("leaderboardBox"), teacherPanel=$("teacherPanel"),
+teacherDashboard=$("teacherDashboard"), adminDashboard=$("adminDashboard"),
+publicQuizzesBox=$("publicQuizzesBox"),
+forgotPasswordBox=$("forgotPasswordBox"),
+resetPasswordBox=$("resetPasswordBox"),
+topNav=$("topNav"),
+welcomeMsg=$("welcomeMsg"),
+quizTitleHeader=$("quizTitleHeader"),
+userBadge=$("userBadge");
 
 function hideAll(){
-  roleScreen.style.display="none";
-  teacherAuth.style.display="none";
-  studentAuth.style.display="none";
-  adminAuth.style.display="none";
-  accessCodeBox.style.display="none";
-  publicQuizzesBox.style.display="none";
-  difficultyScreen.style.display="none";
-  quizBox.style.display="none";
-  resultBox.style.display="none";
-  leaderboardBox.style.display="none";
-  teacherPanel.style.display="none";
-  teacherDashboard.style.display="none";
-  adminDashboard.style.display="none";
-  forgotPasswordBox.style.display="none";
-  resetPasswordBox.style.display="none";
+  [roleScreen,teacherAuth,studentAuth,adminAuth,publicQuizzesBox,
+   difficultyScreen,quizBox,resultBox,leaderboardBox,teacherPanel,
+   teacherDashboard,adminDashboard,forgotPasswordBox,resetPasswordBox
+  ].forEach(el=>el.style.display="none");
+  // stop admin refresh if leaving admin
+  if(adminRefreshInterval){ clearInterval(adminRefreshInterval); adminRefreshInterval=null; }
 }
 
 function updateTopNav(){
   if(currentUser){
     topNav.style.display="flex";
     userBadge.classList.remove("admin");
-    if(currentUser.role==="teacher"){
-      userBadge.textContent = `👩‍🏫 ${currentUser.displayName}`;
-    } else if(currentUser.role==="student"){
-      userBadge.textContent = `👨‍🎓 ${currentUser.name}`;
-    } else if(currentUser.role==="admin"){
-      userBadge.textContent = `🛡️ ADMIN`;
+    if(currentUser.role==="teacher") userBadge.textContent=`👩‍🏫 ${currentUser.displayName}`;
+    else if(currentUser.role==="student") userBadge.textContent=`👨‍🎓 ${currentUser.name}`;
+    else if(currentUser.role==="admin"){
+      userBadge.textContent=`🛡️ ADMIN`;
       userBadge.classList.add("admin");
     }
   } else {
@@ -1292,53 +1254,62 @@ function updateTopNav(){
   }
 }
 
+function escapeHtml(s){ return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function copyToClipboard(text,msg){
+  navigator.clipboard.writeText(text).then(()=>toast(msg||"Copied!","success")).catch(()=>{
+    const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta);
+    ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
+    toast(msg||"Copied!","success");
+  });
+}
+
+// Password toggles
 document.querySelectorAll(".toggle-pass").forEach(btn=>{
   btn.onclick=()=>{
-    const inp=document.getElementById(btn.dataset.target);
+    const inp=$(btn.dataset.target);
     if(!inp) return;
-    inp.type = inp.type==="password" ? "text" : "password";
-    btn.textContent = inp.type==="password" ? "👁️" : "🙈";
+    inp.type=inp.type==="password"?"text":"password";
+    btn.textContent=inp.type==="password"?"👁️":"🙈";
   };
 });
 
 // ============ ROLE SELECTION ============
-document.getElementById("studentRoleBtn").onclick=()=>{
+$("studentRoleBtn").onclick=()=>{
   hideAll();
   studentAuth.style.display="block";
-  document.getElementById("studentError").textContent="";
-  document.getElementById("studentName").value="";
+  $("studentError").textContent="";
+  $("studentName").value="";
 };
-
-document.getElementById("teacherRoleBtn").onclick=()=>{
+$("teacherRoleBtn").onclick=()=>{
   hideAll();
   teacherAuth.style.display="block";
   isRegistering=false;
-  document.getElementById("teacherAuthTitle").textContent="Teacher Login";
-  document.getElementById("teacherSubmit").textContent="Login";
-  document.getElementById("teacherToggle").textContent="Don't have an account? Register";
-  document.getElementById("teacherDisplayName").style.display="none";
-  document.getElementById("forgotPasswordBtn").style.display="inline-block";
-  document.getElementById("teacherError").textContent="";
+  $("teacherAuthTitle").textContent="Teacher Login";
+  $("teacherSubmit").textContent="Login";
+  $("teacherToggle").textContent="Don't have an account? Register";
+  $("teacherDisplayName").style.display="none";
+  $("forgotPasswordBtn").style.display="inline-block";
+  $("teacherError").textContent="";
+  $("teacherInfo").textContent="";
 };
-
-document.getElementById("adminRoleBtn").onclick=()=>{
+$("adminRoleBtn").onclick=()=>{
   hideAll();
   adminAuth.style.display="block";
-  document.getElementById("adminError").textContent="";
-  document.getElementById("adminUsername").value="";
-  document.getElementById("adminPassword").value="";
+  $("adminError").textContent="";
+  $("adminUsername").value="";
+  $("adminPassword").value="";
 };
-
-document.getElementById("studentBack").onclick=()=>{ hideAll(); roleScreen.style.display="flex"; };
-document.getElementById("teacherBack").onclick=()=>{ hideAll(); roleScreen.style.display="flex"; };
-document.getElementById("adminBack").onclick=()=>{ hideAll(); roleScreen.style.display="flex"; };
+$("studentBack").onclick=()=>{ hideAll(); roleScreen.style.display="flex"; };
+$("teacherBack").onclick=()=>{ hideAll(); roleScreen.style.display="flex"; };
+$("adminBack").onclick=()=>{ hideAll(); roleScreen.style.display="flex"; };
 
 // ============ ADMIN AUTH ============
-document.getElementById("adminSubmit").onclick=()=>{
-  const u=document.getElementById("adminUsername").value.trim();
-  const p=document.getElementById("adminPassword").value;
-  const remember=document.getElementById("rememberMeAdmin").checked;
-  const errEl=document.getElementById("adminError");
+$("adminSubmit").onclick=()=>{
+  const u=$("adminUsername").value.trim();
+  const p=$("adminPassword").value;
+  const remember=$("rememberMeAdmin").checked;
+  const errEl=$("adminError");
   if(u!==ADMIN_USERNAME || p!==ADMIN_PASSWORD){
     errEl.textContent="❌ Invalid admin credentials.";
     toast("❌ Access denied","error");
@@ -1353,11 +1324,19 @@ document.getElementById("adminSubmit").onclick=()=>{
 // ============ ADMIN DASHBOARD ============
 function openAdminDashboard(){
   hideAll();
+  refreshData();
   adminDashboard.style.display="block";
   updateTopNav();
   renderAdminStats();
   renderAdminTables();
   saveScreen("adminDashboard");
+  // auto refresh every 3 seconds for real-time monitoring
+  if(adminRefreshInterval) clearInterval(adminRefreshInterval);
+  adminRefreshInterval=setInterval(()=>{
+    refreshData();
+    renderAdminStats();
+    renderAdminTables();
+  }, 3000);
 }
 
 function renderAdminStats(){
@@ -1366,7 +1345,7 @@ function renderAdminStats(){
   const totalQuizzes=Object.keys(quizzes).length;
   const totalScores=leaderboard.length;
   const totalQuestions=Object.values(quizzes).reduce((s,q)=>s+(q.questions?.length||0),0);
-  document.getElementById("adminStats").innerHTML=`
+  $("adminStats").innerHTML=`
     <div class="stat-card"><div class="num">${totalTeachers}</div><div class="label">👩‍🏫 Teachers</div></div>
     <div class="stat-card"><div class="num">${totalStudents}</div><div class="label">👨‍🎓 Students</div></div>
     <div class="stat-card"><div class="num">${totalQuizzes}</div><div class="label">📚 Quizzes</div></div>
@@ -1381,7 +1360,7 @@ document.querySelectorAll(".admin-tabs button").forEach(btn=>{
     btn.classList.add("active");
     document.querySelectorAll(".admin-section").forEach(s=>s.classList.remove("active"));
     currentAdminTab=btn.dataset.tab;
-    document.getElementById("admin"+currentAdminTab.charAt(0).toUpperCase()+currentAdminTab.slice(1)).classList.add("active");
+    $("admin"+currentAdminTab.charAt(0).toUpperCase()+currentAdminTab.slice(1)).classList.add("active");
   };
 });
 
@@ -1392,14 +1371,19 @@ function renderAdminTables(){
   renderAdminScores();
 }
 
-function renderAdminTeachers(filter){
-  const f=(filter||document.getElementById("teacherSearch").value||"").toLowerCase();
-  const tbody=document.getElementById("teachersTableBody");
-  const entries=Object.entries(teachers).filter(([email,t])=>{
-    return email.toLowerCase().includes(f) || (t.displayName||"").toLowerCase().includes(f);
-  });
+function fmtDate(iso){
+  if(!iso) return '-';
+  try{ return new Date(iso).toLocaleDateString(); }catch(e){ return '-'; }
+}
+
+function renderAdminTeachers(){
+  const f=($("teacherSearch").value||"").toLowerCase();
+  const tbody=$("teachersTableBody");
+  const entries=Object.entries(teachers).filter(([email,t])=>
+    email.toLowerCase().includes(f)||(t.displayName||"").toLowerCase().includes(f)
+  );
   if(entries.length===0){
-    tbody.innerHTML=`<tr><td colspan="4" style="text-align:center;padding:20px;color:#64748b;">No teachers found.</td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="5"><div class="empty-state"><div class="icon">👩‍🏫</div><h3>No teachers registered</h3><p>Teachers will appear here when they register.</p></div></td></tr>`;
     return;
   }
   tbody.innerHTML=entries.map(([email,t])=>{
@@ -1408,77 +1392,83 @@ function renderAdminTeachers(filter){
       <td>${escapeHtml(email)}</td>
       <td>${escapeHtml(t.displayName||"")}</td>
       <td>${quizCount}</td>
+      <td style="font-size:.8rem;">${fmtDate(t.createdAt)}</td>
       <td class="action-cell">
-        <button class="warn-btn" onclick="adminSendReset('${email}')">📧 Send Reset</button>
-        <button class="admin-btn" onclick="adminForceResetPass('${email}')">🔑 Force Reset</button>
+        <button class="warn-btn" onclick="adminSendReset('${email}')">📧 Reset Email</button>
+        <button class="admin-btn" onclick="adminForceResetPass('${email}')">🔑 Set Password</button>
         <button class="delete-btn" onclick="adminDeleteTeacher('${email}')">🗑 Delete</button>
       </td>
     </tr>`;
   }).join("");
 }
 
-function renderAdminStudents(filter){
-  const f=(filter||document.getElementById("studentSearch").value||"").toLowerCase();
-  const tbody=document.getElementById("studentsTableBody");
-  const entries=Object.entries(students).filter(([key,s])=>s.name.toLowerCase().includes(f));
+function renderAdminStudents(){
+  const f=($("studentSearch").value||"").toLowerCase();
+  const tbody=$("studentsTableBody");
+  const entries=Object.entries(students).filter(([k,s])=>s.name.toLowerCase().includes(f));
   if(entries.length===0){
-    tbody.innerHTML=`<tr><td colspan="4" style="text-align:center;padding:20px;color:#64748b;">No students found.</td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="5"><div class="empty-state"><div class="icon">👨‍🎓</div><h3>No students yet</h3><p>Students will appear here once they register.</p></div></td></tr>`;
     return;
   }
   tbody.innerHTML=entries.map(([key,s])=>{
-    const attemptsObj=s.attempts||{};
-    const quizzesTaken=Object.keys(attemptsObj).length;
-    const totalAttempts=Object.values(attemptsObj).reduce((a,b)=>a+b,0);
+    const a=s.attempts||{};
+    const taken=Object.keys(a).length;
+    const total=Object.values(a).reduce((x,y)=>x+y,0);
     return `<tr>
       <td>${escapeHtml(s.name)}</td>
-      <td>${quizzesTaken}</td>
-      <td>${totalAttempts}</td>
+      <td>${taken}</td>
+      <td>${total}</td>
+      <td style="font-size:.8rem;">${fmtDate(s.createdAt)}</td>
       <td class="action-cell">
-        <button class="warn-btn" onclick="adminResetStudentAttempts('${key}')">🔄 Reset Attempts</button>
+        <button class="warn-btn" onclick="adminResetStudentAttempts('${key}')">🔄 Reset</button>
         <button class="delete-btn" onclick="adminDeleteStudent('${key}')">🗑 Delete</button>
       </td>
     </tr>`;
   }).join("");
 }
 
-function renderAdminQuizzes(filter){
-  const f=(filter||document.getElementById("quizSearch").value||"").toLowerCase();
-  const tbody=document.getElementById("quizzesTableBody");
+function renderAdminQuizzes(){
+  const f=($("quizSearch").value||"").toLowerCase();
+  const tbody=$("quizzesTableBody");
   const entries=Object.values(quizzes).filter(q=>q.title.toLowerCase().includes(f));
   if(entries.length===0){
-    tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;padding:20px;color:#64748b;">No quizzes found.</td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="7"><div class="empty-state"><div class="icon">📚</div><h3>No quizzes</h3></div></td></tr>`;
     return;
   }
-  tbody.innerHTML=entries.map(q=>`<tr>
-    <td>${escapeHtml(q.title)}</td>
-    <td>${escapeHtml(q.ownerName||"")}<br><span style="font-size:.75rem;color:#64748b;">${escapeHtml(q.ownerEmail||"")}</span></td>
-    <td><code>${q.code}</code></td>
-    <td>${q.visibility==='public'?'🌐':'🔒'}</td>
-    <td>${q.questions?.length||0}</td>
-    <td class="action-cell">
-      <button class="admin-btn" onclick="adminEditQuiz('${q.id}')">✏️ Edit</button>
-      <button class="warn-btn" onclick="adminResetQuizLeaderboard('${q.id}')">🧹 Clear LB</button>
-      <button class="delete-btn" onclick="adminDeleteQuiz('${q.id}')">🗑 Delete</button>
-    </td>
-  </tr>`).join("");
+  tbody.innerHTML=entries.map(q=>{
+    const scoreCount=leaderboard.filter(l=>l.quizId===q.id).length;
+    return `<tr>
+      <td>${escapeHtml(q.title)}</td>
+      <td>${escapeHtml(q.ownerName||"")}<br><span style="font-size:.75rem;color:#64748b;">${escapeHtml(q.ownerEmail||"")}</span></td>
+      <td><code>${q.code}</code></td>
+      <td>${q.visibility==='public'?'🌐':'🔒'}</td>
+      <td>${q.questions?.length||0}</td>
+      <td>${scoreCount}</td>
+      <td class="action-cell">
+        <button class="admin-btn" onclick="adminEditQuiz('${q.id}')">✏️ Edit</button>
+        <button class="warn-btn" onclick="adminResetQuizLeaderboard('${q.id}')">🧹 Clear</button>
+        <button class="delete-btn" onclick="adminDeleteQuiz('${q.id}')">🗑</button>
+      </td>
+    </tr>`;
+  }).join("");
 }
 
-function renderAdminScores(filter){
-  const f=(filter||document.getElementById("scoreSearch").value||"").toLowerCase();
-  const tbody=document.getElementById("scoresTableBody");
-  const filtered=leaderboard.filter(l=>{
-    const quizTitle=quizzes[l.quizId]?.title||"(deleted)";
-    return l.name.toLowerCase().includes(f) || quizTitle.toLowerCase().includes(f);
+function renderAdminScores(){
+  const f=($("scoreSearch").value||"").toLowerCase();
+  const tbody=$("scoresTableBody");
+  const rows=leaderboard.filter(l=>{
+    const t=quizzes[l.quizId]?.title||"(deleted)";
+    return l.name.toLowerCase().includes(f)||t.toLowerCase().includes(f);
   });
-  if(filtered.length===0){
-    tbody.innerHTML=`<tr><td colspan="6" style="text-align:center;padding:20px;color:#64748b;">No scores found.</td></tr>`;
+  if(rows.length===0){
+    tbody.innerHTML=`<tr><td colspan="6"><div class="empty-state"><div class="icon">🏆</div><h3>No scores yet</h3></div></td></tr>`;
     return;
   }
-  tbody.innerHTML=filtered.map((l,idx)=>{
-    const quizTitle=quizzes[l.quizId]?.title||"(deleted quiz)";
+  tbody.innerHTML=rows.map(l=>{
+    const t=quizzes[l.quizId]?.title||"(deleted quiz)";
     return `<tr>
       <td>${escapeHtml(l.name)}</td>
-      <td>${escapeHtml(quizTitle)}</td>
+      <td>${escapeHtml(t)}</td>
       <td>${l.level}</td>
       <td>${l.score}/${l.total}</td>
       <td style="font-size:.8rem;">${l.date}</td>
@@ -1489,29 +1479,37 @@ function renderAdminScores(filter){
   }).join("");
 }
 
-document.getElementById("teacherSearch").oninput=e=>renderAdminTeachers(e.target.value);
-document.getElementById("studentSearch").oninput=e=>renderAdminStudents(e.target.value);
-document.getElementById("quizSearch").oninput=e=>renderAdminQuizzes(e.target.value);
-document.getElementById("scoreSearch").oninput=e=>renderAdminScores(e.target.value);
+$("teacherSearch").oninput=renderAdminTeachers;
+$("studentSearch").oninput=renderAdminStudents;
+$("quizSearch").oninput=renderAdminQuizzes;
+$("scoreSearch").oninput=renderAdminScores;
+$("refreshAdminBtn").onclick=()=>{
+  refreshData();
+  renderAdminStats();
+  renderAdminTables();
+  toast("🔄 Data refreshed","admin");
+};
 
-// Admin actions
-window.adminSendReset=function(email){
+// Admin actions (exposed to window)
+window.adminSendReset=(email)=>{
+  refreshData();
   if(!teachers[email]){ toast("Teacher not found","error"); return; }
   const token=genResetToken();
   resetTokens[email]={token, expiresAt:Date.now()+15*60*1000};
   saveResetTokens();
-  document.getElementById("modalEmailFrom").textContent="admin@ictquizzes.com";
-  document.getElementById("modalEmailTo").textContent=email;
-  document.getElementById("modalEmailSubject").textContent="[Admin] Password Reset Code";
-  document.getElementById("modalUserName").textContent=teachers[email].displayName||"Teacher";
-  document.getElementById("modalEmailIntro").innerHTML=`An administrator has initiated a password reset for your account. Use the code below within <strong>15 minutes</strong> to reset your password.`;
-  document.getElementById("modalResetToken").textContent=token;
-  document.getElementById("modalEmailFooter").textContent="This reset was initiated by a system administrator.";
-  document.getElementById("emailModal").classList.add("active");
+  $("modalEmailFrom").textContent="admin@ictquizzes.com";
+  $("modalEmailTo").textContent=email;
+  $("modalEmailSubject").textContent="[Admin] Password Reset Code";
+  $("modalUserName").textContent=teachers[email].displayName||"Teacher";
+  $("modalEmailIntro").innerHTML=`An administrator has initiated a password reset for your account. Use the code below within <strong>15 minutes</strong> to reset your password.`;
+  $("modalResetToken").textContent=token;
+  $("modalEmailFooter").textContent="This reset was initiated by a system administrator.";
+  $("emailModal").classList.add("active");
   toast(`📧 Reset code sent to ${email}`,"admin");
 };
 
-window.adminForceResetPass=function(email){
+window.adminForceResetPass=(email)=>{
+  refreshData();
   if(!teachers[email]){ toast("Teacher not found","error"); return; }
   const newPass=prompt(`Set a new password for ${email} (min 6 characters):`);
   if(newPass===null) return;
@@ -1519,15 +1517,15 @@ window.adminForceResetPass=function(email){
   teachers[email].password=newPass;
   saveTeachers();
   toast(`✅ Password changed for ${email}`,"admin");
-  alert(`New password for ${email}:\n\n${newPass}\n\nPlease communicate this to the teacher securely.`);
+  alert(`New password for ${email}:\n\n${newPass}\n\nPlease communicate this securely.`);
 };
 
-window.adminDeleteTeacher=function(email){
+window.adminDeleteTeacher=(email)=>{
+  refreshData();
   if(!confirm(`Delete teacher "${email}" and ALL their quizzes? This cannot be undone.`)) return;
-  // Delete their quizzes & leaderboard entries for those quizzes
-  const theirQuizIds=Object.values(quizzes).filter(q=>q.ownerEmail===email).map(q=>q.id);
-  theirQuizIds.forEach(qid=>{ delete quizzes[qid]; });
-  leaderboard=leaderboard.filter(l=>!theirQuizIds.includes(l.quizId));
+  const ids=Object.values(quizzes).filter(q=>q.ownerEmail===email).map(q=>q.id);
+  ids.forEach(id=>delete quizzes[id]);
+  leaderboard=leaderboard.filter(l=>!ids.includes(l.quizId));
   delete teachers[email];
   delete resetTokens[email];
   saveTeachers(); saveQuizzes(); saveLeaderboard(); saveResetTokens();
@@ -1535,7 +1533,8 @@ window.adminDeleteTeacher=function(email){
   renderAdminStats(); renderAdminTables();
 };
 
-window.adminDeleteStudent=function(key){
+window.adminDeleteStudent=(key)=>{
+  refreshData();
   if(!confirm(`Delete student "${students[key]?.name}" and all their scores?`)) return;
   const name=students[key]?.name;
   delete students[key];
@@ -1545,17 +1544,19 @@ window.adminDeleteStudent=function(key){
   renderAdminStats(); renderAdminTables();
 };
 
-window.adminResetStudentAttempts=function(key){
+window.adminResetStudentAttempts=(key)=>{
+  refreshData();
   if(!students[key]) return;
-  if(!confirm(`Reset attempts for "${students[key].name}"? They will be able to retake all quizzes.`)) return;
+  if(!confirm(`Reset attempts for "${students[key].name}"?`)) return;
   students[key].attempts={};
   saveStudents();
   toast("🔄 Attempts reset","admin");
   renderAdminStudents();
 };
 
-window.adminDeleteQuiz=function(id){
-  if(!confirm(`Delete quiz "${quizzes[id]?.title}" and all its scores?`)) return;
+window.adminDeleteQuiz=(id)=>{
+  refreshData();
+  if(!confirm(`Delete quiz "${quizzes[id]?.title}" and all scores?`)) return;
   delete quizzes[id];
   leaderboard=leaderboard.filter(l=>l.quizId!==id);
   saveQuizzes(); saveLeaderboard();
@@ -1563,20 +1564,22 @@ window.adminDeleteQuiz=function(id){
   renderAdminStats(); renderAdminTables();
 };
 
-window.adminResetQuizLeaderboard=function(id){
-  if(!confirm(`Clear leaderboard for quiz "${quizzes[id]?.title}"?`)) return;
+window.adminResetQuizLeaderboard=(id)=>{
+  refreshData();
+  if(!confirm(`Clear leaderboard for "${quizzes[id]?.title}"?`)) return;
   leaderboard=leaderboard.filter(l=>l.quizId!==id);
   saveLeaderboard();
-  toast("🧹 Leaderboard cleared","admin");
+  toast("🧹 Cleared","admin");
   renderAdminStats(); renderAdminScores();
 };
 
-window.adminEditQuiz=function(id){
+window.adminEditQuiz=(id)=>{
   editingQuizId=id;
   openEditor(true);
 };
 
-window.adminDeleteScore=function(idx){
+window.adminDeleteScore=(idx)=>{
+  refreshData();
   if(!confirm("Delete this score entry?")) return;
   leaderboard.splice(idx,1);
   saveLeaderboard();
@@ -1584,96 +1587,136 @@ window.adminDeleteScore=function(idx){
   renderAdminStats(); renderAdminScores();
 };
 
-document.getElementById("deleteAllTeachersBtn").onclick=()=>{
-  if(!confirm("⚠️ DELETE ALL TEACHERS and their quizzes? This is irreversible!")) return;
-  if(!confirm("Are you absolutely sure? Type confirm in next prompt.")) return;
+$("addTeacherBtn").onclick=()=>{
+  refreshData();
+  const email=prompt("Teacher Gmail (must end with @gmail.com):");
+  if(!email) return;
+  const em=email.trim().toLowerCase();
+  if(!em.endsWith("@gmail.com")){ toast("Must be a Gmail address","error"); return; }
+  if(teachers[em]){ toast("Email already exists","error"); return; }
+  const name=prompt("Display name:");
+  if(!name || name.trim().length<2){ toast("Invalid name","error"); return; }
+  const pass=prompt("Initial password (min 6 chars):");
+  if(!pass || pass.length<6){ toast("Password too short","error"); return; }
+  teachers[em]={password:pass, displayName:name.trim(), createdAt:new Date().toISOString()};
+  saveTeachers();
+  toast("✅ Teacher created","admin");
+  renderAdminStats(); renderAdminTeachers();
+};
+
+$("deleteAllTeachersBtn").onclick=()=>{
+  if(!confirm("⚠️ DELETE ALL TEACHERS and their quizzes?")) return;
   const c=prompt("Type DELETE to confirm:");
   if(c!=="DELETE"){ toast("Cancelled","info"); return; }
-  const teacherEmails=Object.keys(teachers);
-  const theirQuizIds=Object.values(quizzes).filter(q=>teacherEmails.includes(q.ownerEmail)).map(q=>q.id);
-  theirQuizIds.forEach(id=>delete quizzes[id]);
-  leaderboard=leaderboard.filter(l=>!theirQuizIds.includes(l.quizId));
+  refreshData();
+  const emails=Object.keys(teachers);
+  const ids=Object.values(quizzes).filter(q=>emails.includes(q.ownerEmail)).map(q=>q.id);
+  ids.forEach(id=>delete quizzes[id]);
+  leaderboard=leaderboard.filter(l=>!ids.includes(l.quizId));
   teachers={}; resetTokens={};
   saveTeachers(); saveQuizzes(); saveLeaderboard(); saveResetTokens();
   toast("🗑 All teachers deleted","admin");
   renderAdminStats(); renderAdminTables();
 };
 
-document.getElementById("deleteAllStudentsBtn").onclick=()=>{
+$("deleteAllStudentsBtn").onclick=()=>{
   if(!confirm("⚠️ DELETE ALL STUDENTS and their scores?")) return;
   const c=prompt("Type DELETE to confirm:");
   if(c!=="DELETE"){ toast("Cancelled","info"); return; }
+  refreshData();
   students={}; leaderboard=[];
   saveStudents(); saveLeaderboard();
   toast("🗑 All students deleted","admin");
   renderAdminStats(); renderAdminTables();
 };
 
-document.getElementById("resetAllAttemptsBtn").onclick=()=>{
+$("resetAllAttemptsBtn").onclick=()=>{
   if(!confirm("Reset attempts for ALL students?")) return;
-  Object.keys(students).forEach(k=>{ students[k].attempts={}; });
+  refreshData();
+  Object.keys(students).forEach(k=>{students[k].attempts={};});
   saveStudents();
   toast("🔄 All attempts reset","admin");
   renderAdminStudents();
 };
 
-document.getElementById("deleteAllQuizzesBtn").onclick=()=>{
+$("deleteAllQuizzesBtn").onclick=()=>{
   if(!confirm("⚠️ DELETE ALL QUIZZES and scores?")) return;
   const c=prompt("Type DELETE to confirm:");
   if(c!=="DELETE"){ toast("Cancelled","info"); return; }
+  refreshData();
   quizzes={}; leaderboard=[];
   saveQuizzes(); saveLeaderboard();
   toast("🗑 All quizzes deleted","admin");
   renderAdminStats(); renderAdminTables();
 };
 
-document.getElementById("clearAllScoresBtn").onclick=()=>{
-  if(!confirm("Clear ALL scores from ALL quizzes?")) return;
+$("clearAllScoresBtn").onclick=()=>{
+  if(!confirm("Clear ALL scores?")) return;
+  refreshData();
   leaderboard=[];
   saveLeaderboard();
   toast("🧹 All scores cleared","admin");
   renderAdminStats(); renderAdminScores();
 };
 
-document.getElementById("adminDashBack").onclick=()=>{
+$("adminDashBack").onclick=()=>{
   if(!confirm("Logout from admin panel?")) return;
   doLogout();
 };
 
 // ============ TEACHER AUTH ============
-document.getElementById("teacherToggle").onclick=()=>{
+$("teacherToggle").onclick=()=>{
   isRegistering=!isRegistering;
-  document.getElementById("teacherAuthTitle").textContent=isRegistering?"Teacher Registration":"Teacher Login";
-  document.getElementById("teacherSubmit").textContent=isRegistering?"Register":"Login";
-  document.getElementById("teacherToggle").textContent=isRegistering?"Already have an account? Login":"Don't have an account? Register";
-  document.getElementById("teacherDisplayName").style.display=isRegistering?"block":"none";
-  document.getElementById("forgotPasswordBtn").style.display=isRegistering?"none":"inline-block";
-  document.getElementById("teacherError").textContent="";
+  $("teacherAuthTitle").textContent=isRegistering?"Teacher Registration":"Teacher Login";
+  $("teacherSubmit").textContent=isRegistering?"Register":"Login";
+  $("teacherToggle").textContent=isRegistering?"Already have an account? Login":"Don't have an account? Register";
+  $("teacherDisplayName").style.display=isRegistering?"block":"none";
+  $("forgotPasswordBtn").style.display=isRegistering?"none":"inline-block";
+  $("teacherError").textContent="";
+  $("teacherInfo").textContent=isRegistering?"Fill in Gmail, password and display name to register.":"";
 };
 
-document.getElementById("teacherSubmit").onclick=()=>{
-  const email=document.getElementById("teacherEmail").value.trim().toLowerCase();
-  const pass=document.getElementById("teacherPassword").value;
-  const displayName=document.getElementById("teacherDisplayName").value.trim();
-  const remember=document.getElementById("rememberMeTeacher").checked;
-  const errEl=document.getElementById("teacherError");
+$("teacherSubmit").onclick=()=>{
+  refreshData();
+  const email=$("teacherEmail").value.trim().toLowerCase();
+  const pass=$("teacherPassword").value;
+  const displayName=$("teacherDisplayName").value.trim();
+  const remember=$("rememberMeTeacher").checked;
+  const errEl=$("teacherError");
+  const infoEl=$("teacherInfo");
+  errEl.textContent=""; infoEl.textContent="";
 
-  if(!email.endsWith("@gmail.com")){ errEl.textContent="Please use a valid Gmail address."; return; }
+  // Basic gmail validation (more forgiving)
+  const gmailOk=/^[a-z0-9._%+-]+@gmail\.com$/.test(email);
+  if(!gmailOk){ errEl.textContent="Please use a valid Gmail address (e.g. name@gmail.com)."; return; }
   if(pass.length<6){ errEl.textContent="Password must be at least 6 characters."; return; }
 
   if(isRegistering){
-    if(teachers[email]){ errEl.textContent="Email already registered. Please login."; return; }
-    if(displayName.length<2){ errEl.textContent="Please enter a display name."; return; }
-    teachers[email]={password:pass, displayName};
+    if(teachers[email]){ errEl.textContent="Email already registered. Switch to Login."; return; }
+    if(displayName.length<2){ errEl.textContent="Please enter a display name (min 2 chars)."; return; }
+    teachers[email]={
+      password:pass,
+      displayName,
+      createdAt:new Date().toISOString()
+    };
     saveTeachers();
-    currentUser={role:"teacher",email,displayName};
+    // sanity: re-read to confirm persisted
+    const check=JSON.parse(localStorage.getItem(K_TEACHERS)||'{}');
+    if(!check[email]){
+      errEl.textContent="⚠️ Failed to save registration. Please try again.";
+      return;
+    }
+    currentUser={role:"teacher", email, displayName};
     saveSession(remember);
     toast(`Welcome, ${displayName}! 🎉`,"success");
     openTeacherDashboard();
   } else {
-    if(!teachers[email]){ errEl.textContent="No account found. Please register."; return; }
+    if(!teachers[email]){
+      errEl.textContent="No account found with that email. Please Register first.";
+      return;
+    }
     if(teachers[email].password!==pass){ errEl.textContent="Incorrect password."; return; }
-    currentUser={role:"teacher",email,displayName:teachers[email].displayName};
+    currentUser={role:"teacher", email, displayName:teachers[email].displayName};
     saveSession(remember);
     toast(`Welcome back, ${currentUser.displayName}!`,"success");
     openTeacherDashboard();
@@ -1681,82 +1724,77 @@ document.getElementById("teacherSubmit").onclick=()=>{
 };
 
 // ============ FORGOT / RESET PASSWORD ============
-document.getElementById("forgotPasswordBtn").onclick=()=>{
+$("forgotPasswordBtn").onclick=()=>{
   hideAll();
   forgotPasswordBox.style.display="block";
-  document.getElementById("forgotEmail").value=document.getElementById("teacherEmail").value || "";
-  document.getElementById("forgotError").textContent="";
-  document.getElementById("forgotInfo").textContent="";
+  $("forgotEmail").value=$("teacherEmail").value||"";
+  $("forgotError").textContent="";
+  $("forgotInfo").textContent="";
 };
-document.getElementById("forgotBack").onclick=()=>{ hideAll(); teacherAuth.style.display="block"; };
+$("forgotBack").onclick=()=>{ hideAll(); teacherAuth.style.display="block"; };
 
-document.getElementById("sendResetBtn").onclick=()=>{
-  const email=document.getElementById("forgotEmail").value.trim().toLowerCase();
-  const errEl=document.getElementById("forgotError");
-  const infoEl=document.getElementById("forgotInfo");
+$("sendResetBtn").onclick=()=>{
+  refreshData();
+  const email=$("forgotEmail").value.trim().toLowerCase();
+  const errEl=$("forgotError"); const infoEl=$("forgotInfo");
   errEl.textContent=""; infoEl.textContent="";
-  if(!email.endsWith("@gmail.com")){ errEl.textContent="Please enter a valid Gmail address."; return; }
+  if(!/^[a-z0-9._%+-]+@gmail\.com$/.test(email)){ errEl.textContent="Please enter a valid Gmail address."; return; }
   if(!teachers[email]){ errEl.textContent="No account found with that email."; return; }
   const token=genResetToken();
   resetTokens[email]={token, expiresAt:Date.now()+15*60*1000};
   saveResetTokens();
-  document.getElementById("modalEmailFrom").textContent="no-reply@ictquizzes.com";
-  document.getElementById("modalEmailTo").textContent=email;
-  document.getElementById("modalEmailSubject").textContent="Password Reset Code";
-  document.getElementById("modalUserName").textContent=teachers[email].displayName||"Teacher";
-  document.getElementById("modalEmailIntro").innerHTML=`You requested a password reset for your ICT Quizzes teacher account. Please use the code below to reset your password. This code is valid for <strong>15 minutes</strong>.`;
-  document.getElementById("modalResetToken").textContent=token;
-  document.getElementById("modalEmailFooter").textContent="If you didn't request this, you can safely ignore this email.";
-  document.getElementById("emailModal").classList.add("active");
+  $("modalEmailFrom").textContent="no-reply@ictquizzes.com";
+  $("modalEmailTo").textContent=email;
+  $("modalEmailSubject").textContent="Password Reset Code";
+  $("modalUserName").textContent=teachers[email].displayName||"Teacher";
+  $("modalEmailIntro").innerHTML=`You requested a password reset. Use the code below within <strong>15 minutes</strong>.`;
+  $("modalResetToken").textContent=token;
+  $("modalEmailFooter").textContent="If you didn't request this, ignore this email.";
+  $("emailModal").classList.add("active");
   infoEl.textContent="✅ Reset code sent to your email! (Check the popup)";
   toast("📧 Reset code sent!","success");
 };
 
-document.getElementById("haveCodeBtn").onclick=()=>{
+$("haveCodeBtn").onclick=()=>{
   hideAll();
   resetPasswordBox.style.display="block";
-  document.getElementById("resetEmailInput").value=document.getElementById("forgotEmail").value||"";
-  document.getElementById("resetError").textContent="";
-  document.getElementById("resetInfo").textContent="";
+  $("resetEmailInput").value=$("forgotEmail").value||"";
+  $("resetError").textContent="";
+  $("resetInfo").textContent="";
 };
 
-document.getElementById("modalCloseBtn").onclick=()=>document.getElementById("emailModal").classList.remove("active");
+$("modalCloseBtn").onclick=()=>$("emailModal").classList.remove("active");
 
-document.getElementById("modalUseCodeBtn").onclick=()=>{
-  document.getElementById("emailModal").classList.remove("active");
-  // If admin triggered, just close
-  if(currentUser && currentUser.role==="admin"){
-    return;
-  }
-  const email=document.getElementById("forgotEmail").value.trim().toLowerCase();
-  const token=document.getElementById("modalResetToken").textContent;
+$("modalUseCodeBtn").onclick=()=>{
+  $("emailModal").classList.remove("active");
+  if(currentUser && currentUser.role==="admin") return;
+  const email=$("forgotEmail").value.trim().toLowerCase();
+  const token=$("modalResetToken").textContent;
   hideAll();
   resetPasswordBox.style.display="block";
-  document.getElementById("resetEmailInput").value=email;
-  document.getElementById("resetTokenInput").value=token;
-  document.getElementById("newPasswordInput").value="";
-  document.getElementById("confirmPasswordInput").value="";
+  $("resetEmailInput").value=email;
+  $("resetTokenInput").value=token;
+  $("newPasswordInput").value="";
+  $("confirmPasswordInput").value="";
 };
 
-document.getElementById("resetBack").onclick=()=>{ hideAll(); forgotPasswordBox.style.display="block"; };
+$("resetBack").onclick=()=>{ hideAll(); forgotPasswordBox.style.display="block"; };
 
-document.getElementById("confirmResetBtn").onclick=()=>{
-  const email=document.getElementById("resetEmailInput").value.trim().toLowerCase();
-  const token=document.getElementById("resetTokenInput").value.trim().toUpperCase();
-  const newPass=document.getElementById("newPasswordInput").value;
-  const confirmPass=document.getElementById("confirmPasswordInput").value;
-  const errEl=document.getElementById("resetError");
-  const infoEl=document.getElementById("resetInfo");
+$("confirmResetBtn").onclick=()=>{
+  refreshData();
+  const email=$("resetEmailInput").value.trim().toLowerCase();
+  const token=$("resetTokenInput").value.trim().toUpperCase();
+  const newPass=$("newPasswordInput").value;
+  const confirmPass=$("confirmPasswordInput").value;
+  const errEl=$("resetError"); const infoEl=$("resetInfo");
   errEl.textContent=""; infoEl.textContent="";
-
-  if(!email || !teachers[email]){ errEl.textContent="Email not found."; return; }
+  if(!email||!teachers[email]){ errEl.textContent="Email not found."; return; }
   const stored=resetTokens[email];
-  if(!stored){ errEl.textContent="No reset code found. Please request a new one."; return; }
+  if(!stored){ errEl.textContent="No reset code found."; return; }
   if(Date.now()>stored.expiresAt){ delete resetTokens[email]; saveResetTokens(); errEl.textContent="Reset code has expired."; return; }
   if(stored.token!==token){ errEl.textContent="Invalid reset code."; return; }
   if(newPass.length<6){ errEl.textContent="New password must be at least 6 characters."; return; }
   if(newPass!==confirmPass){ errEl.textContent="Passwords don't match."; return; }
-
   teachers[email].password=newPass;
   saveTeachers();
   delete resetTokens[email]; saveResetTokens();
@@ -1765,27 +1803,28 @@ document.getElementById("confirmResetBtn").onclick=()=>{
   setTimeout(()=>{
     hideAll();
     teacherAuth.style.display="block";
-    document.getElementById("teacherEmail").value=email;
-    document.getElementById("teacherPassword").value="";
-    document.getElementById("teacherError").textContent="";
+    $("teacherEmail").value=email;
+    $("teacherPassword").value="";
+    $("teacherError").textContent="";
     isRegistering=false;
-    document.getElementById("teacherAuthTitle").textContent="Teacher Login";
-    document.getElementById("teacherSubmit").textContent="Login";
-    document.getElementById("teacherToggle").textContent="Don't have an account? Register";
-    document.getElementById("teacherDisplayName").style.display="none";
-    document.getElementById("forgotPasswordBtn").style.display="inline-block";
+    $("teacherAuthTitle").textContent="Teacher Login";
+    $("teacherSubmit").textContent="Login";
+    $("teacherToggle").textContent="Don't have an account? Register";
+    $("teacherDisplayName").style.display="none";
+    $("forgotPasswordBtn").style.display="inline-block";
   },1500);
 };
 
-document.getElementById("changePasswordBtn").onclick=()=>{
-  const oldPass=prompt("Enter your current password:");
+$("changePasswordBtn").onclick=()=>{
+  refreshData();
+  const oldPass=prompt("Current password:");
   if(oldPass===null) return;
   if(teachers[currentUser.email].password!==oldPass){ toast("❌ Incorrect current password.","error"); return; }
-  const newPass=prompt("Enter new password (min 6 characters):");
+  const newPass=prompt("New password (min 6):");
   if(newPass===null) return;
-  if(newPass.length<6){ toast("❌ Password too short.","error"); return; }
+  if(newPass.length<6){ toast("❌ Too short","error"); return; }
   const confirmPass=prompt("Confirm new password:");
-  if(confirmPass!==newPass){ toast("❌ Passwords don't match.","error"); return; }
+  if(confirmPass!==newPass){ toast("❌ Don't match","error"); return; }
   teachers[currentUser.email].password=newPass;
   saveTeachers();
   toast("✅ Password updated!","success");
@@ -1794,18 +1833,19 @@ document.getElementById("changePasswordBtn").onclick=()=>{
 // ============ TEACHER DASHBOARD ============
 function openTeacherDashboard(){
   hideAll();
+  refreshData();
   teacherDashboard.style.display="block";
   updateTopNav();
-  document.getElementById("teacherEmailDisplay").textContent=`${currentUser.displayName} (${currentUser.email})`;
+  $("teacherEmailDisplay").textContent=`${currentUser.displayName} (${currentUser.email})`;
   renderMyQuizzes();
   saveScreen("teacherDashboard");
 }
 
 function renderMyQuizzes(){
-  const list=document.getElementById("myQuizzesList");
+  const list=$("myQuizzesList");
   const mine=Object.values(quizzes).filter(q=>q.ownerEmail===currentUser.email);
   if(mine.length===0){
-    list.innerHTML=`<p style="text-align:center;color:#64748b;padding:20px;">No quizzes yet. Click "Create New Quiz" to start.</p>`;
+    list.innerHTML=`<div class="empty-state"><div class="icon">📚</div><h3>No quizzes yet</h3><p>Click "Create New Quiz" to get started!</p></div>`;
     return;
   }
   list.innerHTML=mine.map(q=>{
@@ -1813,14 +1853,14 @@ function renderMyQuizzes(){
     const attemptCount=leaderboard.filter(l=>l.quizId===q.id).length;
     return `
       <div class="quiz-card">
-        <h3>${escapeHtml(q.title)}</h3>
+        <h3>${escapeHtml(q.title)} <span class="badge ${q.visibility==='public'?'badge-public':'badge-code'}">${q.visibility==='public'?'🌐 Public':'🔒 Code-only'}</span></h3>
         <p>${escapeHtml(q.desc||'No description')}</p>
-        <p><strong>Questions:</strong> ${q.questions.length} | <strong>Visibility:</strong> ${q.visibility==='public'?'🌐 Public':'🔒 Code-only'} | <strong>Attempts:</strong> ${attemptCount}</p>
+        <p><strong>Questions:</strong> ${q.questions.length} | <strong>Attempts:</strong> ${attemptCount}</p>
         <div class="link-box"><strong>Code:</strong> ${q.code} &nbsp; | &nbsp; <strong>Link:</strong> ${link}</div>
         <div class="card-actions">
           <button onclick="editQuiz('${q.id}')">✏️ Edit</button>
-          <button class="success-btn" onclick="copyToClipboard('${link}','Link copied!')">📋 Link</button>
-          <button onclick="copyToClipboard('${q.code}','Code copied!')">📋 Code</button>
+          <button class="success-btn" onclick="copyToClipboard('${link}','Link copied!')">📋 Copy Link</button>
+          <button onclick="copyToClipboard('${q.code}','Code copied!')">📋 Copy Code</button>
           <button onclick="viewQuizLeaderboard('${q.id}')">🏆 Leaderboard</button>
           <button class="delete-btn" onclick="deleteQuiz('${q.id}')">🗑 Delete</button>
         </div>
@@ -1828,35 +1868,26 @@ function renderMyQuizzes(){
   }).join("");
 }
 
-function escapeHtml(s){ return (s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-function copyToClipboard(text,msg){
-  navigator.clipboard.writeText(text).then(()=>toast(msg||"Copied!","success")).catch(()=>{
-    const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta);
-    ta.select(); document.execCommand("copy"); document.body.removeChild(ta);
-    toast(msg||"Copied!","success");
-  });
-}
-
 function deleteQuiz(id){
   if(!confirm("Delete this quiz and all its leaderboard entries?")) return;
+  refreshData();
   delete quizzes[id];
   leaderboard=leaderboard.filter(l=>l.quizId!==id);
   saveQuizzes(); saveLeaderboard();
   toast("🗑 Quiz deleted","info");
   renderMyQuizzes();
 }
-
 function editQuiz(id){ editingQuizId=id; openEditor(); }
 
 function viewQuizLeaderboard(id){
+  refreshData();
   currentQuizId=id;
   hideAll();
   leaderboardBox.style.display="block";
   updateTopNav();
   renderLeaderboard(id);
-  document.getElementById("leaderboardQuizName").textContent=` — ${quizzes[id].title}`;
-  if(!document.getElementById("tempLbBack")){
+  $("leaderboardQuizName").textContent=` — ${quizzes[id].title}`;
+  if(!$("tempLbBack")){
     const btn=document.createElement("button");
     btn.id="tempLbBack"; btn.className="back-btn"; btn.textContent="⬅ Back to My Quizzes";
     btn.style.margin="20px auto"; btn.style.display="block";
@@ -1865,7 +1896,8 @@ function viewQuizLeaderboard(id){
   }
 }
 
-document.getElementById("createNewQuizBtn").onclick=()=>{
+$("createNewQuizBtn").onclick=()=>{
+  refreshData();
   const id=genId();
   quizzes[id]={
     id, code:genCode(), title:"New Quiz", desc:"",
@@ -1880,34 +1912,35 @@ document.getElementById("createNewQuizBtn").onclick=()=>{
   openEditor();
 };
 
-document.getElementById("teacherDashBack").onclick=()=>{
-  if(!confirm("This will log you out. Continue?")) return;
+$("teacherDashBack").onclick=()=>{
+  if(!confirm("Log out?")) return;
   doLogout();
 };
 
-// ============ TEACHER EDITOR ============
-let editorFromAdmin=false;
+// ============ EDITOR ============
 function openEditor(fromAdmin){
   editorFromAdmin=!!fromAdmin;
   hideAll();
+  refreshData();
   teacherPanel.style.display="block";
   updateTopNav();
   const qz=quizzes[editingQuizId];
-  document.getElementById("editorTitle").textContent=(editorFromAdmin?"🛡️ Admin Edit: ":"📝 Edit: ")+qz.title;
-  document.getElementById("quizTitleInput").value=qz.title;
-  document.getElementById("quizDescInput").value=qz.desc||"";
-  document.getElementById("quizVisibility").value=qz.visibility;
-  document.getElementById("quizCode").value=qz.code;
-  document.getElementById("quizLink").value=`${location.origin}${location.pathname}?quiz=${qz.code}`;
+  if(!qz){ toast("Quiz no longer exists","error"); openTeacherDashboard(); return; }
+  $("editorTitle").textContent=(editorFromAdmin?"🛡️ Admin Edit: ":"📝 Edit: ")+qz.title;
+  $("quizTitleInput").value=qz.title;
+  $("quizDescInput").value=qz.desc||"";
+  $("quizVisibility").value=qz.visibility;
+  $("quizCode").value=qz.code;
+  $("quizLink").value=`${location.origin}${location.pathname}?quiz=${qz.code}`;
   renderQuestionsEditor();
   saveScreen("editor",{editingQuizId});
 }
 
-document.getElementById("copyLinkBtn").onclick=()=>copyToClipboard(document.getElementById("quizLink").value,"Link copied!");
-document.getElementById("copyCodeBtn").onclick=()=>copyToClipboard(document.getElementById("quizCode").value,"Code copied!");
+$("copyLinkBtn").onclick=()=>copyToClipboard($("quizLink").value,"Link copied!");
+$("copyCodeBtn").onclick=()=>copyToClipboard($("quizCode").value,"Code copied!");
 
 function renderQuestionsEditor(){
-  const container=document.getElementById("questionsEditor");
+  const container=$("questionsEditor");
   container.innerHTML="";
   const qz=quizzes[editingQuizId];
   qz.questions.forEach((q,i)=>{
@@ -1920,7 +1953,7 @@ function renderQuestionsEditor(){
       <textarea data-idx="${i}" data-field="o" rows="4">${q.o.map(escapeHtml).join("\n")}</textarea>
       <label>Correct Answer Index (0-3)</label>
       <input type="number" min="0" max="3" data-idx="${i}" data-field="a" value="${q.a}">
-      <label>Difficulty Level</label>
+      <label>Difficulty</label>
       <select data-idx="${i}" data-field="l">
         <option value="easy" ${q.l==="easy"?"selected":""}>Easy</option>
         <option value="medium" ${q.l==="medium"?"selected":""}>Medium</option>
@@ -1928,7 +1961,7 @@ function renderQuestionsEditor(){
       </select>
       <label>Explanation</label>
       <input type="text" data-idx="${i}" data-field="e" value="${escapeHtml(q.e)}">
-      <button class="delete-btn small-btn" data-del="${i}">🗑 Delete</button>
+      <button class="delete-btn small-btn" data-del="${i}">🗑 Delete Question</button>
     `;
     container.appendChild(div);
   });
@@ -1943,17 +1976,17 @@ function renderQuestionsEditor(){
   });
 }
 
-document.getElementById("addQuestionBtn").onclick=()=>{
+$("addQuestionBtn").onclick=()=>{
   quizzes[editingQuizId].questions.push({q:"New Question",o:["Option A","Option B","Option C","Option D"],a:0,l:"easy",e:"Explanation here."});
   saveQuizzes();
   renderQuestionsEditor();
 };
 
-document.getElementById("saveAllBtn").onclick=()=>{
+$("saveAllBtn").onclick=()=>{
   const qz=quizzes[editingQuizId];
-  qz.title=document.getElementById("quizTitleInput").value.trim()||"Untitled Quiz";
-  qz.desc=document.getElementById("quizDescInput").value.trim();
-  qz.visibility=document.getElementById("quizVisibility").value;
+  qz.title=$("quizTitleInput").value.trim()||"Untitled Quiz";
+  qz.desc=$("quizDescInput").value.trim();
+  qz.visibility=$("quizVisibility").value;
   const editors=document.querySelectorAll("#questionsEditor .q-editor");
   editors.forEach(ed=>{
     const fields=ed.querySelectorAll("[data-field]");
@@ -1967,18 +2000,19 @@ document.getElementById("saveAllBtn").onclick=()=>{
   });
   saveQuizzes();
   toast("💾 All changes saved!","success");
-  document.getElementById("editorTitle").textContent=(editorFromAdmin?"🛡️ Admin Edit: ":"📝 Edit: ")+qz.title;
+  $("editorTitle").textContent=(editorFromAdmin?"🛡️ Admin Edit: ":"📝 Edit: ")+qz.title;
 };
 
-document.getElementById("resetLeaderboardBtn").onclick=()=>{
+$("resetLeaderboardBtn").onclick=()=>{
   if(confirm("Clear this quiz's leaderboard?")){
+    refreshData();
     leaderboard=leaderboard.filter(l=>l.quizId!==editingQuizId);
     saveLeaderboard();
     toast("🧹 Leaderboard cleared","info");
   }
 };
 
-document.getElementById("previewQuizBtn").onclick=()=>{
+$("previewQuizBtn").onclick=()=>{
   isPreviewMode=true;
   currentQuizId=editingQuizId;
   hideAll();
@@ -1986,82 +2020,97 @@ document.getElementById("previewQuizBtn").onclick=()=>{
   updateTopNav();
   const qz=quizzes[currentQuizId];
   quizTitleHeader.textContent=qz.title+" (Preview)";
-  welcomeMsg.textContent=`Preview mode — results won't be saved. Select Difficulty`;
-  document.getElementById("resumeSlot").innerHTML="";
+  welcomeMsg.textContent=`Preview mode — results won't be saved.`;
+  $("resumeSlot").innerHTML="";
 };
 
-document.getElementById("editorBack").onclick=()=>{
+$("editorBack").onclick=()=>{
   if(editorFromAdmin){ editorFromAdmin=false; openAdminDashboard(); }
   else openTeacherDashboard();
 };
 
 // ============ STUDENT FLOW ============
-document.getElementById("studentSubmit").onclick=()=>{
-  const name=document.getElementById("studentName").value.trim();
-  const remember=document.getElementById("rememberMeStudent").checked;
-  const errEl=document.getElementById("studentError");
-  if(name.length<2){ errEl.textContent="Please enter a valid name."; return; }
+$("studentSubmit").onclick=()=>{
+  refreshData();
+  const name=$("studentName").value.trim();
+  const remember=$("rememberMeStudent").checked;
+  const errEl=$("studentError");
+  if(name.length<2){ errEl.textContent="Please enter a valid name (min 2 characters)."; return; }
   const key=name.toLowerCase();
-  if(!students[key]) students[key]={name, attempts:{}};
+  if(!students[key]) students[key]={name, attempts:{}, createdAt:new Date().toISOString()};
   currentUser={role:"student", name, key};
   saveStudents();
   saveSession(remember);
   toast(`Welcome, ${name}! 👋`,"success");
-  hideAll();
-  accessCodeBox.style.display="block";
-  updateTopNav();
-  document.getElementById("accessCodeError").textContent="";
-  document.getElementById("accessCodeInput").value="";
-  saveScreen("accessCode");
+  openStudentQuizzes();
 };
 
-document.getElementById("accessCodeBack").onclick=()=>{
-  if(!confirm("This will log you out. Continue?")) return;
+function openStudentQuizzes(){
+  hideAll();
+  refreshData();
+  publicQuizzesBox.style.display="block";
+  updateTopNav();
+  $("accessCodeError").textContent="";
+  $("accessCodeInput").value="";
+  renderPublicQuizzes();
+  saveScreen("publicQuizzes");
+}
+
+$("publicQuizzesBack").onclick=()=>{
+  if(!confirm("Log out?")) return;
   doLogout();
 };
 
-document.getElementById("joinByCodeBtn").onclick=()=>{
-  const code=document.getElementById("accessCodeInput").value.trim().toUpperCase();
-  const errEl=document.getElementById("accessCodeError");
-  if(!code){ errEl.textContent="Enter a quiz code."; return; }
+$("joinByCodeBtn").onclick=()=>{
+  refreshData();
+  const code=$("accessCodeInput").value.trim().toUpperCase();
+  const errEl=$("accessCodeError");
+  errEl.textContent="";
+  if(!code){ errEl.textContent="Please enter a quiz code."; return; }
   const quiz=Object.values(quizzes).find(q=>q.code===code);
-  if(!quiz){ errEl.textContent="Quiz not found for that code."; return; }
+  if(!quiz){ errEl.textContent="No quiz found for that code."; return; }
   enterQuiz(quiz.id);
 };
 
-document.getElementById("browsePublicBtn").onclick=()=>{
-  hideAll();
-  publicQuizzesBox.style.display="block";
-  updateTopNav();
-  renderPublicQuizzes();
-  saveScreen("publicQuizzes");
-};
-
-document.getElementById("publicQuizzesBack").onclick=()=>{
-  hideAll(); accessCodeBox.style.display="block"; updateTopNav();
-  saveScreen("accessCode");
-};
+$("studentQuizSearch").oninput=()=>renderPublicQuizzes();
 
 function renderPublicQuizzes(){
-  const list=document.getElementById("publicQuizzesList");
-  const pub=Object.values(quizzes).filter(q=>q.visibility==="public" && q.questions.length>0);
+  const list=$("publicQuizzesList");
+  const f=($("studentQuizSearch").value||"").toLowerCase();
+  const pub=Object.values(quizzes).filter(q=>
+    q.visibility==="public" &&
+    (q.questions?.length||0)>0 &&
+    (q.title.toLowerCase().includes(f) || (q.ownerName||"").toLowerCase().includes(f))
+  ).sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0));
+
   if(pub.length===0){
-    list.innerHTML=`<p style="text-align:center;color:#64748b;padding:20px;">No public quizzes available.</p>`;
+    list.innerHTML=`<div class="empty-state"><div class="icon">📂</div><h3>No public quizzes yet</h3><p>Check back later or ask your teacher for a quiz code.</p></div>`;
     return;
   }
-  list.innerHTML=pub.map(q=>`
-    <div class="quiz-card">
-      <h3>${escapeHtml(q.title)}</h3>
-      <p>${escapeHtml(q.desc||'No description')}</p>
-      <p><strong>By:</strong> ${escapeHtml(q.ownerName)} | <strong>Questions:</strong> ${q.questions.length}</p>
-      <div class="card-actions">
-        <button class="success-btn" onclick="enterQuiz('${q.id}')">▶️ Start Quiz</button>
-      </div>
-    </div>
-  `).join("");
+
+  const now=Date.now();
+  list.innerHTML=pub.map(q=>{
+    const isNew=q.createdAt && (now-new Date(q.createdAt).getTime() < 1000*60*60*24*3);
+    const used=students[currentUser?.key]?.attempts?.[q.id]||0;
+    const attemptsLabel=used>=2?`<span class="badge" style="background:#fecaca;color:#991b1b;">Attempts used (2/2)</span>`:`<span class="badge" style="background:#e0e7ff;color:#3730a3;">Attempts: ${used}/2</span>`;
+    return `
+      <div class="quiz-card student-quiz-card">
+        <h3>
+          ${escapeHtml(q.title)}
+          <span class="badge badge-public">🌐 Public</span>
+          ${isNew?`<span class="badge badge-new">✨ NEW</span>`:""}
+        </h3>
+        <p>${escapeHtml(q.desc||'No description')}</p>
+        <p><strong>👨‍🏫 By:</strong> ${escapeHtml(q.ownerName||"Teacher")} &nbsp; | &nbsp; <strong>❓ Questions:</strong> ${q.questions.length} &nbsp; ${attemptsLabel}</p>
+        <div class="card-actions">
+          <button class="start-big" onclick="enterQuiz('${q.id}')" ${used>=2?'disabled':''}>${used>=2?'🚫 Limit Reached':'▶️ Start Quiz'}</button>
+        </div>
+      </div>`;
+  }).join("");
 }
 
 function enterQuiz(quizId){
+  refreshData();
   const qz=quizzes[quizId];
   if(!qz){ toast("Quiz not found.","error"); return; }
   if(!qz.questions || qz.questions.length===0){ toast("This quiz has no questions yet.","error"); return; }
@@ -2077,10 +2126,10 @@ function enterQuiz(quizId){
   updateTopNav();
   leaderboardBox.style.display="block";
   quizTitleHeader.textContent=qz.title;
-  welcomeMsg.textContent=`Welcome, ${currentUser.name}! Attempts on this quiz: ${used}/2. Select Difficulty`;
+  welcomeMsg.textContent=`Welcome, ${currentUser.name}! Attempts: ${used}/2. Select Difficulty`;
   renderLeaderboard(quizId);
-  document.getElementById("leaderboardQuizName").textContent=` — ${qz.title}`;
-  document.getElementById("resumeSlot").innerHTML="";
+  $("leaderboardQuizName").textContent=` — ${qz.title}`;
+  $("resumeSlot").innerHTML="";
   saveScreen("difficulty",{currentQuizId});
 }
 
@@ -2104,34 +2153,31 @@ function doLogout(){
   toast("👋 Logged out","info");
 }
 
-document.getElementById("logoutBtn").onclick=()=>{
+$("logoutBtn").onclick=()=>{
   if(!confirm("Are you sure you want to log out?")) return;
   doLogout();
 };
 
-document.getElementById("homeBtn").onclick=()=>{
+$("homeBtn").onclick=()=>{
   if(!currentUser){ hideAll(); roleScreen.style.display="flex"; updateTopNav(); return; }
   if(currentUser.role==="teacher") openTeacherDashboard();
   else if(currentUser.role==="admin") openAdminDashboard();
-  else { hideAll(); accessCodeBox.style.display="block"; updateTopNav(); saveScreen("accessCode"); }
+  else openStudentQuizzes();
 };
 
-document.getElementById("difficultyBack").onclick=()=>{
+$("difficultyBack").onclick=()=>{
   if(isPreviewMode){ isPreviewMode=false; openEditor(editorFromAdmin); return; }
-  hideAll(); accessCodeBox.style.display="block"; updateTopNav(); saveScreen("accessCode");
+  openStudentQuizzes();
 };
 
 // ============ QUIZ ENGINE ============
-function updateAttempts(){
-  attemptsEl.textContent = `Restart Attempts: ${attempts}`;
-}
+function updateAttempts(){ attemptsEl.textContent=`Restart Attempts: ${attempts}`; }
 
 function persistQuizState(){
   if(!currentUser || currentUser.role!=="student" || isPreviewMode) return;
   localStorage.setItem(QUIZ_STATE_KEY, JSON.stringify({
     quizId:currentQuizId, level:currentLevel,
-    filtered, index, score, attempts,
-    ts:Date.now()
+    filtered, index, score, attempts, ts:Date.now()
   }));
 }
 function clearQuizState(){ localStorage.removeItem(QUIZ_STATE_KEY); }
@@ -2140,13 +2186,15 @@ document.querySelectorAll("[data-level]").forEach(btn=>{
   btn.onclick=()=>{
     if(!currentUser){ toast("Please login first.","error"); return; }
     if(!currentQuizId){ toast("Please select a quiz.","error"); return; }
+    refreshData();
     const qz=quizzes[currentQuizId];
+    if(!qz){ toast("Quiz no longer exists.","error"); openStudentQuizzes(); return; }
     if(currentUser.role==="student" && !isPreviewMode){
       const used=students[currentUser.key].attempts[currentQuizId]||0;
-      if(used>=2){ toast("You've reached the 2-attempt limit for this quiz.","error"); return; }
+      if(used>=2){ toast("You've reached the 2-attempt limit.","error"); return; }
     }
     currentLevel=btn.dataset.level;
-    let pool = currentLevel==="all" ? qz.questions : qz.questions.filter(q=>q.l===currentLevel);
+    let pool=currentLevel==="all"?qz.questions:qz.questions.filter(q=>q.l===currentLevel);
     if(pool.length===0){ toast("No questions available for this level.","error"); return; }
     filtered=shuffleArray([...pool]).slice(0,10);
     index=score=0; attempts=0;
@@ -2194,25 +2242,27 @@ function answerQuestion(correct,correctIndex,explanation){
   clearInterval(timerInterval);
   [...optionsEl.children].forEach((b,i)=>{
     b.disabled=true;
-    if(i===correctIndex)b.classList.add("correct-glow");
-    else if(!correct)b.classList.add("wrong-glow");
+    if(i===correctIndex) b.classList.add("correct-glow");
+    else if(!correct) b.classList.add("wrong-glow");
   });
   feedbackEl.textContent=correct?"✅ Correct!":"❌ Wrong!";
   explanationEl.textContent=`Correct Answer: ${filtered[index].o[correctIndex]}. ${explanation}`;
-  if(correct)score++;
-  setTimeout(()=>{
-    index++;
-    index<filtered.length?loadQuestion():showResult();
-  },2500);
+  if(correct) score++;
+  setTimeout(()=>{ index++; index<filtered.length?loadQuestion():showResult(); },2500);
 }
 
 function showResult(){
   clearQuizState();
+  refreshData();
   if(currentUser && currentUser.role==="student" && !isPreviewMode){
     if(!students[currentUser.key].attempts) students[currentUser.key].attempts={};
     students[currentUser.key].attempts[currentQuizId]=(students[currentUser.key].attempts[currentQuizId]||0)+1;
     saveStudents();
-    leaderboard.push({quizId:currentQuizId,name:currentUser.name,level:currentLevel,score,total:filtered.length,date:new Date().toLocaleString()});
+    leaderboard.push({
+      quizId:currentQuizId, name:currentUser.name,
+      level:currentLevel, score, total:filtered.length,
+      date:new Date().toLocaleString()
+    });
     saveLeaderboard();
   }
   hideAll();
@@ -2224,17 +2274,17 @@ function showResult(){
     finalAttemptsEl.textContent=`Preview mode — attempt not saved.`;
   } else if(currentUser && currentUser.role==="student"){
     const used=students[currentUser.key].attempts[currentQuizId]||0;
-    finalAttemptsEl.textContent = `Restart Attempts: ${attempts} | Total Quiz Attempts: ${used}/2`;
+    finalAttemptsEl.textContent=`Restart Attempts: ${attempts} | Total Quiz Attempts: ${used}/2`;
   }
   renderLeaderboard(currentQuizId);
-  document.getElementById("leaderboardQuizName").textContent=` — ${quizzes[currentQuizId].title}`;
+  $("leaderboardQuizName").textContent=` — ${quizzes[currentQuizId].title}`;
   saveScreen("result",{currentQuizId});
   const pct=(score/filtered.length)*100;
   if(pct===100) toast("🌟 Perfect score!","success");
   else if(pct>=70) toast("🎉 Great job!","success");
 }
 
-document.getElementById("backBtn").onclick=()=>{
+$("backBtn").onclick=()=>{
   attempts++;
   updateAttempts();
   clearInterval(timerInterval);
@@ -2247,44 +2297,42 @@ document.getElementById("backBtn").onclick=()=>{
   saveScreen("difficulty",{currentQuizId});
 };
 
-document.getElementById("restartBtn").onclick=()=>{
+$("restartBtn").onclick=()=>{
   attempts++;
+  refreshData();
   const qz=quizzes[currentQuizId];
-  let pool = currentLevel==="all" ? qz.questions : qz.questions.filter(q=>q.l===currentLevel);
+  let pool=currentLevel==="all"?qz.questions:qz.questions.filter(q=>q.l===currentLevel);
   filtered=shuffleArray([...pool]).slice(0,10);
   index=score=0;
   updateAttempts();
   loadQuestion();
 };
 
-document.getElementById("restartAllBtn").onclick=()=>{
+$("restartAllBtn").onclick=()=>{
   hideAll();
   difficultyScreen.style.display="flex";
   updateTopNav();
   leaderboardBox.style.display="block";
   if(currentUser && currentUser.role==="student" && !isPreviewMode){
+    refreshData();
     const used=students[currentUser.key].attempts[currentQuizId]||0;
-    welcomeMsg.textContent=`Welcome, ${currentUser.name}! Attempts on this quiz: ${used}/2. Select Difficulty`;
+    welcomeMsg.textContent=`Welcome, ${currentUser.name}! Attempts: ${used}/2.`;
   }
   renderLeaderboard(currentQuizId);
   saveScreen("difficulty",{currentQuizId});
 };
 
-document.getElementById("resultHomeBtn").onclick=()=>{
+$("resultHomeBtn").onclick=()=>{
   if(isPreviewMode){ isPreviewMode=false; openEditor(editorFromAdmin); return; }
-  if(currentUser && currentUser.role==="student"){
-    hideAll(); accessCodeBox.style.display="block"; updateTopNav(); saveScreen("accessCode");
-  } else {
-    hideAll(); roleScreen.style.display="flex"; updateTopNav();
-  }
+  if(currentUser && currentUser.role==="student") openStudentQuizzes();
+  else { hideAll(); roleScreen.style.display="flex"; updateTopNav(); }
 };
 
 function shuffleArray(arr){ return arr.sort(()=>Math.random()-0.5); }
 
-// ============ LEADERBOARD ============
 function renderLeaderboard(quizId){
-  const body=document.getElementById("leaderboardBody");
-  let entries = quizId ? leaderboard.filter(e=>e.quizId===quizId) : leaderboard;
+  const body=$("leaderboardBody");
+  let entries=quizId?leaderboard.filter(e=>e.quizId===quizId):leaderboard;
   const sorted=[...entries].sort((a,b)=>(b.score/b.total)-(a.score/a.total)).slice(0,10);
   if(sorted.length===0){
     body.innerHTML=`<tr><td colspan="5">No scores yet. Be the first!</td></tr>`;
@@ -2310,14 +2358,27 @@ window.addEventListener("storage",(e)=>{
     updateTopNav();
     toast("Logged out in another tab","info");
   }
-  if(e.key==="ict_quizzes"){ quizzes=JSON.parse(e.newValue)||{}; if(currentUser?.role==="admin") renderAdminTables(); }
-  if(e.key==="ict_leaderboard_v2"){ leaderboard=JSON.parse(e.newValue)||[]; if(currentQuizId) renderLeaderboard(currentQuizId); if(currentUser?.role==="admin") renderAdminTables(); }
-  if(e.key==="ict_teachers"){ teachers=JSON.parse(e.newValue)||{}; if(currentUser?.role==="admin") renderAdminTables(); }
-  if(e.key==="ict_students_v2"){ students=JSON.parse(e.newValue)||{}; if(currentUser?.role==="admin") renderAdminTables(); }
+  // any relevant data change -> refresh in-memory copy
+  if([K_TEACHERS,K_QUIZZES,K_STUDENTS,K_LEADERBOARD,K_RESETS].includes(e.key)){
+    refreshData();
+    if(currentUser?.role==="admin"){
+      renderAdminStats(); renderAdminTables();
+    }
+    if(currentUser?.role==="student" && publicQuizzesBox.style.display==="block"){
+      renderPublicQuizzes();
+    }
+    if(currentUser?.role==="teacher" && teacherDashboard.style.display==="block"){
+      renderMyQuizzes();
+    }
+    if(currentQuizId && leaderboardBox.style.display==="block"){
+      renderLeaderboard(currentQuizId);
+    }
+  }
 });
 
-// ============ RESTORE SESSION ON LOAD ============
+// ============ RESTORE SESSION ============
 function restoreSession(){
+  refreshData();
   const savedUser=loadSession();
   const params=new URLSearchParams(location.search);
   const linkCode=params.get("quiz");
@@ -2325,7 +2386,7 @@ function restoreSession(){
   if(linkCode){
     const quiz=Object.values(quizzes).find(q=>q.code===linkCode.toUpperCase());
     if(!quiz){ toast("Quiz link invalid.","error"); }
-    else {
+    else{
       if(savedUser && savedUser.role==="student" && students[savedUser.key]){
         currentUser=savedUser;
         updateTopNav();
@@ -2334,29 +2395,26 @@ function restoreSession(){
       }
       hideAll();
       studentAuth.style.display="block";
-      document.getElementById("studentError").textContent=`You're joining: "${quiz.title}". Register to start.`;
-      const oldHandler=document.getElementById("studentSubmit").onclick;
-      document.getElementById("studentSubmit").onclick=()=>{
-        const name=document.getElementById("studentName").value.trim();
-        const remember=document.getElementById("rememberMeStudent").checked;
-        const errEl=document.getElementById("studentError");
+      $("studentError").textContent=`You're joining: "${quiz.title}". Enter your name to start.`;
+      const oldHandler=$("studentSubmit").onclick;
+      $("studentSubmit").onclick=()=>{
+        refreshData();
+        const name=$("studentName").value.trim();
+        const remember=$("rememberMeStudent").checked;
+        const errEl=$("studentError");
         if(name.length<2){ errEl.textContent="Please enter a valid name."; return; }
         const key=name.toLowerCase();
-        if(!students[key]) students[key]={name,attempts:{}};
+        if(!students[key]) students[key]={name,attempts:{},createdAt:new Date().toISOString()};
         currentUser={role:"student",name,key};
         saveStudents(); saveSession(remember);
-        document.getElementById("studentSubmit").onclick=oldHandler;
+        $("studentSubmit").onclick=oldHandler;
         enterQuiz(quiz.id);
       };
       return;
     }
   }
 
-  if(!savedUser){
-    hideAll();
-    roleScreen.style.display="flex";
-    return;
-  }
+  if(!savedUser){ hideAll(); roleScreen.style.display="flex"; return; }
 
   if(savedUser.role==="admin"){
     currentUser=savedUser;
@@ -2381,7 +2439,7 @@ function restoreSession(){
     openTeacherDashboard();
     toast(`Welcome back, ${currentUser.displayName}!`,"success");
   } else if(savedUser.role==="student"){
-    if(!students[savedUser.key]){ students[savedUser.key]={name:savedUser.name,attempts:{}}; saveStudents(); }
+    if(!students[savedUser.key]){ students[savedUser.key]={name:savedUser.name, attempts:{}, createdAt:new Date().toISOString()}; saveStudents(); }
     currentUser=savedUser;
     updateTopNav();
     let restoredFromQuiz=false;
@@ -2397,7 +2455,7 @@ function restoreSession(){
           quizTitleHeader.textContent=qz.title;
           const used=students[currentUser.key].attempts[currentQuizId]||0;
           welcomeMsg.textContent=`Welcome back, ${currentUser.name}! Attempts: ${used}/2.`;
-          const slot=document.getElementById("resumeSlot");
+          const slot=$("resumeSlot");
           slot.innerHTML=`
             <div class="resume-banner">
               ⏸ You have a quiz in progress (Q ${qState.index+1} of ${qState.filtered.length}).
@@ -2408,32 +2466,27 @@ function restoreSession(){
             </div>`;
           leaderboardBox.style.display="block";
           renderLeaderboard(currentQuizId);
-          document.getElementById("leaderboardQuizName").textContent=` — ${qz.title}`;
-          document.getElementById("resumeQuizBtn").onclick=()=>{
+          $("leaderboardQuizName").textContent=` — ${qz.title}`;
+          $("resumeQuizBtn").onclick=()=>{
             filtered=qState.filtered; index=qState.index; score=qState.score;
             currentLevel=qState.level; attempts=qState.attempts||0;
             hideAll(); quizBox.style.display="block"; updateTopNav();
             updateAttempts(); loadQuestion();
-            toast("▶️ Quiz resumed!","info");
+            toast("▶️ Resumed!","info");
           };
-          document.getElementById("discardQuizBtn").onclick=()=>{
-            clearQuizState();
-            slot.innerHTML="";
-            toast("Quiz discarded","info");
+          $("discardQuizBtn").onclick=()=>{
+            clearQuizState(); slot.innerHTML=""; toast("Discarded","info");
           };
           restoredFromQuiz=true;
         }
       }
     }catch(e){}
-
     if(!restoredFromQuiz){
       const lastScreen=loadScreen();
       if(lastScreen && lastScreen.name==="difficulty" && lastScreen.extra && quizzes[lastScreen.extra.currentQuizId]){
         enterQuiz(lastScreen.extra.currentQuizId);
-      } else if(lastScreen && lastScreen.name==="publicQuizzes"){
-        hideAll(); publicQuizzesBox.style.display="block"; updateTopNav(); renderPublicQuizzes();
       } else {
-        hideAll(); accessCodeBox.style.display="block"; updateTopNav();
+        openStudentQuizzes();
       }
     }
     toast(`Welcome back, ${currentUser.name}!`,"success");
@@ -2443,7 +2496,7 @@ function restoreSession(){
 window.addEventListener("DOMContentLoaded",()=>{
   setTimeout(()=>{
     restoreSession();
-    document.getElementById("loadingOverlay").style.display="none";
+    $("loadingOverlay").style.display="none";
   }, 400);
 });
 
