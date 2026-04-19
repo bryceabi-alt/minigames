@@ -30,640 +30,187 @@ body{
   min-height:100vh;
 }
 
-.gadget-background{
-  position:fixed; inset:0;
-  pointer-events:none; z-index:0;
-  overflow:hidden;
-}
-.gadget{
-  position:absolute;
-  font-size:clamp(2rem,6vw,3.6rem);
-  opacity:.2;
-  animation:float 24s linear infinite;
-}
-@keyframes float{
-  from{transform:translateX(-30vw)}
-  to{transform:translateX(130vw)}
-}
+.gadget-background{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.gadget{position:absolute;font-size:clamp(2rem,6vw,3.6rem);opacity:.2;animation:float 24s linear infinite;}
+@keyframes float{from{transform:translateX(-30vw)}to{transform:translateX(130vw)}}
 
 header,section,footer{position:relative;z-index:1}
 
-header{
-  min-height:100vh;
-  padding:var(--pad);
-  display:flex; flex-direction:column;
-  justify-content:center; align-items:center;
-  text-align:center;
-}
-header h1{
-  font-size:var(--title);
-  color:#1d4ed8;
-  margin-bottom:10px;
-}
-header p{
-  font-size:var(--text);
-  margin-bottom:24px;
-}
+header{min-height:100vh;padding:var(--pad);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;}
+header h1{font-size:var(--title);color:#1d4ed8;margin-bottom:10px;}
+header p{font-size:var(--text);margin-bottom:24px;}
 
-button{
-  width:100%;
-  max-width:360px;
-  padding:var(--btn-pad);
-  font-size:var(--btn-font);
-  background:#3b82f6;
-  color:#fff;
-  border:none;
-  border-radius:var(--radius);
-  cursor:pointer;
-  margin:10px 0;
-  box-shadow:0 6px 0 #1e40af;
-  transition:transform .1s ease, box-shadow .1s ease;
-  font-family:'Poppins',sans-serif;
-  font-weight:600;
-}
+button{width:100%;max-width:360px;padding:var(--btn-pad);font-size:var(--btn-font);background:#3b82f6;color:#fff;border:none;border-radius:var(--radius);cursor:pointer;margin:10px 0;box-shadow:0 6px 0 #1e40af;transition:transform .1s ease,box-shadow .1s ease;font-family:'Poppins',sans-serif;font-weight:600;}
 button:hover:not(:disabled){transform:translateY(-1px);}
-button:active{
-  transform:translateY(2px);
-  box-shadow:0 4px 0 #1e40af;
-}
-button:disabled{
-  opacity:.5; cursor:not-allowed;
-}
+button:active{transform:translateY(2px);box-shadow:0 4px 0 #1e40af;}
+button:disabled{opacity:.5;cursor:not-allowed;}
 
-.quiz-box{
-  width:100%;
-  max-width:1000px;
-  margin:20px auto;
-  background:#fff;
-  padding:var(--pad);
-  border-radius:var(--radius);
-  box-shadow:0 20px 40px rgba(0,0,0,.1);
-  display:none;
-}
+.quiz-box{width:100%;max-width:1000px;margin:20px auto;background:#fff;padding:var(--pad);border-radius:var(--radius);box-shadow:0 20px 40px rgba(0,0,0,.1);display:none;}
 
-.counter{
-  font-weight:600; margin-bottom:8px;
-  font-size:var(--text); color:#2563eb;
-  text-align:center;
-}
-#attempts{
-  font-size:clamp(.9rem,3vw,1.05rem);
-  color:#475569; text-align:center;
-  margin-bottom:16px;
-}
-.question{
-  font-size:var(--question);
-  margin-bottom:22px; text-align:center;
-}
-.options button{
-  background:#eff6ff;
-  color:#1e293b;
-  border:2px solid #3b82f6;
-}
+.counter{font-weight:600;margin-bottom:8px;font-size:var(--text);color:#2563eb;text-align:center;}
+#attempts{font-size:clamp(.9rem,3vw,1.05rem);color:#475569;text-align:center;margin-bottom:16px;}
+.question{font-size:var(--question);margin-bottom:22px;text-align:center;}
+.options button{background:#eff6ff;color:#1e293b;border:2px solid #3b82f6;}
 .options button:active{background:#dbeafe}
 
 .correct-glow{box-shadow:0 0 15px 5px #16a34a}
 .wrong-glow{box-shadow:0 0 15px 5px #dc2626}
 
-#feedback{
-  font-weight:700;
-  font-size:clamp(1.1rem,3.5vw,1.3rem);
-  margin-top:14px; text-align:center;
-}
-.explanation{
-  margin-top:10px; font-style:italic;
-  font-size:var(--text); text-align:center;
-}
+#feedback{font-weight:700;font-size:clamp(1.1rem,3.5vw,1.3rem);margin-top:14px;text-align:center;}
+.explanation{margin-top:10px;font-style:italic;font-size:var(--text);text-align:center;}
 
-.controls{
-  margin-top:26px; display:flex;
-  gap:12px; flex-wrap:wrap;
-  justify-content:center;
-}
+.controls{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
 .controls button{flex:0 0 240px}
 
 .result{text-align:center}
-.result h2{
-  font-size:clamp(2rem,6vw,3.2rem);
-  color:#1d4ed8;
-}
+.result h2{font-size:clamp(2rem,6vw,3.2rem);color:#1d4ed8;}
 
-footer{
-  text-align:center; padding:20px;
-  font-size:clamp(.85rem,2.5vw,.95rem);
-  color:#475569;
-}
+footer{text-align:center;padding:20px;font-size:clamp(.85rem,2.5vw,.95rem);color:#475569;}
 
-.role-select, .auth-box {
-  width:100%;
-  max-width:500px;
-  margin:20px auto;
-  background:#fff;
-  padding:var(--pad);
-  border-radius:var(--radius);
-  box-shadow:0 20px 40px rgba(0,0,0,.1);
-  display:none;
-  text-align:center;
-}
-.auth-box h2, .role-select h2 {
-  color:#1d4ed8;
-  font-size:clamp(1.6rem,5vw,2.4rem);
-  margin-top:0;
-}
-.auth-box input {
-  width:100%; max-width:360px;
-  padding:var(--btn-pad);
-  font-size:var(--btn-font);
-  border:2px solid #3b82f6;
-  border-radius:var(--radius);
-  margin:8px 0;
-  font-family:'Poppins',sans-serif;
-}
-.auth-toggle {
-  background:#64748b !important;
-  box-shadow:0 6px 0 #334155 !important;
-}
-.back-btn {
-  background:#64748b !important;
-  box-shadow:0 6px 0 #334155 !important;
-}
-.link-btn {
-  background:transparent !important;
-  color:#2563eb !important;
-  box-shadow:none !important;
-  text-decoration:underline;
-  font-size:.95rem !important;
-  padding:6px !important;
-}
-.auth-error {
-  color:#dc2626; font-weight:600;
-  margin-top:10px; min-height:24px;
-}
-.auth-info {
-  color:#16a34a; font-weight:600;
-  margin-top:10px; min-height:24px;
-}
+.role-select,.auth-box{width:100%;max-width:500px;margin:20px auto;background:#fff;padding:var(--pad);border-radius:var(--radius);box-shadow:0 20px 40px rgba(0,0,0,.1);display:none;text-align:center;}
+.auth-box h2,.role-select h2{color:#1d4ed8;font-size:clamp(1.6rem,5vw,2.4rem);margin-top:0;}
+.auth-box input{width:100%;max-width:360px;padding:var(--btn-pad);font-size:var(--btn-font);border:2px solid #3b82f6;border-radius:var(--radius);margin:8px 0;font-family:'Poppins',sans-serif;}
+.auth-toggle{background:#64748b !important;box-shadow:0 6px 0 #334155 !important;}
+.back-btn{background:#64748b !important;box-shadow:0 6px 0 #334155 !important;}
+.link-btn{background:transparent !important;color:#2563eb !important;box-shadow:none !important;text-decoration:underline;font-size:.95rem !important;padding:6px !important;}
+.auth-error{color:#dc2626;font-weight:600;margin-top:10px;min-height:24px;}
+.auth-info{color:#16a34a;font-weight:600;margin-top:10px;min-height:24px;}
 
-.remember-row {
-  display:flex; align-items:center;
-  justify-content:center; gap:8px;
-  margin:10px 0;
-  font-size:.95rem; color:#475569;
-}
-.remember-row input[type="checkbox"]{
-  width:18px; height:18px;
-  max-width:18px; margin:0; cursor:pointer;
-}
+.remember-row{display:flex;align-items:center;justify-content:center;gap:8px;margin:10px 0;font-size:.95rem;color:#475569;}
+.remember-row input[type="checkbox"]{width:18px;height:18px;max-width:18px;margin:0;cursor:pointer;}
 
-.password-wrapper{position:relative; display:inline-block; width:100%; max-width:360px;}
+.password-wrapper{position:relative;display:inline-block;width:100%;max-width:360px;}
 .password-wrapper input{padding-right:50px !important;}
-.toggle-pass{
-  position:absolute; right:10px;
-  top:50%; transform:translateY(-50%);
-  background:transparent; border:none;
-  font-size:1.3rem; cursor:pointer;
-  padding:4px 8px !important;
-  width:auto !important; max-width:none !important;
-  margin:0 !important; box-shadow:none !important;
-  color:#64748b;
-}
+.toggle-pass{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:transparent;border:none;font-size:1.3rem;cursor:pointer;padding:4px 8px !important;width:auto !important;max-width:none !important;margin:0 !important;box-shadow:none !important;color:#64748b;}
 
-.leaderboard {
-  width:100%; max-width:1000px;
-  margin:20px auto; background:#fff;
-  padding:var(--pad);
-  border-radius:var(--radius);
-  box-shadow:0 20px 40px rgba(0,0,0,.1);
-}
-.leaderboard h2 {
-  color:#1d4ed8; text-align:center;
-  margin-top:0;
-}
-.leaderboard table {
-  width:100%; border-collapse:collapse;
-  margin-top:14px; font-size:var(--text);
-}
-.leaderboard th, .leaderboard td {
-  padding:10px; border-bottom:1px solid #e2e8f0;
-  text-align:center;
-}
-.leaderboard th {
-  background:#dbeafe; color:#1d4ed8;
-}
-.leaderboard tr:nth-child(1) td { background:#fef3c7; font-weight:700; }
-.leaderboard tr:nth-child(2) td { background:#f1f5f9; font-weight:600; }
-.leaderboard tr:nth-child(3) td { background:#fde68a; }
+.leaderboard{width:100%;max-width:1000px;margin:20px auto;background:#fff;padding:var(--pad);border-radius:var(--radius);box-shadow:0 20px 40px rgba(0,0,0,.1);}
+.leaderboard h2{color:#1d4ed8;text-align:center;margin-top:0;}
+.leaderboard table{width:100%;border-collapse:collapse;margin-top:14px;font-size:var(--text);}
+.leaderboard th,.leaderboard td{padding:10px;border-bottom:1px solid #e2e8f0;text-align:center;}
+.leaderboard th{background:#dbeafe;color:#1d4ed8;}
+.leaderboard tr:nth-child(1) td{background:#fef3c7;font-weight:700;}
+.leaderboard tr:nth-child(2) td{background:#f1f5f9;font-weight:600;}
+.leaderboard tr:nth-child(3) td{background:#fde68a;}
 
-.teacher-panel, .quiz-list-box, .admin-panel {
-  width:100%; max-width:1100px;
-  margin:20px auto; background:#fff;
-  padding:var(--pad);
-  border-radius:var(--radius);
-  box-shadow:0 20px 40px rgba(0,0,0,.1);
-  display:none;
-}
-.teacher-panel h2, .quiz-list-box h2, .admin-panel h2 { color:#1d4ed8; text-align:center; margin-top:0; }
+.teacher-panel,.quiz-list-box,.admin-panel{width:100%;max-width:1100px;margin:20px auto;background:#fff;padding:var(--pad);border-radius:var(--radius);box-shadow:0 20px 40px rgba(0,0,0,.1);display:none;}
+.teacher-panel h2,.quiz-list-box h2,.admin-panel h2{color:#1d4ed8;text-align:center;margin-top:0;}
 
-.q-editor {
-  background:#f8fafc; padding:16px;
-  border-radius:var(--radius); margin:12px 0;
-  border:2px solid #e2e8f0;
-}
-.q-editor input, .q-editor select, .q-editor textarea {
-  width:100%; padding:10px;
-  font-size:1rem;
-  border:1px solid #cbd5e1;
-  border-radius:8px; margin:4px 0;
-  font-family:'Poppins',sans-serif;
-}
-.q-editor label {
-  font-weight:600; font-size:.9rem;
-  color:#475569; display:block;
-  margin-top:8px;
-}
-.small-btn {
-  max-width:200px;
-  padding:10px 14px !important;
-  font-size:.95rem !important;
-}
-.delete-btn {
-  background:#dc2626 !important;
-  box-shadow:0 6px 0 #991b1b !important;
-}
-.success-btn {
-  background:#16a34a !important;
-  box-shadow:0 6px 0 #166534 !important;
-}
-.warn-btn {
-  background:#f59e0b !important;
-  box-shadow:0 6px 0 #b45309 !important;
-}
-.admin-btn {
-  background:#7c3aed !important;
-  box-shadow:0 6px 0 #5b21b6 !important;
-}
+.q-editor{background:#f8fafc;padding:16px;border-radius:var(--radius);margin:12px 0;border:2px solid #e2e8f0;}
+.q-editor input,.q-editor select,.q-editor textarea{width:100%;padding:10px;font-size:1rem;border:1px solid #cbd5e1;border-radius:8px;margin:4px 0;font-family:'Poppins',sans-serif;}
+.q-editor label{font-weight:600;font-size:.9rem;color:#475569;display:block;margin-top:8px;}
+.small-btn{max-width:200px;padding:10px 14px !important;font-size:.95rem !important;}
+.delete-btn{background:#dc2626 !important;box-shadow:0 6px 0 #991b1b !important;}
+.success-btn{background:#16a34a !important;box-shadow:0 6px 0 #166534 !important;}
+.warn-btn{background:#f59e0b !important;box-shadow:0 6px 0 #b45309 !important;}
+.admin-btn{background:#7c3aed !important;box-shadow:0 6px 0 #5b21b6 !important;}
 
-.top-nav {
-  position:fixed; top:10px; right:10px;
-  z-index:10; display:flex;
-  align-items:center; gap:6px;
-  background:rgba(255,255,255,.95);
-  backdrop-filter:blur(8px);
-  padding:6px 10px;
-  border-radius:var(--radius);
-  box-shadow:0 4px 12px rgba(0,0,0,.1);
-}
-.top-nav button {
-  max-width:150px;
-  padding:8px 14px !important;
-  font-size:.9rem !important;
-  margin:0 !important;
-}
-.user-badge{
-  font-size:.85rem; color:#1d4ed8;
-  font-weight:600; padding:0 8px;
-  max-width:180px; white-space:nowrap;
-  overflow:hidden; text-overflow:ellipsis;
-}
+.top-nav{position:fixed;top:10px;right:10px;z-index:10;display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);padding:6px 10px;border-radius:var(--radius);box-shadow:0 4px 12px rgba(0,0,0,.1);}
+.top-nav button{max-width:150px;padding:8px 14px !important;font-size:.9rem !important;margin:0 !important;}
+.user-badge{font-size:.85rem;color:#1d4ed8;font-weight:600;padding:0 8px;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .user-badge.admin{color:#7c3aed;}
 
-.quiz-card {
-  background:#f8fafc;
-  border:2px solid #e2e8f0;
-  padding:16px;
-  border-radius:var(--radius);
-  margin:12px 0; text-align:left;
-  transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-}
-.quiz-card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 10px 25px rgba(0,0,0,.08);
-  border-color:#3b82f6;
-}
-.quiz-card h3 {
-  margin:0 0 6px 0;
-  color:#1d4ed8;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  flex-wrap:wrap;
-}
-.quiz-card p { margin:4px 0; font-size:.95rem; color:#475569; }
-.quiz-card .link-box {
-  background:#dbeafe; padding:8px 12px;
-  border-radius:8px; word-break:break-all;
-  font-family:monospace; font-size:.85rem;
-  margin:8px 0;
-}
-.quiz-card .card-actions {
-  display:flex; gap:8px;
-  flex-wrap:wrap; margin-top:10px;
-}
-.quiz-card .card-actions button {
-  flex:1 1 120px;
-  max-width:180px; margin:0;
-  padding:10px !important;
-  font-size:.9rem !important;
-}
+.cloud-indicator{position:fixed;bottom:10px;left:10px;z-index:10;background:rgba(255,255,255,.95);padding:6px 12px;border-radius:20px;font-size:.8rem;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.1);display:flex;align-items:center;gap:6px;}
+.cloud-indicator.online{color:#16a34a;}
+.cloud-indicator.offline{color:#dc2626;}
+.cloud-indicator.syncing{color:#2563eb;}
+.cloud-dot{width:8px;height:8px;border-radius:50%;background:currentColor;}
+.cloud-dot.pulse{animation:livePulse 1.5s infinite;}
 
-/* Big start quiz button on student cards */
-.student-quiz-card{
-  cursor:pointer;
-  background:linear-gradient(135deg,#ffffff,#f0f9ff);
-}
-.student-quiz-card .start-big{
-  background:#16a34a !important;
-  box-shadow:0 6px 0 #166534 !important;
-  font-size:1.05rem !important;
-  padding:14px !important;
-  max-width:100% !important;
-  flex:1 1 100% !important;
-}
-.badge{
-  display:inline-block;
-  font-size:.75rem;
-  padding:3px 8px;
-  border-radius:999px;
-  font-weight:600;
-}
-.badge-public{background:#dcfce7; color:#166534;}
-.badge-code{background:#fef9c3; color:#854d0e;}
-.badge-new{background:#dbeafe; color:#1e40af; animation:pulse 2s infinite;}
-@keyframes pulse{
-  0%,100%{opacity:1}
-  50%{opacity:.6}
-}
+.quiz-card{background:#f8fafc;border:2px solid #e2e8f0;padding:16px;border-radius:var(--radius);margin:12px 0;text-align:left;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;}
+.quiz-card:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(0,0,0,.08);border-color:#3b82f6;}
+.quiz-card h3{margin:0 0 6px 0;color:#1d4ed8;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.quiz-card p{margin:4px 0;font-size:.95rem;color:#475569;}
+.quiz-card .link-box{background:#dbeafe;padding:8px 12px;border-radius:8px;word-break:break-all;font-family:monospace;font-size:.85rem;margin:8px 0;}
+.quiz-card .card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+.quiz-card .card-actions button{flex:1 1 120px;max-width:180px;margin:0;padding:10px !important;font-size:.9rem !important;}
 
-.quiz-meta-box {
-  background:#eff6ff; padding:16px;
-  border-radius:var(--radius);
-  border:2px solid #3b82f6; margin:12px 0;
-}
-.quiz-meta-box input, .quiz-meta-box textarea {
-  width:100%; padding:10px;
-  font-size:1rem;
-  border:1px solid #cbd5e1;
-  border-radius:8px; margin:4px 0;
-  font-family:'Poppins',sans-serif;
-}
-.quiz-meta-box label {
-  font-weight:600; color:#1d4ed8;
-  display:block; margin-top:8px;
-}
+.student-quiz-card{cursor:pointer;background:linear-gradient(135deg,#ffffff,#f0f9ff);}
+.student-quiz-card .start-big{background:#16a34a !important;box-shadow:0 6px 0 #166534 !important;font-size:1.05rem !important;padding:14px !important;max-width:100% !important;flex:1 1 100% !important;}
+.badge{display:inline-block;font-size:.75rem;padding:3px 8px;border-radius:999px;font-weight:600;}
+.badge-public{background:#dcfce7;color:#166534;}
+.badge-code{background:#fef9c3;color:#854d0e;}
+.badge-new{background:#dbeafe;color:#1e40af;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
 
-.email-modal {
-  position:fixed; inset:0;
-  background:rgba(0,0,0,.6);
-  z-index:100; display:none;
-  justify-content:center; align-items:center;
-  padding:20px;
-}
+.quiz-meta-box{background:#eff6ff;padding:16px;border-radius:var(--radius);border:2px solid #3b82f6;margin:12px 0;}
+.quiz-meta-box input,.quiz-meta-box textarea{width:100%;padding:10px;font-size:1rem;border:1px solid #cbd5e1;border-radius:8px;margin:4px 0;font-family:'Poppins',sans-serif;}
+.quiz-meta-box label{font-weight:600;color:#1d4ed8;display:block;margin-top:8px;}
+
+.email-modal{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;display:none;justify-content:center;align-items:center;padding:20px;}
 .email-modal.active{display:flex;}
-.email-content {
-  background:#fff;
-  border-radius:var(--radius);
-  padding:var(--pad);
-  max-width:500px; width:100%;
-  box-shadow:0 30px 60px rgba(0,0,0,.3);
-  animation:slideIn .3s ease;
-}
-@keyframes slideIn{
-  from{transform:translateY(-30px);opacity:0}
-  to{transform:translateY(0);opacity:1}
-}
-.email-header {
-  background:#dbeafe;
-  margin:calc(var(--pad) * -1) calc(var(--pad) * -1) 16px;
-  padding:16px var(--pad);
-  border-radius:var(--radius) var(--radius) 0 0;
-  border-bottom:3px solid #3b82f6;
-}
-.email-header h3 { margin:0; color:#1d4ed8; font-size:1.3rem;}
-.email-header p { margin:4px 0 0; font-size:.9rem; color:#475569;}
-.email-body p{margin:10px 0; font-size:.95rem;}
-.reset-token-display {
-  background:#1e293b; color:#fbbf24;
-  padding:16px; border-radius:8px;
-  font-family:monospace; font-size:1.4rem;
-  letter-spacing:4px; text-align:center;
-  font-weight:700; margin:14px 0;
-  word-break:break-all;
-}
+.email-content{background:#fff;border-radius:var(--radius);padding:var(--pad);max-width:500px;width:100%;box-shadow:0 30px 60px rgba(0,0,0,.3);animation:slideIn .3s ease;}
+@keyframes slideIn{from{transform:translateY(-30px);opacity:0}to{transform:translateY(0);opacity:1}}
+.email-header{background:#dbeafe;margin:calc(var(--pad) * -1) calc(var(--pad) * -1) 16px;padding:16px var(--pad);border-radius:var(--radius) var(--radius) 0 0;border-bottom:3px solid #3b82f6;}
+.email-header h3{margin:0;color:#1d4ed8;font-size:1.3rem;}
+.email-header p{margin:4px 0 0;font-size:.9rem;color:#475569;}
+.email-body p{margin:10px 0;font-size:.95rem;}
+.reset-token-display{background:#1e293b;color:#fbbf24;padding:16px;border-radius:8px;font-family:monospace;font-size:1.4rem;letter-spacing:4px;text-align:center;font-weight:700;margin:14px 0;word-break:break-all;}
 
-.toast-container{
-  position:fixed; top:80px; right:20px;
-  z-index:200; display:flex;
-  flex-direction:column; gap:10px;
-  pointer-events:none;
-}
-.toast{
-  background:#1e293b; color:#fff;
-  padding:12px 20px; border-radius:12px;
-  font-size:.95rem; font-weight:600;
-  box-shadow:0 8px 20px rgba(0,0,0,.2);
-  animation:toastIn .3s ease;
-  max-width:320px; pointer-events:auto;
-}
+.toast-container{position:fixed;top:80px;right:20px;z-index:200;display:flex;flex-direction:column;gap:10px;pointer-events:none;}
+.toast{background:#1e293b;color:#fff;padding:12px 20px;border-radius:12px;font-size:.95rem;font-weight:600;box-shadow:0 8px 20px rgba(0,0,0,.2);animation:toastIn .3s ease;max-width:320px;pointer-events:auto;}
 .toast.success{background:#16a34a;}
 .toast.error{background:#dc2626;}
 .toast.info{background:#2563eb;}
 .toast.admin{background:#7c3aed;}
-@keyframes toastIn{
-  from{transform:translateX(100%);opacity:0}
-  to{transform:translateX(0);opacity:1}
-}
+@keyframes toastIn{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
 .toast.fade-out{animation:toastOut .3s ease forwards;}
-@keyframes toastOut{
-  to{transform:translateX(100%);opacity:0}
-}
+@keyframes toastOut{to{transform:translateX(100%);opacity:0}}
 
-.loading-overlay{
-  position:fixed; inset:0;
-  background:rgba(248,250,252,.95);
-  z-index:300; display:flex;
-  justify-content:center; align-items:center;
-  flex-direction:column; gap:20px;
-}
-.spinner{
-  width:60px; height:60px;
-  border:6px solid #dbeafe;
-  border-top-color:#1d4ed8;
-  border-radius:50%;
-  animation:spin 1s linear infinite;
-}
+.loading-overlay{position:fixed;inset:0;background:rgba(248,250,252,.95);z-index:300;display:flex;justify-content:center;align-items:center;flex-direction:column;gap:20px;}
+.spinner{width:60px;height:60px;border:6px solid #dbeafe;border-top-color:#1d4ed8;border-radius:50%;animation:spin 1s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-.resume-banner{
-  background:#fef3c7;
-  border:2px solid #f59e0b;
-  padding:14px;
-  border-radius:var(--radius);
-  text-align:center;
-  margin:14px auto;
-  max-width:500px;
-  color:#92400e;
-  font-weight:600;
-}
+.resume-banner{background:#fef3c7;border:2px solid #f59e0b;padding:14px;border-radius:var(--radius);text-align:center;margin:14px auto;max-width:500px;color:#92400e;font-weight:600;}
 
-/* Admin */
-.admin-header{
-  background:linear-gradient(135deg,#7c3aed,#5b21b6);
-  color:#fff; padding:20px;
-  border-radius:var(--radius);
-  margin-bottom:20px; text-align:center;
-  position:relative;
-}
-.admin-header h2{color:#fff !important; margin:0;}
-.admin-header p{color:#e9d5ff; margin:6px 0 0;}
-.live-indicator{
-  position:absolute; top:12px; right:14px;
-  background:#16a34a; color:#fff;
-  padding:4px 10px; border-radius:999px;
-  font-size:.75rem; font-weight:700;
-  display:flex; align-items:center; gap:6px;
-}
-.live-dot{
-  width:8px; height:8px;
-  background:#fff; border-radius:50%;
-  animation:livePulse 1.2s infinite;
-}
-@keyframes livePulse{
-  0%,100%{opacity:1;transform:scale(1)}
-  50%{opacity:.4;transform:scale(1.3)}
-}
+.admin-header{background:linear-gradient(135deg,#7c3aed,#5b21b6);color:#fff;padding:20px;border-radius:var(--radius);margin-bottom:20px;text-align:center;position:relative;}
+.admin-header h2{color:#fff !important;margin:0;}
+.admin-header p{color:#e9d5ff;margin:6px 0 0;}
+.live-indicator{position:absolute;top:12px;right:14px;background:#16a34a;color:#fff;padding:4px 10px;border-radius:999px;font-size:.75rem;font-weight:700;display:flex;align-items:center;gap:6px;}
+.live-dot{width:8px;height:8px;background:#fff;border-radius:50%;animation:livePulse 1.2s infinite;}
+@keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.3)}}
 
-.admin-stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(160px,1fr));
-  gap:12px; margin:16px 0;
-}
-.stat-card{
-  background:#f3e8ff;
-  border:2px solid #a855f7;
-  padding:16px;
-  border-radius:var(--radius);
-  text-align:center;
-  transition:transform .15s ease;
-}
+.admin-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:16px 0;}
+.stat-card{background:#f3e8ff;border:2px solid #a855f7;padding:16px;border-radius:var(--radius);text-align:center;transition:transform .15s ease;}
 .stat-card:hover{transform:translateY(-3px);}
-.stat-card .num{
-  font-size:2rem; font-weight:700;
-  color:#6b21a8;
-}
-.stat-card .label{
-  font-size:.85rem; color:#475569;
-  font-weight:600;
-}
+.stat-card .num{font-size:2rem;font-weight:700;color:#6b21a8;}
+.stat-card .label{font-size:.85rem;color:#475569;font-weight:600;}
 
-.admin-tabs{
-  display:flex; gap:6px;
-  flex-wrap:wrap; justify-content:center;
-  margin:16px 0;
-}
-.admin-tabs button{
-  flex:1 1 140px; max-width:200px;
-  padding:10px !important;
-  font-size:.95rem !important;
-  background:#cbd5e1 !important;
-  color:#1e293b !important;
-  box-shadow:0 4px 0 #94a3b8 !important;
-}
-.admin-tabs button.active{
-  background:#7c3aed !important;
-  color:#fff !important;
-  box-shadow:0 4px 0 #5b21b6 !important;
-}
+.admin-tabs{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:16px 0;}
+.admin-tabs button{flex:1 1 140px;max-width:200px;padding:10px !important;font-size:.95rem !important;background:#cbd5e1 !important;color:#1e293b !important;box-shadow:0 4px 0 #94a3b8 !important;}
+.admin-tabs button.active{background:#7c3aed !important;color:#fff !important;box-shadow:0 4px 0 #5b21b6 !important;}
 .admin-section{display:none;}
 .admin-section.active{display:block;}
 
-.data-table{
-  width:100%; border-collapse:collapse;
-  margin-top:14px; font-size:.9rem;
-  background:#fff;
-}
-.data-table th, .data-table td{
-  padding:10px 8px;
-  border-bottom:1px solid #e2e8f0;
-  text-align:left;
-}
-.data-table th{
-  background:#f3e8ff; color:#6b21a8;
-  font-weight:700; position:sticky; top:0;
-}
+.data-table{width:100%;border-collapse:collapse;margin-top:14px;font-size:.9rem;background:#fff;}
+.data-table th,.data-table td{padding:10px 8px;border-bottom:1px solid #e2e8f0;text-align:left;}
+.data-table th{background:#f3e8ff;color:#6b21a8;font-weight:700;position:sticky;top:0;}
 .data-table tr:hover{background:#faf5ff;}
-.data-table .action-cell{display:flex; gap:4px; flex-wrap:wrap;}
-.data-table .action-cell button{
-  width:auto; max-width:none;
-  padding:6px 10px !important;
-  font-size:.8rem !important;
-  margin:0 !important;
-  box-shadow:0 3px 0 rgba(0,0,0,.2) !important;
-}
-.table-wrapper{
-  overflow-x:auto;
-  border-radius:var(--radius);
-  border:1px solid #e2e8f0;
-  max-height:500px;
-  overflow-y:auto;
-}
+.data-table .action-cell{display:flex;gap:4px;flex-wrap:wrap;}
+.data-table .action-cell button{width:auto;max-width:none;padding:6px 10px !important;font-size:.8rem !important;margin:0 !important;box-shadow:0 3px 0 rgba(0,0,0,.2) !important;}
+.table-wrapper{overflow-x:auto;border-radius:var(--radius);border:1px solid #e2e8f0;max-height:500px;overflow-y:auto;}
 
-.search-box{
-  width:100%; max-width:400px;
-  padding:10px; font-size:1rem;
-  border:2px solid #a855f7;
-  border-radius:10px;
-  margin:10px auto; display:block;
-  font-family:'Poppins',sans-serif;
-}
+.search-box{width:100%;max-width:400px;padding:10px;font-size:1rem;border:2px solid #a855f7;border-radius:10px;margin:10px auto;display:block;font-family:'Poppins',sans-serif;}
 
-.empty-state{
-  text-align:center; padding:40px 20px;
-  color:#94a3b8;
-}
+.empty-state{text-align:center;padding:40px 20px;color:#94a3b8;}
 .empty-state .icon{font-size:3rem;}
-.empty-state h3{color:#64748b; margin:10px 0;}
+.empty-state h3{color:#64748b;margin:10px 0;}
 
-/* Manual code fallback panel */
-.code-fallback{
-  margin:18px auto 6px;
-  max-width:500px;
-  background:#fffbeb;
-  border:2px dashed #f59e0b;
-  padding:14px;
-  border-radius:var(--radius);
-  text-align:center;
-}
-.code-fallback input{
-  width:100%; max-width:280px;
-  padding:10px; font-size:1rem;
-  border:2px solid #f59e0b;
-  border-radius:10px;
-  margin:8px 0; letter-spacing:3px;
-  text-transform:uppercase;
-  text-align:center;
-  font-family:'Poppins',sans-serif;
-}
-.code-fallback button{
-  background:#f59e0b !important;
-  box-shadow:0 4px 0 #b45309 !important;
-  max-width:280px;
-}
+.code-fallback{margin:18px auto 6px;max-width:500px;background:#fffbeb;border:2px dashed #f59e0b;padding:14px;border-radius:var(--radius);text-align:center;}
+.code-fallback input{width:100%;max-width:280px;padding:10px;font-size:1rem;border:2px solid #f59e0b;border-radius:10px;margin:8px 0;letter-spacing:3px;text-transform:uppercase;text-align:center;font-family:'Poppins',sans-serif;}
+.code-fallback button{background:#f59e0b !important;box-shadow:0 4px 0 #b45309 !important;max-width:280px;}
 
 @media(min-width:1024px){
-  .options{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-  .options button{ width:80%; max-width:520px; }
+  .options{display:flex;flex-direction:column;align-items:center;}
+  .options button{width:80%;max-width:520px;}
 }
 @media(max-width:500px){
   .top-nav{top:5px;right:5px;padding:4px 8px;}
   .user-badge{max-width:100px;font-size:.75rem;}
   .top-nav button{font-size:.8rem !important;padding:6px 10px !important;}
   .data-table{font-size:.8rem;}
-  .data-table th, .data-table td{padding:6px 4px;}
+  .data-table th,.data-table td{padding:6px 4px;}
   .live-indicator{position:static;margin-top:10px;display:inline-flex;}
+  .cloud-indicator{bottom:5px;left:5px;font-size:.7rem;padding:4px 8px;}
 }
 </style>
 </head>
@@ -672,28 +219,33 @@ footer{
 
 <div class="loading-overlay" id="loadingOverlay">
   <div class="spinner"></div>
-  <p style="color:#1d4ed8;font-weight:600;font-size:1.1rem;">Loading your session...</p>
+  <p style="color:#1d4ed8;font-weight:600;font-size:1.1rem;">Connecting to cloud...</p>
 </div>
 
 <div class="toast-container" id="toastContainer"></div>
 
+<div class="cloud-indicator offline" id="cloudIndicator">
+  <span class="cloud-dot"></span>
+  <span id="cloudStatus">Offline</span>
+</div>
+
 <div class="gadget-background">
-  <div class="gadget" style="top:3%;  animation-duration:28s;">📚</div>
-  <div class="gadget" style="top:8%;  animation-duration:22s; animation-delay:-5s;">💻</div>
-  <div class="gadget" style="top:14%; animation-duration:30s; animation-delay:-10s;">🧠</div>
-  <div class="gadget" style="top:20%; animation-duration:26s;">🎓</div>
-  <div class="gadget" style="top:26%; animation-duration:24s; animation-delay:-8s;">📱</div>
-  <div class="gadget" style="top:32%; animation-duration:32s;">🖥️</div>
-  <div class="gadget" style="top:38%; animation-duration:20s; animation-delay:-12s;">🧮</div>
-  <div class="gadget" style="top:44%; animation-duration:29s;">📊</div>
-  <div class="gadget" style="top:50%; animation-duration:25s; animation-delay:-6s;">🧑‍💻</div>
-  <div class="gadget" style="top:56%; animation-duration:34s;">🖱️</div>
-  <div class="gadget" style="top:62%; animation-duration:21s; animation-delay:-9s;">🔌</div>
-  <div class="gadget" style="top:68%; animation-duration:27s;">💾</div>
-  <div class="gadget" style="top:74%; animation-duration:31s; animation-delay:-14s;">📂</div>
-  <div class="gadget" style="top:80%; animation-duration:36s;">📎</div>
-  <div class="gadget" style="top:86%; animation-duration:23s;">⌨️</div>
-  <div class="gadget" style="top:92%; animation-duration:33s; animation-delay:-11s;">🛜</div>
+  <div class="gadget" style="top:3%;animation-duration:28s;">📚</div>
+  <div class="gadget" style="top:8%;animation-duration:22s;animation-delay:-5s;">💻</div>
+  <div class="gadget" style="top:14%;animation-duration:30s;animation-delay:-10s;">🧠</div>
+  <div class="gadget" style="top:20%;animation-duration:26s;">🎓</div>
+  <div class="gadget" style="top:26%;animation-duration:24s;animation-delay:-8s;">📱</div>
+  <div class="gadget" style="top:32%;animation-duration:32s;">🖥️</div>
+  <div class="gadget" style="top:38%;animation-duration:20s;animation-delay:-12s;">🧮</div>
+  <div class="gadget" style="top:44%;animation-duration:29s;">📊</div>
+  <div class="gadget" style="top:50%;animation-duration:25s;animation-delay:-6s;">🧑‍💻</div>
+  <div class="gadget" style="top:56%;animation-duration:34s;">🖱️</div>
+  <div class="gadget" style="top:62%;animation-duration:21s;animation-delay:-9s;">🔌</div>
+  <div class="gadget" style="top:68%;animation-duration:27s;">💾</div>
+  <div class="gadget" style="top:74%;animation-duration:31s;animation-delay:-14s;">📂</div>
+  <div class="gadget" style="top:80%;animation-duration:36s;">📎</div>
+  <div class="gadget" style="top:86%;animation-duration:23s;">⌨️</div>
+  <div class="gadget" style="top:92%;animation-duration:33s;animation-delay:-11s;">🛜</div>
 </div>
 
 <div class="top-nav" id="topNav" style="display:none;">
@@ -702,8 +254,7 @@ footer{
   <button id="logoutBtn">Logout</button>
 </div>
 
-<!-- ROLE SELECT -->
-<header class="role-select" id="roleScreen" style="display:flex;">
+<header class="role-select" id="roleScreen" style="display:none;">
   <h1>ICT Quizzes</h1>
   <p>Welcome! Please choose your role</p>
   <button id="studentRoleBtn">👨‍🎓 I'm a Student</button>
@@ -711,7 +262,6 @@ footer{
   <button id="adminRoleBtn" class="admin-btn">🛡️ Admin Login</button>
 </header>
 
-<!-- ADMIN AUTH -->
 <section class="auth-box" id="adminAuth">
   <h2 style="color:#7c3aed;">🛡️ Admin Login</h2>
   <p>Restricted access. Authorized personnel only.</p>
@@ -728,7 +278,6 @@ footer{
   <div class="auth-error" id="adminError"></div>
 </section>
 
-<!-- TEACHER AUTH -->
 <section class="auth-box" id="teacherAuth">
   <h2 id="teacherAuthTitle">Teacher Login</h2>
   <input type="email" id="teacherEmail" placeholder="Gmail address (example@gmail.com)" autocomplete="email">
@@ -748,24 +297,22 @@ footer{
   <div class="auth-info" id="teacherInfo"></div>
 </section>
 
-<!-- FORGOT PASSWORD -->
 <section class="auth-box" id="forgotPasswordBox">
   <h2>🔑 Forgot Password</h2>
-  <p>Enter your registered Gmail. A reset code will be sent to your email.</p>
+  <p>Enter your registered Gmail. A reset code will be generated.</p>
   <input type="email" id="forgotEmail" placeholder="Your registered Gmail">
-  <button id="sendResetBtn">📧 Send Reset Code</button>
+  <button id="sendResetBtn">📧 Generate Reset Code</button>
   <button class="link-btn" id="haveCodeBtn">I already have a reset code</button>
   <button class="back-btn" id="forgotBack">⬅ Back to Login</button>
   <div class="auth-error" id="forgotError"></div>
   <div class="auth-info" id="forgotInfo"></div>
 </section>
 
-<!-- RESET PASSWORD -->
 <section class="auth-box" id="resetPasswordBox">
   <h2>🔒 Reset Password</h2>
-  <p>Enter the reset code sent to your email and your new password.</p>
+  <p>Enter the reset code and your new password.</p>
   <input type="email" id="resetEmailInput" placeholder="Your Gmail">
-  <input type="text" id="resetTokenInput" placeholder="Reset code from email" style="letter-spacing:2px;">
+  <input type="text" id="resetTokenInput" placeholder="Reset code" style="letter-spacing:2px;">
   <div class="password-wrapper">
     <input type="password" id="newPasswordInput" placeholder="New password (min 6 characters)">
     <button type="button" class="toggle-pass" data-target="newPasswordInput">👁️</button>
@@ -780,20 +327,19 @@ footer{
   <div class="auth-info" id="resetInfo"></div>
 </section>
 
-<!-- EMAIL SIMULATION MODAL -->
 <div class="email-modal" id="emailModal">
   <div class="email-content">
     <div class="email-header">
-      <h3>📧 Email Received</h3>
+      <h3>📧 Reset Code Generated</h3>
       <p><strong>From:</strong> <span id="modalEmailFrom">no-reply@ictquizzes.com</span></p>
       <p><strong>To:</strong> <span id="modalEmailTo"></span></p>
       <p><strong>Subject:</strong> <span id="modalEmailSubject">Password Reset Code</span></p>
     </div>
     <div class="email-body">
       <p>Hello <span id="modalUserName"></span>,</p>
-      <p id="modalEmailIntro">You requested a password reset for your ICT Quizzes teacher account. Please use the code below to reset your password. This code is valid for <strong>15 minutes</strong>.</p>
+      <p id="modalEmailIntro">Use the code below to reset your password. Valid for <strong>15 minutes</strong>.</p>
       <div class="reset-token-display" id="modalResetToken"></div>
-      <p style="font-size:.85rem;color:#64748b;" id="modalEmailFooter">If you didn't request this, you can safely ignore this email.</p>
+      <p style="font-size:.85rem;color:#64748b;" id="modalEmailFooter">Copy this code now — it won't be shown again.</p>
     </div>
     <div class="controls">
       <button class="success-btn" id="modalUseCodeBtn">Use This Code</button>
@@ -802,7 +348,6 @@ footer{
   </div>
 </div>
 
-<!-- STUDENT REGISTER -->
 <section class="auth-box" id="studentAuth">
   <h2>Student Registration</h2>
   <p>Enter your name to start. You have 2 attempts per name per quiz.</p>
@@ -815,14 +360,11 @@ footer{
   <div class="auth-error" id="studentError"></div>
 </section>
 
-<!-- STUDENT: QUIZ LIST -->
 <section class="quiz-list-box" id="publicQuizzesBox">
   <h2>📚 Available Quizzes</h2>
   <p style="text-align:center;">Click on any quiz below to start playing!</p>
   <input type="text" class="search-box" id="studentQuizSearch" placeholder="🔍 Search for a quiz...">
   <div id="publicQuizzesList"></div>
-
-  <!-- Secret code fallback for private quizzes -->
   <div class="code-fallback">
     <p style="margin:0 0 4px;font-weight:600;color:#92400e;">🔒 Got a private quiz code?</p>
     <p style="margin:0 0 6px;font-size:.85rem;color:#78350f;">Enter it here to access a code-only quiz.</p>
@@ -830,13 +372,11 @@ footer{
     <button id="joinByCodeBtn">🔑 Unlock Quiz</button>
     <div class="auth-error" id="accessCodeError" style="margin-top:6px;"></div>
   </div>
-
   <div class="controls">
     <button class="back-btn" id="publicQuizzesBack">⬅ Logout</button>
   </div>
 </section>
 
-<!-- DIFFICULTY -->
 <header id="difficultyScreen" style="display:none;">
   <h1 id="quizTitleHeader">ICT Quizzes</h1>
   <p id="welcomeMsg">Select Difficulty</p>
@@ -848,7 +388,6 @@ footer{
   <button class="back-btn" id="difficultyBack">⬅ Back</button>
 </header>
 
-<!-- QUIZ -->
 <section class="quiz-box" id="quizBox">
   <div class="counter" id="counter"></div>
   <div id="attempts"></div>
@@ -862,7 +401,6 @@ footer{
   </div>
 </section>
 
-<!-- RESULT -->
 <section class="quiz-box result" id="resultBox">
   <h2>Quiz Complete 🎉</h2>
   <p>Your Score: <span id="score"></span></p>
@@ -871,7 +409,6 @@ footer{
   <button id="resultHomeBtn" class="back-btn">🏠 Home</button>
 </section>
 
-<!-- LEADERBOARD -->
 <section class="leaderboard" id="leaderboardBox" style="display:none;">
   <h2>🏆 Live Leaderboard <span id="leaderboardQuizName" style="font-size:.6em;color:#475569;"></span></h2>
   <table>
@@ -882,7 +419,6 @@ footer{
   </table>
 </section>
 
-<!-- TEACHER DASHBOARD -->
 <section class="quiz-list-box" id="teacherDashboard">
   <h2>👩‍🏫 My Quizzes</h2>
   <p style="text-align:center;">Logged in as: <strong id="teacherEmailDisplay"></strong></p>
@@ -896,10 +432,8 @@ footer{
   </div>
 </section>
 
-<!-- TEACHER PANEL: EDIT QUIZ -->
 <section class="teacher-panel" id="teacherPanel">
   <h2 id="editorTitle">📝 Edit Quiz</h2>
-
   <div class="quiz-meta-box">
     <label>Quiz Title</label>
     <input type="text" id="quizTitleInput" placeholder="e.g., ICT Basics Quiz">
@@ -919,7 +453,6 @@ footer{
       <button id="copyCodeBtn" class="small-btn">📋 Copy Code</button>
     </div>
   </div>
-
   <div class="controls">
     <button id="addQuestionBtn" class="small-btn">➕ Add Question</button>
     <button id="resetLeaderboardBtn" class="small-btn delete-btn">🧹 Clear This Quiz's Leaderboard</button>
@@ -932,23 +465,19 @@ footer{
   </div>
 </section>
 
-<!-- ADMIN DASHBOARD -->
 <section class="admin-panel" id="adminDashboard">
   <div class="admin-header">
     <div class="live-indicator"><span class="live-dot"></span> LIVE</div>
     <h2>🛡️ Admin Control Panel</h2>
-    <p>Full system monitoring & management · Auto-refreshing</p>
+    <p>Full system monitoring & management · Real-time cloud sync</p>
   </div>
-
   <div class="admin-stats" id="adminStats"></div>
-
   <div class="admin-tabs">
     <button class="active" data-tab="teachers">👩‍🏫 Teachers</button>
     <button data-tab="students">👨‍🎓 Students</button>
     <button data-tab="quizzes">📚 Quizzes</button>
     <button data-tab="scores">🏆 All Scores</button>
   </div>
-
   <div class="admin-section active" id="adminTeachers">
     <h3 style="color:#6b21a8;">Manage Teacher Accounts</h3>
     <input type="text" class="search-box" id="teacherSearch" placeholder="🔍 Search teachers by email or name...">
@@ -958,20 +487,11 @@ footer{
     </div>
     <div class="table-wrapper">
       <table class="data-table" id="teachersTable">
-        <thead>
-          <tr>
-            <th>Email</th>
-            <th>Display Name</th>
-            <th>Quizzes</th>
-            <th>Registered</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Email</th><th>Display Name</th><th>Quizzes</th><th>Registered</th><th>Actions</th></tr></thead>
         <tbody id="teachersTableBody"></tbody>
       </table>
     </div>
   </div>
-
   <div class="admin-section" id="adminStudents">
     <h3 style="color:#6b21a8;">Manage Student Accounts</h3>
     <input type="text" class="search-box" id="studentSearch" placeholder="🔍 Search students by name...">
@@ -981,20 +501,11 @@ footer{
     </div>
     <div class="table-wrapper">
       <table class="data-table" id="studentsTable">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Quizzes Taken</th>
-            <th>Total Attempts</th>
-            <th>Registered</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Name</th><th>Quizzes Taken</th><th>Total Attempts</th><th>Registered</th><th>Actions</th></tr></thead>
         <tbody id="studentsTableBody"></tbody>
       </table>
     </div>
   </div>
-
   <div class="admin-section" id="adminQuizzes">
     <h3 style="color:#6b21a8;">Manage All Quizzes</h3>
     <input type="text" class="search-box" id="quizSearch" placeholder="🔍 Search quizzes by title...">
@@ -1003,22 +514,11 @@ footer{
     </div>
     <div class="table-wrapper">
       <table class="data-table" id="quizzesTable">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Owner</th>
-            <th>Code</th>
-            <th>Visibility</th>
-            <th>Qs</th>
-            <th>Scores</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Title</th><th>Owner</th><th>Code</th><th>Visibility</th><th>Qs</th><th>Scores</th><th>Actions</th></tr></thead>
         <tbody id="quizzesTableBody"></tbody>
       </table>
     </div>
   </div>
-
   <div class="admin-section" id="adminScores">
     <h3 style="color:#6b21a8;">All Quiz Scores / Leaderboard</h3>
     <input type="text" class="search-box" id="scoreSearch" placeholder="🔍 Search by student or quiz...">
@@ -1027,28 +527,42 @@ footer{
     </div>
     <div class="table-wrapper">
       <table class="data-table" id="scoresTable">
-        <thead>
-          <tr>
-            <th>Student</th>
-            <th>Quiz</th>
-            <th>Level</th>
-            <th>Score</th>
-            <th>Date</th>
-            <th>Action</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Student</th><th>Quiz</th><th>Level</th><th>Score</th><th>Date</th><th>Action</th></tr></thead>
         <tbody id="scoresTableBody"></tbody>
       </table>
     </div>
   </div>
-
   <div class="controls" style="margin-top:24px;">
     <button id="refreshAdminBtn" class="small-btn">🔄 Refresh Now</button>
     <button class="back-btn" id="adminDashBack">⬅ Logout Admin</button>
   </div>
 </section>
 
-<footer>© 2026 • Gamified Learning • Pangkat Tatlo</footer>
+<footer>© 2026 • Gamified Learning • Pangkat Tatlo • ☁️ Cloud-Synced</footer>
+
+<!-- Firebase SDK -->
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyC_svhJTeVR6ThyAUfIghr8yqwW2ABRNXw",
+    authDomain: "minigames-6969.firebaseapp.com",
+    projectId: "minigames-6969",
+    storageBucket: "minigames-6969.firebasestorage.app",
+    messagingSenderId: "752124971142",
+    appId: "1:752124971142:web:1e04697281e1d542ee6907"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
+
+window.__firebase = { db, auth, doc, getDoc, setDoc, onSnapshot, collection, signInAnonymously };
+</script>
 
 <script>
 // ============ ADMIN CREDENTIALS ============
@@ -1079,58 +593,159 @@ const defaultQuestions = [
   {q:"What is ethical ICT use?",o:["Hacking","Piracy","Citing sources","Spamming"],a:2,l:"hard",e:"Citing sources is ethical."}
 ];
 
-// ============ STORAGE KEYS ============
-const K_TEACHERS = 'ict_teachers_v3';
-const K_QUIZZES = 'ict_quizzes_v3';
-const K_STUDENTS = 'ict_students_v3';
-const K_LEADERBOARD = 'ict_leaderboard_v3';
-const K_RESETS = 'ict_reset_tokens_v3';
+// ============ CLOUD DATABASE ============
+let teachers = {};
+let quizzes = {};
+let students = {};
+let leaderboard = [];
+let resetTokens = {};
+
+let dbReady = false;
+let unsubscribe = null;
+
 const SESSION_KEY = 'ict_session_v3';
 const SCREEN_KEY = 'ict_last_screen_v3';
 const QUIZ_STATE_KEY = 'ict_active_quiz_v3';
+const DB_DOC_PATH = ['app_data', 'main'];
 
-// ============ DATA LOAD (always fresh from storage) ============
-function loadData(){
-  return {
-    teachers: JSON.parse(localStorage.getItem(K_TEACHERS) || '{}'),
-    quizzes:  JSON.parse(localStorage.getItem(K_QUIZZES)  || '{}'),
-    students: JSON.parse(localStorage.getItem(K_STUDENTS) || '{}'),
-    leaderboard: JSON.parse(localStorage.getItem(K_LEADERBOARD) || '[]'),
-    resetTokens: JSON.parse(localStorage.getItem(K_RESETS) || '{}')
-  };
+function setCloudStatus(state, msg) {
+  const el = $("cloudIndicator");
+  const txt = $("cloudStatus");
+  if (!el || !txt) return;
+  el.classList.remove("online","offline","syncing");
+  el.classList.add(state);
+  const dot = el.querySelector(".cloud-dot");
+  if (state === "syncing") dot.classList.add("pulse");
+  else dot.classList.remove("pulse");
+  txt.textContent = msg || state;
 }
 
-// Migrate from older keys if present (one-time)
-(function migrateOldKeys(){
-  const oldTeachers=localStorage.getItem('ict_teachers');
-  const oldQuizzes=localStorage.getItem('ict_quizzes');
-  const oldStudents=localStorage.getItem('ict_students_v2');
-  const oldLB=localStorage.getItem('ict_leaderboard_v2');
-  const oldRT=localStorage.getItem('ict_reset_tokens');
-  if(oldTeachers && !localStorage.getItem(K_TEACHERS)) localStorage.setItem(K_TEACHERS, oldTeachers);
-  if(oldQuizzes && !localStorage.getItem(K_QUIZZES)) localStorage.setItem(K_QUIZZES, oldQuizzes);
-  if(oldStudents && !localStorage.getItem(K_STUDENTS)) localStorage.setItem(K_STUDENTS, oldStudents);
-  if(oldLB && !localStorage.getItem(K_LEADERBOARD)) localStorage.setItem(K_LEADERBOARD, oldLB);
-  if(oldRT && !localStorage.getItem(K_RESETS)) localStorage.setItem(K_RESETS, oldRT);
-})();
-
-let { teachers, quizzes, students, leaderboard, resetTokens } = loadData();
-
-// Re-sync helper used before any admin render
-function refreshData(){
-  const d=loadData();
-  teachers=d.teachers;
-  quizzes=d.quizzes;
-  students=d.students;
-  leaderboard=d.leaderboard;
-  resetTokens=d.resetTokens;
+async function waitForFirebase() {
+  let tries = 0;
+  while (!window.__firebase && tries < 100) {
+    await new Promise(r => setTimeout(r, 100));
+    tries++;
+  }
+  if (!window.__firebase) throw new Error("Firebase did not load");
+  return window.__firebase;
 }
 
-function saveTeachers(){ localStorage.setItem(K_TEACHERS, JSON.stringify(teachers)); }
-function saveQuizzes(){ localStorage.setItem(K_QUIZZES, JSON.stringify(quizzes)); }
-function saveStudents(){ localStorage.setItem(K_STUDENTS, JSON.stringify(students)); }
-function saveLeaderboard(){ localStorage.setItem(K_LEADERBOARD, JSON.stringify(leaderboard)); }
-function saveResetTokens(){ localStorage.setItem(K_RESETS, JSON.stringify(resetTokens)); }
+async function initCloud() {
+  setCloudStatus("syncing", "Connecting...");
+  try {
+    const fb = await waitForFirebase();
+    // Sign in anonymously
+    await fb.signInAnonymously(fb.auth);
+    
+    const dref = fb.doc(fb.db, DB_DOC_PATH[0], DB_DOC_PATH[1]);
+    
+    // Initial read
+    const snap = await fb.getDoc(dref);
+    if (!snap.exists()) {
+      // Create with sample quiz
+      const sampleId = genId();
+      const initialData = {
+        teachers: {},
+        quizzes: {
+          [sampleId]: {
+            id: sampleId, code: genCode({}),
+            title: "ICT Basics (Sample)",
+            desc: "Demo quiz with default ICT questions.",
+            ownerEmail: "system@gmail.com", ownerName: "System",
+            visibility: "public",
+            questions: JSON.parse(JSON.stringify(defaultQuestions)),
+            createdAt: new Date().toISOString()
+          }
+        },
+        students: {},
+        leaderboard: [],
+        resetTokens: {}
+      };
+      await fb.setDoc(dref, initialData);
+      applyCloudData(initialData);
+    } else {
+      applyCloudData(snap.data());
+    }
+    
+    // Real-time listener
+    unsubscribe = fb.onSnapshot(dref, (snap) => {
+      if (snap.exists()) {
+        applyCloudData(snap.data());
+        onCloudUpdate();
+      }
+    }, (err) => {
+      console.error("Snapshot error:", err);
+      setCloudStatus("offline", "Sync error");
+    });
+    
+    dbReady = true;
+    setCloudStatus("online", "Online");
+    return true;
+  } catch (err) {
+    console.error("Cloud init failed:", err);
+    setCloudStatus("offline", "Offline");
+    toast("❌ Cloud connection failed. Check Firebase config.", "error");
+    return false;
+  }
+}
+
+function applyCloudData(data) {
+  teachers = data.teachers || {};
+  quizzes = data.quizzes || {};
+  students = data.students || {};
+  leaderboard = data.leaderboard || [];
+  resetTokens = data.resetTokens || {};
+}
+
+let saveTimer = null;
+let savePending = false;
+async function saveCloud() {
+  if (!dbReady) { toast("Not connected to cloud", "error"); return; }
+  setCloudStatus("syncing", "Saving...");
+  try {
+    const fb = window.__firebase;
+    const dref = fb.doc(fb.db, DB_DOC_PATH[0], DB_DOC_PATH[1]);
+    await fb.setDoc(dref, { teachers, quizzes, students, leaderboard, resetTokens });
+    setCloudStatus("online", "Online");
+  } catch (err) {
+    console.error("Save error:", err);
+    setCloudStatus("offline", "Save failed");
+    toast("⚠️ Save failed — retrying...", "error");
+  }
+}
+
+// Debounced save
+function scheduleSave() {
+  savePending = true;
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    savePending = false;
+    saveCloud();
+  }, 300);
+}
+
+function saveTeachers() { scheduleSave(); }
+function saveQuizzes() { scheduleSave(); }
+function saveStudents() { scheduleSave(); }
+function saveLeaderboard() { scheduleSave(); }
+function saveResetTokens() { scheduleSave(); }
+function refreshData() { /* no-op: real-time via listener */ }
+
+function onCloudUpdate() {
+  // Re-render active screens
+  if (currentUser?.role === "admin" && adminDashboard.style.display === "block") {
+    renderAdminStats(); renderAdminTables();
+  }
+  if (currentUser?.role === "student" && publicQuizzesBox.style.display === "block") {
+    renderPublicQuizzes();
+  }
+  if (currentUser?.role === "teacher" && teacherDashboard.style.display === "block") {
+    renderMyQuizzes();
+  }
+  if (currentQuizId && leaderboardBox.style.display === "block") {
+    renderLeaderboard(currentQuizId);
+  }
+}
 
 // ============ SESSION ============
 let currentUser = null;
@@ -1140,7 +755,6 @@ let editingQuizId = null;
 let isPreviewMode = false;
 let editorFromAdmin = false;
 let currentAdminTab = 'teachers';
-let adminRefreshInterval = null;
 
 function saveSession(remember){
   if(!currentUser) return;
@@ -1168,9 +782,9 @@ function loadScreen(){
   try{return JSON.parse(localStorage.getItem(SCREEN_KEY));}catch(e){return null;}
 }
 
-// ============ TOAST ============
 function toast(msg, type){
   const c=document.getElementById("toastContainer");
+  if(!c) return;
   const el=document.createElement("div");
   el.className="toast "+(type||"info");
   el.textContent=msg;
@@ -1179,32 +793,18 @@ function toast(msg, type){
 }
 
 function genId(){ return 'q_' + Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
-function genCode(){
+function genCode(qs){
+  const src = qs || quizzes || {};
   const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   let c='';
   do{ c=''; for(let i=0;i<6;i++) c+=chars[Math.floor(Math.random()*chars.length)]; }
-  while(Object.values(quizzes).some(q=>q.code===c));
+  while(Object.values(src).some(q=>q.code===c));
   return c;
 }
 function genResetToken(){
   const chars='ABCDEFGHJKLMNPQRSTUVWXYZ0123456789';
   let t=''; for(let i=0;i<8;i++) t+=chars[Math.floor(Math.random()*chars.length)];
   return t;
-}
-
-// Seed sample quiz on first run
-if(Object.keys(quizzes).length===0){
-  const sampleId=genId();
-  quizzes[sampleId]={
-    id:sampleId, code:genCode(),
-    title:"ICT Basics (Sample)",
-    desc:"Demo quiz with default ICT questions.",
-    ownerEmail:"system@gmail.com", ownerName:"System",
-    visibility:"public",
-    questions:JSON.parse(JSON.stringify(defaultQuestions)),
-    createdAt:new Date().toISOString()
-  };
-  saveQuizzes();
 }
 
 let filtered=[], index=0, score=0, currentLevel="", timer=15, timerInterval;
@@ -1234,8 +834,6 @@ function hideAll(){
    difficultyScreen,quizBox,resultBox,leaderboardBox,teacherPanel,
    teacherDashboard,adminDashboard,forgotPasswordBox,resetPasswordBox
   ].forEach(el=>el.style.display="none");
-  // stop admin refresh if leaving admin
-  if(adminRefreshInterval){ clearInterval(adminRefreshInterval); adminRefreshInterval=null; }
 }
 
 function updateTopNav(){
@@ -1264,7 +862,6 @@ function copyToClipboard(text,msg){
   });
 }
 
-// Password toggles
 document.querySelectorAll(".toggle-pass").forEach(btn=>{
   btn.onclick=()=>{
     const inp=$(btn.dataset.target);
@@ -1274,7 +871,6 @@ document.querySelectorAll(".toggle-pass").forEach(btn=>{
   };
 });
 
-// ============ ROLE SELECTION ============
 $("studentRoleBtn").onclick=()=>{
   hideAll();
   studentAuth.style.display="block";
@@ -1304,7 +900,6 @@ $("studentBack").onclick=()=>{ hideAll(); roleScreen.style.display="flex"; };
 $("teacherBack").onclick=()=>{ hideAll(); roleScreen.style.display="flex"; };
 $("adminBack").onclick=()=>{ hideAll(); roleScreen.style.display="flex"; };
 
-// ============ ADMIN AUTH ============
 $("adminSubmit").onclick=()=>{
   const u=$("adminUsername").value.trim();
   const p=$("adminPassword").value;
@@ -1321,22 +916,13 @@ $("adminSubmit").onclick=()=>{
   openAdminDashboard();
 };
 
-// ============ ADMIN DASHBOARD ============
 function openAdminDashboard(){
   hideAll();
-  refreshData();
   adminDashboard.style.display="block";
   updateTopNav();
   renderAdminStats();
   renderAdminTables();
   saveScreen("adminDashboard");
-  // auto refresh every 3 seconds for real-time monitoring
-  if(adminRefreshInterval) clearInterval(adminRefreshInterval);
-  adminRefreshInterval=setInterval(()=>{
-    refreshData();
-    renderAdminStats();
-    renderAdminTables();
-  }, 3000);
 }
 
 function renderAdminStats(){
@@ -1383,7 +969,7 @@ function renderAdminTeachers(){
     email.toLowerCase().includes(f)||(t.displayName||"").toLowerCase().includes(f)
   );
   if(entries.length===0){
-    tbody.innerHTML=`<tr><td colspan="5"><div class="empty-state"><div class="icon">👩‍🏫</div><h3>No teachers registered</h3><p>Teachers will appear here when they register.</p></div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="5"><div class="empty-state"><div class="icon">👩‍🏫</div><h3>No teachers registered</h3></div></td></tr>`;
     return;
   }
   tbody.innerHTML=entries.map(([email,t])=>{
@@ -1407,7 +993,7 @@ function renderAdminStudents(){
   const tbody=$("studentsTableBody");
   const entries=Object.entries(students).filter(([k,s])=>s.name.toLowerCase().includes(f));
   if(entries.length===0){
-    tbody.innerHTML=`<tr><td colspan="5"><div class="empty-state"><div class="icon">👨‍🎓</div><h3>No students yet</h3><p>Students will appear here once they register.</p></div></td></tr>`;
+    tbody.innerHTML=`<tr><td colspan="5"><div class="empty-state"><div class="icon">👨‍🎓</div><h3>No students yet</h3></div></td></tr>`;
     return;
   }
   tbody.innerHTML=entries.map(([key,s])=>{
@@ -1484,15 +1070,12 @@ $("studentSearch").oninput=renderAdminStudents;
 $("quizSearch").oninput=renderAdminQuizzes;
 $("scoreSearch").oninput=renderAdminScores;
 $("refreshAdminBtn").onclick=()=>{
-  refreshData();
   renderAdminStats();
   renderAdminTables();
-  toast("🔄 Data refreshed","admin");
+  toast("🔄 Refreshed","admin");
 };
 
-// Admin actions (exposed to window)
 window.adminSendReset=(email)=>{
-  refreshData();
   if(!teachers[email]){ toast("Teacher not found","error"); return; }
   const token=genResetToken();
   resetTokens[email]={token, expiresAt:Date.now()+15*60*1000};
@@ -1501,15 +1084,14 @@ window.adminSendReset=(email)=>{
   $("modalEmailTo").textContent=email;
   $("modalEmailSubject").textContent="[Admin] Password Reset Code";
   $("modalUserName").textContent=teachers[email].displayName||"Teacher";
-  $("modalEmailIntro").innerHTML=`An administrator has initiated a password reset for your account. Use the code below within <strong>15 minutes</strong> to reset your password.`;
+  $("modalEmailIntro").innerHTML=`An administrator initiated a password reset. Use the code below within <strong>15 minutes</strong>.`;
   $("modalResetToken").textContent=token;
   $("modalEmailFooter").textContent="This reset was initiated by a system administrator.";
   $("emailModal").classList.add("active");
-  toast(`📧 Reset code sent to ${email}`,"admin");
+  toast(`📧 Reset code for ${email}`,"admin");
 };
 
 window.adminForceResetPass=(email)=>{
-  refreshData();
   if(!teachers[email]){ toast("Teacher not found","error"); return; }
   const newPass=prompt(`Set a new password for ${email} (min 6 characters):`);
   if(newPass===null) return;
@@ -1521,8 +1103,7 @@ window.adminForceResetPass=(email)=>{
 };
 
 window.adminDeleteTeacher=(email)=>{
-  refreshData();
-  if(!confirm(`Delete teacher "${email}" and ALL their quizzes? This cannot be undone.`)) return;
+  if(!confirm(`Delete teacher "${email}" and ALL their quizzes?`)) return;
   const ids=Object.values(quizzes).filter(q=>q.ownerEmail===email).map(q=>q.id);
   ids.forEach(id=>delete quizzes[id]);
   leaderboard=leaderboard.filter(l=>!ids.includes(l.quizId));
@@ -1534,7 +1115,6 @@ window.adminDeleteTeacher=(email)=>{
 };
 
 window.adminDeleteStudent=(key)=>{
-  refreshData();
   if(!confirm(`Delete student "${students[key]?.name}" and all their scores?`)) return;
   const name=students[key]?.name;
   delete students[key];
@@ -1545,7 +1125,6 @@ window.adminDeleteStudent=(key)=>{
 };
 
 window.adminResetStudentAttempts=(key)=>{
-  refreshData();
   if(!students[key]) return;
   if(!confirm(`Reset attempts for "${students[key].name}"?`)) return;
   students[key].attempts={};
@@ -1555,7 +1134,6 @@ window.adminResetStudentAttempts=(key)=>{
 };
 
 window.adminDeleteQuiz=(id)=>{
-  refreshData();
   if(!confirm(`Delete quiz "${quizzes[id]?.title}" and all scores?`)) return;
   delete quizzes[id];
   leaderboard=leaderboard.filter(l=>l.quizId!==id);
@@ -1565,7 +1143,6 @@ window.adminDeleteQuiz=(id)=>{
 };
 
 window.adminResetQuizLeaderboard=(id)=>{
-  refreshData();
   if(!confirm(`Clear leaderboard for "${quizzes[id]?.title}"?`)) return;
   leaderboard=leaderboard.filter(l=>l.quizId!==id);
   saveLeaderboard();
@@ -1579,7 +1156,6 @@ window.adminEditQuiz=(id)=>{
 };
 
 window.adminDeleteScore=(idx)=>{
-  refreshData();
   if(!confirm("Delete this score entry?")) return;
   leaderboard.splice(idx,1);
   saveLeaderboard();
@@ -1588,7 +1164,6 @@ window.adminDeleteScore=(idx)=>{
 };
 
 $("addTeacherBtn").onclick=()=>{
-  refreshData();
   const email=prompt("Teacher Gmail (must end with @gmail.com):");
   if(!email) return;
   const em=email.trim().toLowerCase();
@@ -1608,7 +1183,6 @@ $("deleteAllTeachersBtn").onclick=()=>{
   if(!confirm("⚠️ DELETE ALL TEACHERS and their quizzes?")) return;
   const c=prompt("Type DELETE to confirm:");
   if(c!=="DELETE"){ toast("Cancelled","info"); return; }
-  refreshData();
   const emails=Object.keys(teachers);
   const ids=Object.values(quizzes).filter(q=>emails.includes(q.ownerEmail)).map(q=>q.id);
   ids.forEach(id=>delete quizzes[id]);
@@ -1623,7 +1197,6 @@ $("deleteAllStudentsBtn").onclick=()=>{
   if(!confirm("⚠️ DELETE ALL STUDENTS and their scores?")) return;
   const c=prompt("Type DELETE to confirm:");
   if(c!=="DELETE"){ toast("Cancelled","info"); return; }
-  refreshData();
   students={}; leaderboard=[];
   saveStudents(); saveLeaderboard();
   toast("🗑 All students deleted","admin");
@@ -1632,7 +1205,6 @@ $("deleteAllStudentsBtn").onclick=()=>{
 
 $("resetAllAttemptsBtn").onclick=()=>{
   if(!confirm("Reset attempts for ALL students?")) return;
-  refreshData();
   Object.keys(students).forEach(k=>{students[k].attempts={};});
   saveStudents();
   toast("🔄 All attempts reset","admin");
@@ -1643,7 +1215,6 @@ $("deleteAllQuizzesBtn").onclick=()=>{
   if(!confirm("⚠️ DELETE ALL QUIZZES and scores?")) return;
   const c=prompt("Type DELETE to confirm:");
   if(c!=="DELETE"){ toast("Cancelled","info"); return; }
-  refreshData();
   quizzes={}; leaderboard=[];
   saveQuizzes(); saveLeaderboard();
   toast("🗑 All quizzes deleted","admin");
@@ -1652,7 +1223,6 @@ $("deleteAllQuizzesBtn").onclick=()=>{
 
 $("clearAllScoresBtn").onclick=()=>{
   if(!confirm("Clear ALL scores?")) return;
-  refreshData();
   leaderboard=[];
   saveLeaderboard();
   toast("🧹 All scores cleared","admin");
@@ -1664,7 +1234,6 @@ $("adminDashBack").onclick=()=>{
   doLogout();
 };
 
-// ============ TEACHER AUTH ============
 $("teacherToggle").onclick=()=>{
   isRegistering=!isRegistering;
   $("teacherAuthTitle").textContent=isRegistering?"Teacher Registration":"Teacher Login";
@@ -1677,7 +1246,6 @@ $("teacherToggle").onclick=()=>{
 };
 
 $("teacherSubmit").onclick=()=>{
-  refreshData();
   const email=$("teacherEmail").value.trim().toLowerCase();
   const pass=$("teacherPassword").value;
   const displayName=$("teacherDisplayName").value.trim();
@@ -1686,7 +1254,6 @@ $("teacherSubmit").onclick=()=>{
   const infoEl=$("teacherInfo");
   errEl.textContent=""; infoEl.textContent="";
 
-  // Basic gmail validation (more forgiving)
   const gmailOk=/^[a-z0-9._%+-]+@gmail\.com$/.test(email);
   if(!gmailOk){ errEl.textContent="Please use a valid Gmail address (e.g. name@gmail.com)."; return; }
   if(pass.length<6){ errEl.textContent="Password must be at least 6 characters."; return; }
@@ -1700,12 +1267,6 @@ $("teacherSubmit").onclick=()=>{
       createdAt:new Date().toISOString()
     };
     saveTeachers();
-    // sanity: re-read to confirm persisted
-    const check=JSON.parse(localStorage.getItem(K_TEACHERS)||'{}');
-    if(!check[email]){
-      errEl.textContent="⚠️ Failed to save registration. Please try again.";
-      return;
-    }
     currentUser={role:"teacher", email, displayName};
     saveSession(remember);
     toast(`Welcome, ${displayName}! 🎉`,"success");
@@ -1723,7 +1284,6 @@ $("teacherSubmit").onclick=()=>{
   }
 };
 
-// ============ FORGOT / RESET PASSWORD ============
 $("forgotPasswordBtn").onclick=()=>{
   hideAll();
   forgotPasswordBox.style.display="block";
@@ -1734,7 +1294,6 @@ $("forgotPasswordBtn").onclick=()=>{
 $("forgotBack").onclick=()=>{ hideAll(); teacherAuth.style.display="block"; };
 
 $("sendResetBtn").onclick=()=>{
-  refreshData();
   const email=$("forgotEmail").value.trim().toLowerCase();
   const errEl=$("forgotError"); const infoEl=$("forgotInfo");
   errEl.textContent=""; infoEl.textContent="";
@@ -1749,10 +1308,10 @@ $("sendResetBtn").onclick=()=>{
   $("modalUserName").textContent=teachers[email].displayName||"Teacher";
   $("modalEmailIntro").innerHTML=`You requested a password reset. Use the code below within <strong>15 minutes</strong>.`;
   $("modalResetToken").textContent=token;
-  $("modalEmailFooter").textContent="If you didn't request this, ignore this email.";
+  $("modalEmailFooter").textContent="Copy this code — it won't be shown again.";
   $("emailModal").classList.add("active");
-  infoEl.textContent="✅ Reset code sent to your email! (Check the popup)";
-  toast("📧 Reset code sent!","success");
+  infoEl.textContent="✅ Reset code generated! Copy it from the popup.";
+  toast("📧 Reset code ready!","success");
 };
 
 $("haveCodeBtn").onclick=()=>{
@@ -1781,7 +1340,6 @@ $("modalUseCodeBtn").onclick=()=>{
 $("resetBack").onclick=()=>{ hideAll(); forgotPasswordBox.style.display="block"; };
 
 $("confirmResetBtn").onclick=()=>{
-  refreshData();
   const email=$("resetEmailInput").value.trim().toLowerCase();
   const token=$("resetTokenInput").value.trim().toUpperCase();
   const newPass=$("newPasswordInput").value;
@@ -1816,7 +1374,6 @@ $("confirmResetBtn").onclick=()=>{
 };
 
 $("changePasswordBtn").onclick=()=>{
-  refreshData();
   const oldPass=prompt("Current password:");
   if(oldPass===null) return;
   if(teachers[currentUser.email].password!==oldPass){ toast("❌ Incorrect current password.","error"); return; }
@@ -1830,10 +1387,8 @@ $("changePasswordBtn").onclick=()=>{
   toast("✅ Password updated!","success");
 };
 
-// ============ TEACHER DASHBOARD ============
 function openTeacherDashboard(){
   hideAll();
-  refreshData();
   teacherDashboard.style.display="block";
   updateTopNav();
   $("teacherEmailDisplay").textContent=`${currentUser.displayName} (${currentUser.email})`;
@@ -1870,7 +1425,6 @@ function renderMyQuizzes(){
 
 function deleteQuiz(id){
   if(!confirm("Delete this quiz and all its leaderboard entries?")) return;
-  refreshData();
   delete quizzes[id];
   leaderboard=leaderboard.filter(l=>l.quizId!==id);
   saveQuizzes(); saveLeaderboard();
@@ -1880,7 +1434,6 @@ function deleteQuiz(id){
 function editQuiz(id){ editingQuizId=id; openEditor(); }
 
 function viewQuizLeaderboard(id){
-  refreshData();
   currentQuizId=id;
   hideAll();
   leaderboardBox.style.display="block";
@@ -1897,7 +1450,6 @@ function viewQuizLeaderboard(id){
 }
 
 $("createNewQuizBtn").onclick=()=>{
-  refreshData();
   const id=genId();
   quizzes[id]={
     id, code:genCode(), title:"New Quiz", desc:"",
@@ -1917,11 +1469,9 @@ $("teacherDashBack").onclick=()=>{
   doLogout();
 };
 
-// ============ EDITOR ============
 function openEditor(fromAdmin){
   editorFromAdmin=!!fromAdmin;
   hideAll();
-  refreshData();
   teacherPanel.style.display="block";
   updateTopNav();
   const qz=quizzes[editingQuizId];
@@ -1999,13 +1549,12 @@ $("saveAllBtn").onclick=()=>{
     });
   });
   saveQuizzes();
-  toast("💾 All changes saved!","success");
+  toast("💾 All changes saved to cloud!","success");
   $("editorTitle").textContent=(editorFromAdmin?"🛡️ Admin Edit: ":"📝 Edit: ")+qz.title;
 };
 
 $("resetLeaderboardBtn").onclick=()=>{
   if(confirm("Clear this quiz's leaderboard?")){
-    refreshData();
     leaderboard=leaderboard.filter(l=>l.quizId!==editingQuizId);
     saveLeaderboard();
     toast("🧹 Leaderboard cleared","info");
@@ -2029,9 +1578,7 @@ $("editorBack").onclick=()=>{
   else openTeacherDashboard();
 };
 
-// ============ STUDENT FLOW ============
 $("studentSubmit").onclick=()=>{
-  refreshData();
   const name=$("studentName").value.trim();
   const remember=$("rememberMeStudent").checked;
   const errEl=$("studentError");
@@ -2047,7 +1594,6 @@ $("studentSubmit").onclick=()=>{
 
 function openStudentQuizzes(){
   hideAll();
-  refreshData();
   publicQuizzesBox.style.display="block";
   updateTopNav();
   $("accessCodeError").textContent="";
@@ -2062,7 +1608,6 @@ $("publicQuizzesBack").onclick=()=>{
 };
 
 $("joinByCodeBtn").onclick=()=>{
-  refreshData();
   const code=$("accessCodeInput").value.trim().toUpperCase();
   const errEl=$("accessCodeError");
   errEl.textContent="";
@@ -2110,7 +1655,6 @@ function renderPublicQuizzes(){
 }
 
 function enterQuiz(quizId){
-  refreshData();
   const qz=quizzes[quizId];
   if(!qz){ toast("Quiz not found.","error"); return; }
   if(!qz.questions || qz.questions.length===0){ toast("This quiz has no questions yet.","error"); return; }
@@ -2139,7 +1683,6 @@ window.copyToClipboard=copyToClipboard;
 window.enterQuiz=enterQuiz;
 window.viewQuizLeaderboard=viewQuizLeaderboard;
 
-// ============ NAV ============
 function doLogout(){
   clearSession();
   currentUser=null;
@@ -2170,7 +1713,6 @@ $("difficultyBack").onclick=()=>{
   openStudentQuizzes();
 };
 
-// ============ QUIZ ENGINE ============
 function updateAttempts(){ attemptsEl.textContent=`Restart Attempts: ${attempts}`; }
 
 function persistQuizState(){
@@ -2186,7 +1728,6 @@ document.querySelectorAll("[data-level]").forEach(btn=>{
   btn.onclick=()=>{
     if(!currentUser){ toast("Please login first.","error"); return; }
     if(!currentQuizId){ toast("Please select a quiz.","error"); return; }
-    refreshData();
     const qz=quizzes[currentQuizId];
     if(!qz){ toast("Quiz no longer exists.","error"); openStudentQuizzes(); return; }
     if(currentUser.role==="student" && !isPreviewMode){
@@ -2253,16 +1794,15 @@ function answerQuestion(correct,correctIndex,explanation){
 
 function showResult(){
   clearQuizState();
-  refreshData();
   if(currentUser && currentUser.role==="student" && !isPreviewMode){
     if(!students[currentUser.key].attempts) students[currentUser.key].attempts={};
     students[currentUser.key].attempts[currentQuizId]=(students[currentUser.key].attempts[currentQuizId]||0)+1;
-    saveStudents();
     leaderboard.push({
       quizId:currentQuizId, name:currentUser.name,
       level:currentLevel, score, total:filtered.length,
       date:new Date().toLocaleString()
     });
+    saveStudents();
     saveLeaderboard();
   }
   hideAll();
@@ -2299,7 +1839,6 @@ $("backBtn").onclick=()=>{
 
 $("restartBtn").onclick=()=>{
   attempts++;
-  refreshData();
   const qz=quizzes[currentQuizId];
   let pool=currentLevel==="all"?qz.questions:qz.questions.filter(q=>q.l===currentLevel);
   filtered=shuffleArray([...pool]).slice(0,10);
@@ -2314,7 +1853,6 @@ $("restartAllBtn").onclick=()=>{
   updateTopNav();
   leaderboardBox.style.display="block";
   if(currentUser && currentUser.role==="student" && !isPreviewMode){
-    refreshData();
     const used=students[currentUser.key].attempts[currentQuizId]||0;
     welcomeMsg.textContent=`Welcome, ${currentUser.name}! Attempts: ${used}/2.`;
   }
@@ -2349,7 +1887,6 @@ function renderLeaderboard(quizId){
   `).join("");
 }
 
-// ============ CROSS-TAB SYNC ============
 window.addEventListener("storage",(e)=>{
   if(e.key===SESSION_KEY && !e.newValue){
     currentUser=null;
@@ -2358,27 +1895,9 @@ window.addEventListener("storage",(e)=>{
     updateTopNav();
     toast("Logged out in another tab","info");
   }
-  // any relevant data change -> refresh in-memory copy
-  if([K_TEACHERS,K_QUIZZES,K_STUDENTS,K_LEADERBOARD,K_RESETS].includes(e.key)){
-    refreshData();
-    if(currentUser?.role==="admin"){
-      renderAdminStats(); renderAdminTables();
-    }
-    if(currentUser?.role==="student" && publicQuizzesBox.style.display==="block"){
-      renderPublicQuizzes();
-    }
-    if(currentUser?.role==="teacher" && teacherDashboard.style.display==="block"){
-      renderMyQuizzes();
-    }
-    if(currentQuizId && leaderboardBox.style.display==="block"){
-      renderLeaderboard(currentQuizId);
-    }
-  }
 });
 
-// ============ RESTORE SESSION ============
 function restoreSession(){
-  refreshData();
   const savedUser=loadSession();
   const params=new URLSearchParams(location.search);
   const linkCode=params.get("quiz");
@@ -2398,7 +1917,6 @@ function restoreSession(){
       $("studentError").textContent=`You're joining: "${quiz.title}". Enter your name to start.`;
       const oldHandler=$("studentSubmit").onclick;
       $("studentSubmit").onclick=()=>{
-        refreshData();
         const name=$("studentName").value.trim();
         const remember=$("rememberMeStudent").checked;
         const errEl=$("studentError");
@@ -2493,20 +2011,25 @@ function restoreSession(){
   }
 }
 
-window.addEventListener("DOMContentLoaded",()=>{
-  setTimeout(()=>{
-    restoreSession();
-    $("loadingOverlay").style.display="none";
-  }, 400);
-});
-
 setInterval(()=>{
   if(quizBox.style.display==="block" && currentUser && currentUser.role==="student" && !isPreviewMode){
     persistQuizState();
   }
 },3000);
 
-renderLeaderboard();
+// ============ STARTUP ============
+window.addEventListener("DOMContentLoaded", async ()=>{
+  const ok = await initCloud();
+  if (ok) {
+    restoreSession();
+    renderLeaderboard();
+  } else {
+    // Still let user see something even if offline
+    hideAll();
+    roleScreen.style.display="flex";
+  }
+  $("loadingOverlay").style.display="none";
+});
 </script>
 </body>
 </html>
