@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICT Click & Drop</title>
+<title>ICT Drag & Drop</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
@@ -57,7 +57,11 @@ p{max-width:900px;margin:10px auto 20px}
   font-weight:700;
   font-size:1rem;
   box-shadow:0 4px 10px rgba(0,0,0,.1);
-  cursor:pointer;
+  cursor:grab;
+}
+
+.item:active{
+  cursor:grabbing;
 }
 
 .item.selected{
@@ -105,8 +109,8 @@ button{
 
 <body>
 
-<h1>ICT Click & Drop</h1>
-<p>📘 Tap an item to select, then tap the correct category to drop your answer.</p>
+<h1>ICT Drag & Drop</h1>
+<p>📘 Drag an item and drop it into the correct category.</p>
 
 <p id="scoreBox">Score: <span id="score">0</span> / 20</p>
 
@@ -118,57 +122,58 @@ button{
 </div>
 
 <div class="container">
-  <div class="item" data-type="network">📶 Wi-Fi</div>
-  <div class="item" data-type="storage">⚡ SSD</div>
-  <div class="item" data-type="storage">💾 Flash Drive</div>
-  <div class="item" data-type="network">🔀 Switch</div>
-  <div class="item" data-type="hardware">🧠 CPU</div>
-  <div class="item" data-type="software">🪟 Windows</div>
-  <div class="item" data-type="software">📄 MS Word</div>
-  <div class="item" data-type="software">📊 Excel</div>
-  <div class="item" data-type="network">📡 Router</div>
-  <div class="item" data-type="hardware">🖥️ Monitor</div>
-  <div class="item" data-type="network">🌐 Modem</div>
-  <div class="item" data-type="storage">📀 Memory Card</div>
-  <div class="item" data-type="software">🌍 Chrome</div>
-  <div class="item" data-type="hardware">🖱️ Mouse</div>
-  <div class="item" data-type="hardware">🖨️ Printer</div>
-  <div class="item" data-type="software">📽️ PowerPoint</div>
-  <div class="item" data-type="network">🔗 LAN</div>
-  <div class="item" data-type="storage">💽 Hard Drive</div>
-  <div class="item" data-type="storage">☁️ Cloud Storage</div>
-  <div class="item" data-type="hardware">⌨️ Keyboard</div>
+  <div class="item" draggable="true" data-type="network">📶 Wi-Fi</div>
+  <div class="item" draggable="true" data-type="storage">⚡ SSD</div>
+  <div class="item" draggable="true" data-type="storage">💾 Flash Drive</div>
+  <div class="item" draggable="true" data-type="network">🔀 Switch</div>
+  <div class="item" draggable="true" data-type="hardware">🧠 CPU</div>
+  <div class="item" draggable="true" data-type="software">🪟 Windows</div>
+  <div class="item" draggable="true" data-type="software">📄 MS Word</div>
+  <div class="item" draggable="true" data-type="software">📊 Excel</div>
+  <div class="item" draggable="true" data-type="network">📡 Router</div>
+  <div class="item" draggable="true" data-type="hardware">🖥️ Monitor</div>
+  <div class="item" draggable="true" data-type="network">🌐 Modem</div>
+  <div class="item" draggable="true" data-type="storage">📀 Memory Card</div>
+  <div class="item" draggable="true" data-type="software">🌍 Chrome</div>
+  <div class="item" draggable="true" data-type="hardware">🖱️ Mouse</div>
+  <div class="item" draggable="true" data-type="hardware">🖨️ Printer</div>
+  <div class="item" draggable="true" data-type="software">📽️ PowerPoint</div>
+  <div class="item" draggable="true" data-type="network">🔗 LAN</div>
+  <div class="item" draggable="true" data-type="storage">💽 Hard Drive</div>
+  <div class="item" draggable="true" data-type="storage">☁️ Cloud Storage</div>
+  <div class="item" draggable="true" data-type="hardware">⌨️ Keyboard</div>
 </div>
 
 <p id="msg"></p>
 <button onclick="location.reload()">Restart Game</button>
 
 <script>
-let selectedItem=null;
+let draggedItem=null;
 let placed=0, correct=0;
 
 document.querySelectorAll('.item').forEach(item=>{
-  item.addEventListener('click',()=>{
+  item.addEventListener('dragstart',()=>{
     if(item.dataset.done) return;
-    document.querySelectorAll('.item').forEach(i=>i.classList.remove('selected'));
-    selectedItem=item;
-    item.classList.add('selected');
+    draggedItem=item;
   });
 });
 
 document.querySelectorAll('.box').forEach(box=>{
-  box.addEventListener('click',()=>{
-    if(!selectedItem) return;
+  box.addEventListener('dragover',(e)=>{
+    e.preventDefault();
+  });
 
-    selectedItem.dataset.done="true";
-    box.appendChild(selectedItem);
+  box.addEventListener('drop',()=>{
+    if(!draggedItem) return;
 
-    if(selectedItem.dataset.type===box.dataset.type){
-      selectedItem.dataset.correct="true";
+    draggedItem.dataset.done="true";
+    box.appendChild(draggedItem);
+
+    if(draggedItem.dataset.type===box.dataset.type){
+      draggedItem.dataset.correct="true";
     }
 
-    selectedItem.classList.remove('selected');
-    selectedItem=null;
+    draggedItem=null;
     placed++;
 
     if(placed===20) reveal();
