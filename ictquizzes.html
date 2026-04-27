@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICT Gamified Quizzes</title>
+<title>QuizHUB</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
@@ -255,7 +255,7 @@ footer{text-align:center;padding:20px;font-size:clamp(.85rem,2.5vw,.95rem);color
 </div>
 
 <header class="role-select" id="roleScreen" style="display:none;">
-  <h1>ICT Quizzes</h1>
+  <h1>QuizHUB</h1>
   <p>Welcome! Please choose your role</p>
   <button id="studentRoleBtn">👨‍🎓 I'm a Student</button>
   <button id="teacherRoleBtn">👩‍🏫 I'm a Teacher</button>
@@ -331,7 +331,7 @@ footer{text-align:center;padding:20px;font-size:clamp(.85rem,2.5vw,.95rem);color
   <div class="email-content">
     <div class="email-header">
       <h3>📧 Reset Code Generated</h3>
-      <p><strong>From:</strong> <span id="modalEmailFrom">no-reply@ictquizzes.com</span></p>
+      <p><strong>From:</strong> <span id="modalEmailFrom">no-reply@quizhub.com</span></p>
       <p><strong>To:</strong> <span id="modalEmailTo"></span></p>
       <p><strong>Subject:</strong> <span id="modalEmailSubject">Password Reset Code</span></p>
     </div>
@@ -378,7 +378,7 @@ footer{text-align:center;padding:20px;font-size:clamp(.85rem,2.5vw,.95rem);color
 </section>
 
 <header id="difficultyScreen" style="display:none;">
-  <h1 id="quizTitleHeader">ICT Quizzes</h1>
+  <h1 id="quizTitleHeader">QuizHUB</h1>
   <p id="welcomeMsg">Select Difficulty</p>
   <div id="resumeSlot"></div>
   <button data-level="easy">Easy</button>
@@ -538,7 +538,7 @@ footer{text-align:center;padding:20px;font-size:clamp(.85rem,2.5vw,.95rem);color
   </div>
 </section>
 
-<footer>© 2026 • Gamified Learning • Pangkat Tatlo • ☁️ Cloud-Synced</footer>
+<footer>© 2026 • QuizHUB • Gamified Learning • Pangkat Tatlo • ☁️ Cloud-Synced</footer>
 
 <!-- Firebase SDK -->
 <script type="module">
@@ -604,9 +604,9 @@ let resetTokens = {};
 let dbReady = false;
 let unsubscribe = null;
 
-const SESSION_KEY = 'ict_session_v3';
-const SCREEN_KEY = 'ict_last_screen_v3';
-const QUIZ_STATE_KEY = 'ict_active_quiz_v3';
+const SESSION_KEY = 'quizhub_session_v3';
+const SCREEN_KEY = 'quizhub_last_screen_v3';
+const QUIZ_STATE_KEY = 'quizhub_active_quiz_v3';
 const DB_DOC_PATH = ['app_data', 'main'];
 
 function setCloudStatus(state, msg) {
@@ -1081,7 +1081,7 @@ window.adminSendReset=(email)=>{
   const token=genResetToken();
   resetTokens[email]={token, expiresAt:Date.now()+15*60*1000};
   saveResetTokens();
-  $("modalEmailFrom").textContent="admin@ictquizzes.com";
+  $("modalEmailFrom").textContent="admin@quizhub.com";
   $("modalEmailTo").textContent=email;
   $("modalEmailSubject").textContent="[Admin] Password Reset Code";
   $("modalUserName").textContent=teachers[email].displayName||"Teacher";
@@ -1303,7 +1303,7 @@ $("sendResetBtn").onclick=()=>{
   const token=genResetToken();
   resetTokens[email]={token, expiresAt:Date.now()+15*60*1000};
   saveResetTokens();
-  $("modalEmailFrom").textContent="no-reply@ictquizzes.com";
+  $("modalEmailFrom").textContent="no-reply@quizhub.com";
   $("modalEmailTo").textContent=email;
   $("modalEmailSubject").textContent="Password Reset Code";
   $("modalUserName").textContent=teachers[email].displayName||"Teacher";
@@ -2028,6 +2028,8 @@ window.addEventListener("DOMContentLoaded", async ()=>{
     // Still let user see something even if offline
     hideAll();
     roleScreen.style.display="flex";
+    $("loadingOverlay").style.display="none";
+    return;
   }
   $("loadingOverlay").style.display="none";
 });
