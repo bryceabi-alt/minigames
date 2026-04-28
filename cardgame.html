@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>ICT SHS | 20 Questions - Stack Shuffle & Learn</title>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-        /* ========== GLOBAL & THEME ========== */
         * {
             margin: 0;
             padding: 0;
@@ -28,7 +28,6 @@
             position: relative;
         }
 
-        /* FLOATING EMOJIS */
         .gadget-background {
             position: fixed;
             inset: 0;
@@ -44,8 +43,13 @@
         }
 
         @keyframes spinSide {
-            0% { transform: translateX(-30vw) rotate(0deg); }
-            100% { transform: translateX(130vw) rotate(360deg); }
+            0% {
+                transform: translateX(-30vw) rotate(0deg);
+            }
+
+            100% {
+                transform: translateX(130vw) rotate(360deg);
+            }
         }
 
         .game-container {
@@ -95,7 +99,6 @@
             color: #2563eb;
         }
 
-        /* ========== CARD WRAPPER & LIST ========== */
         .card-wrapper {
             display: flex;
             flex-direction: column;
@@ -245,9 +248,17 @@
         }
 
         @keyframes flipCard {
-            0% { transform: rotateY(0deg); }
-            50% { transform: rotateY(92deg); }
-            100% { transform: rotateY(0deg); }
+            0% {
+                transform: rotateY(0deg);
+            }
+
+            50% {
+                transform: rotateY(92deg);
+            }
+
+            100% {
+                transform: rotateY(0deg);
+            }
         }
 
         .button-wrapper {
@@ -425,6 +436,61 @@
             color: #1d4ed8;
         }
 
+        .redirect-notification {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .redirect-box {
+            background: white;
+            border-radius: 28px;
+            padding: 2rem;
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+            border: 2px solid #93c5fd;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+            animation: popNotif 0.35s ease-out;
+        }
+
+        .redirect-box h2 {
+            color: #1d4ed8;
+            font-size: 1.7rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .redirect-box p {
+            color: #334155;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.8rem;
+        }
+
+        .redirect-countdown {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: #2563eb;
+        }
+
+        @keyframes popNotif {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
         footer {
             text-align: center;
             font-size: 0.8rem;
@@ -468,9 +534,9 @@
         }
     </style>
 </head>
+
 <body>
 
-<!-- BACKGROUND -->
 <div class="gadget-background">
     <div class="gadget" style="top:3%; font-size:2.4rem; animation-duration:28s;">📚</div>
     <div class="gadget" style="top:8%; font-size:3.1rem; animation-duration:22s; animation-delay:-5s;">💻</div>
@@ -494,7 +560,7 @@
     <div class="game-header">
         <div class="title">
             <h1>📱 ICT SHS • 20 QUESTIONS 📱</h1>
-            <p>Philippines Senior High | Stack Shuffle Animation | Stop to Answer | Auto-Reshuffle</p>
+            <p>Philippines Senior High | Stack Shuffle Animation | Flip to Answer</p>
         </div>
 
         <div class="score-area">
@@ -523,7 +589,6 @@
         <div class="button-wrapper">
             <button class="button btn-stop" id="stopShuffleBtn">⏹️ FLIP THE CARD</button>
             <button class="button" id="shuffleAnimBtn">🃏 SHUFFLE THE DECK</button>
-            <button class="button btn-reset" id="resetGameBtn">🔄 RESET GAME</button>
         </div>
     </div>
 
@@ -534,7 +599,7 @@
 
     <div class="feedback-row">
         <div class="message" id="gameMessage">
-            🎴 Click SHUFFLE ANIMATION to see cards stack one by one! Then press STOP to reveal a question.
+            🎴 Click SHUFFLE THE DECK, then press FLIP THE CARD to reveal a question.
         </div>
 
         <div class="answer-indicator neutral" id="answerIndicator">
@@ -545,12 +610,23 @@
     <div class="explanation-box" id="explanationBox"></div>
 
     <footer>
-         ICT CardGame | TVL ICT | Ares | Pangkat TATLO 
+        ICT CardGame | TVL ICT | Ares | Pangkat TATLO
     </footer>
 </div>
 
+<div class="redirect-notification" id="redirectNotification">
+    <div class="redirect-box">
+        <h2>🎉 Great Job!</h2>
+        <p>You answered all 20 ICT questions.</p>
+        <p>You will now be redirected to the game hub to choose another game.</p>
+        <p>Redirecting in</p>
+        <div class="redirect-countdown" id="redirectCountdown">5</div>
+    </div>
+</div>
+
 <script>
-    // --------------------- 20 ICT QUESTIONS FOR SENIOR HIGH PHILIPPINES -----------------
+    const HUB_URL = "hub.html";
+
     const FULL_QUESTION_SET = [
         {
             text: "What does ICT stand for in the Philippine K-12 curriculum?",
@@ -580,7 +656,7 @@
             text: "What does URL stand for?",
             correct: "Uniform Resource Locator",
             options: ["Universal Reference Link", "Uniform Resource Locator", "Unified Resource Library", "Universal Retrieval Language"],
-            explanation: "URL stands for Uniform Resource Locator. It is the web address used to locate a webpage or online resource, such as https://www.google.com."
+            explanation: "URL stands for Uniform Resource Locator. It is the web address used to locate a webpage or online resource."
         },
         {
             text: "Which Philippine law protects data privacy?",
@@ -598,13 +674,13 @@
             text: "Which language is primarily used for web structure?",
             correct: "HTML",
             options: ["Python", "Java", "C++", "HTML"],
-            explanation: "HTML, or HyperText Markup Language, is used to create the structure and content of web pages, such as headings, paragraphs, links, and images."
+            explanation: "HTML, or HyperText Markup Language, is used to create the structure and content of web pages."
         },
         {
             text: "What does 'phishing' refer to?",
             correct: "Fake emails/websites to steal information",
             options: ["Hacking physical servers", "Fake emails/websites to steal information", "Antivirus method", "Encryption algorithm"],
-            explanation: "Phishing is a cyberattack where fake emails, messages, or websites trick people into giving personal information such as passwords, bank details, or account credentials."
+            explanation: "Phishing is a cyberattack where fake emails, messages, or websites trick people into giving personal information such as passwords or account credentials."
         },
         {
             text: "Which is a cloud storage service?",
@@ -616,7 +692,7 @@
             text: "What is the primary purpose of an algorithm?",
             correct: "Step-by-step problem solving",
             options: ["Design graphics", "Step-by-step problem solving", "Connect to internet", "Store files"],
-            explanation: "An algorithm is a step-by-step procedure for solving a problem or completing a task. Programmers use algorithms before writing code."
+            explanation: "An algorithm is a step-by-step procedure for solving a problem or completing a task."
         },
         {
             text: "Which memory is temporary and volatile?",
@@ -628,7 +704,7 @@
             text: "What does LAN stand for?",
             correct: "Local Area Network",
             options: ["Large Area Network", "Local Access Node", "Local Area Network", "Linked Array Network"],
-            explanation: "LAN stands for Local Area Network. It connects computers and devices within a small area such as a classroom, computer laboratory, home, or office."
+            explanation: "LAN stands for Local Area Network. It connects computers and devices within a small area such as a classroom, home, or office."
         },
         {
             text: "What is the main role of an ICT strand graduate?",
@@ -658,7 +734,7 @@
             text: "What is bandwidth in networking?",
             correct: "Maximum data transfer rate",
             options: ["Storage capacity", "Processor speed", "Maximum data transfer rate", "Screen resolution"],
-            explanation: "Bandwidth refers to the maximum amount of data that can be transmitted over a network connection in a given time. Higher bandwidth usually means faster data transfer."
+            explanation: "Bandwidth refers to the maximum amount of data that can be transmitted over a network connection in a given time."
         },
         {
             text: "Which of these is a programming language?",
@@ -670,7 +746,7 @@
             text: "What does UI/UX stand for in design?",
             correct: "User Interface / User Experience",
             options: ["Universal Input/Utility X", "User Interface / User Experience", "Underlying Integration", "Unit Interchange"],
-            explanation: "UI means User Interface, which focuses on the visual layout of an app or website. UX means User Experience, which focuses on how easy and enjoyable it is to use."
+            explanation: "UI means User Interface, which focuses on the visual layout. UX means User Experience, which focuses on how easy and enjoyable it is to use."
         }
     ];
 
@@ -680,15 +756,15 @@
     let score = 0;
     let answeredCount = 0;
     let answerChosen = false;
-    let answersEnabled = true;
+    let answersEnabled = false;
     let gameLocked = false;
     let animationTimeout = null;
     let nextQuestionTimeout = null;
+    let redirectTimer = null;
 
     const cardList = document.getElementById('cardList');
     const stopShuffleBtn = document.getElementById('stopShuffleBtn');
     const shuffleAnimBtn = document.getElementById('shuffleAnimBtn');
-    const resetGameBtn = document.getElementById('resetGameBtn');
     const topCardDiv = document.getElementById('topCard');
     const questionTextSpan = document.getElementById('questionText');
     const answersGridDiv = document.getElementById('answersGrid');
@@ -697,6 +773,8 @@
     const totalAnsweredSpan = document.getElementById('totalAnswered');
     const answerIndicator = document.getElementById('answerIndicator');
     const explanationBox = document.getElementById('explanationBox');
+    const redirectNotification = document.getElementById('redirectNotification');
+    const redirectCountdown = document.getElementById('redirectCountdown');
 
     function updateUIStats() {
         scoreSpan.innerText = score;
@@ -721,30 +799,63 @@
         `;
     }
 
+    function showRedirectNotification() {
+        let countdown = 5;
+
+        redirectCountdown.innerText = countdown;
+        redirectNotification.style.display = 'flex';
+
+        stopShuffleBtn.disabled = true;
+        shuffleAnimBtn.disabled = true;
+        answersEnabled = false;
+        gameLocked = true;
+
+        setIndicator('right', '🏁 COMPLETED');
+        gameMessageSpan.innerHTML = '🎉 You completed all 20 questions! Redirecting to the game hub...';
+
+        if (redirectTimer) {
+            clearInterval(redirectTimer);
+        }
+
+        redirectTimer = setInterval(() => {
+            countdown--;
+            redirectCountdown.innerText = countdown;
+
+            if (countdown <= 0) {
+                clearInterval(redirectTimer);
+                window.location.href = HUB_URL;
+            }
+        }, 1000);
+    }
+
+    function shuffleDeck() {
+        remainingDeck = FULL_QUESTION_SET.map(q => ({ ...q }));
+
+        for (let i = remainingDeck.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [remainingDeck[i], remainingDeck[j]] = [remainingDeck[j], remainingDeck[i]];
+        }
+    }
+
     function renderAnswerOptions() {
         if (!currentQuestion) {
-            answersGridDiv.innerHTML = '<div style="grid-column:1 / -1; text-align:center;">❓ Press STOP to reveal a question</div>';
+            answersGridDiv.innerHTML = '<div style="grid-column:1 / -1; text-align:center;">❓ Press FLIP THE CARD to reveal a question</div>';
             return;
         }
 
-        const opts = currentQuestion.options;
         answersGridDiv.innerHTML = '';
 
-        opts.forEach(opt => {
+        currentQuestion.options.forEach(opt => {
             const ansDiv = document.createElement('div');
             ansDiv.className = 'answer-option';
+            ansDiv.innerText = opt;
 
             if (!answersEnabled || answerChosen || gameLocked) {
                 ansDiv.classList.add('disabled-answer');
             }
 
-            ansDiv.innerText = opt;
-
-            ansDiv.addEventListener('click', (e) => {
-                e.stopPropagation();
-
+            ansDiv.addEventListener('click', () => {
                 if (!answersEnabled || answerChosen || gameLocked || !currentQuestion) {
-                    gameMessageSpan.innerText = '⚠️ Answers disabled or card already answered. Reveal a new card!';
                     return;
                 }
 
@@ -759,12 +870,6 @@
                     ansDiv.classList.add('wrong-highlight');
                     setIndicator('wrong', '❌ WRONG');
                     gameMessageSpan.innerHTML = `❌ WRONG! The correct answer is "${currentQuestion.correct}".`;
-
-                    document.querySelectorAll('.answer-option').forEach(btn => {
-                        if (btn.innerText === currentQuestion.correct) {
-                            btn.classList.add('correct-highlight');
-                        }
-                    });
                 }
 
                 answeredCount++;
@@ -774,28 +879,33 @@
                 answersEnabled = false;
                 gameLocked = true;
 
+                document.querySelectorAll('.answer-option').forEach(btn => {
+                    if (btn.innerText === currentQuestion.correct) {
+                        btn.classList.add('correct-highlight');
+                    }
+
+                    btn.classList.add('disabled-answer');
+                });
+
                 showExplanation(currentQuestion);
 
                 const idxInDeck = remainingDeck.findIndex(q => q.text === currentQuestion.text);
+
                 if (idxInDeck !== -1) {
                     remainingDeck.splice(idxInDeck, 1);
                 }
 
-                document.querySelectorAll('.answer-option').forEach(btn => {
-                    btn.classList.add('disabled-answer');
-                });
-
                 if (remainingDeck.length === 0) {
-                    gameMessageSpan.innerHTML += ' 🎉 CONGRATULATIONS! You completed all 20 questions! Press RESET GAME.';
-                    stopShuffleBtn.disabled = true;
-                    shuffleAnimBtn.disabled = true;
-                    gameLocked = true;
+                    gameMessageSpan.innerHTML += ' 🎉 You answered all 20 questions!';
+                    showRedirectNotification();
                     return;
                 }
 
                 gameMessageSpan.innerHTML += ' ⏳ Next card will be ready in 5 seconds...';
 
-                if (nextQuestionTimeout) clearTimeout(nextQuestionTimeout);
+                if (nextQuestionTimeout) {
+                    clearTimeout(nextQuestionTimeout);
+                }
 
                 nextQuestionTimeout = setTimeout(() => {
                     resetAfterAnswer();
@@ -810,8 +920,8 @@
         topCardDiv.classList.add('back-mode');
         topCardDiv.classList.remove('flip-animation');
 
-        isCardFlipped = false;
         currentQuestion = null;
+        isCardFlipped = false;
         answerChosen = false;
         answersEnabled = false;
         gameLocked = false;
@@ -826,7 +936,7 @@
         setIndicator('neutral', 'Waiting for answer');
         hideExplanation();
 
-        gameMessageSpan.innerHTML = '✅ Answer recorded! Click SHUFFLE ANIMATION to shuffle deck, then STOP to reveal the next question.';
+        gameMessageSpan.innerHTML = '✅ Answer recorded! Click SHUFFLE THE DECK, then FLIP THE CARD for the next question.';
     }
 
     function stopAndReveal() {
@@ -836,7 +946,7 @@
         }
 
         if (remainingDeck.length === 0) {
-            gameMessageSpan.innerText = '🏁 No cards left! Press RESET GAME.';
+            showRedirectNotification();
             return;
         }
 
@@ -847,7 +957,9 @@
 
         cardList.classList.remove('is-animated');
 
-        if (animationTimeout) clearTimeout(animationTimeout);
+        if (animationTimeout) {
+            clearTimeout(animationTimeout);
+        }
 
         const randIndex = Math.floor(Math.random() * remainingDeck.length);
         currentQuestion = { ...remainingDeck[randIndex] };
@@ -868,7 +980,6 @@
 
         setIndicator('neutral', 'Choose an answer');
         hideExplanation();
-
         renderAnswerOptions();
 
         gameMessageSpan.innerHTML = `📖 REVEALED: "${currentQuestion.text}" — Choose the correct answer below.`;
@@ -898,72 +1009,24 @@
         setIndicator('neutral', 'Shuffling...');
         hideExplanation();
 
-        gameMessageSpan.innerText = '🃏 Cards shuffling one by one to the top... watch the animation!';
+        gameMessageSpan.innerText = '🃏 Cards shuffling one by one to the top...';
 
-        if (animationTimeout) clearTimeout(animationTimeout);
+        if (animationTimeout) {
+            clearTimeout(animationTimeout);
+        }
 
         animationTimeout = setTimeout(() => {
             if (!gameLocked && !isCardFlipped) {
                 stopShuffleBtn.disabled = false;
                 shuffleAnimBtn.disabled = false;
                 setIndicator('neutral', 'Ready to reveal');
-                gameMessageSpan.innerText = '✨ Shuffle complete! Press STOP to reveal a question.';
-            } else if (isCardFlipped) {
-                shuffleAnimBtn.disabled = true;
-                stopShuffleBtn.disabled = true;
-            } else {
-                stopShuffleBtn.disabled = false;
-                shuffleAnimBtn.disabled = false;
+                gameMessageSpan.innerText = '✨ Shuffle complete! Press FLIP THE CARD to reveal a question.';
             }
         }, 2800);
     }
 
-    function shuffleDeck() {
-        remainingDeck = FULL_QUESTION_SET.map(q => ({ ...q }));
-
-        for (let i = remainingDeck.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [remainingDeck[i], remainingDeck[j]] = [remainingDeck[j], remainingDeck[i]];
-        }
-    }
-
-    function resetFullGame() {
-        if (animationTimeout) clearTimeout(animationTimeout);
-        if (nextQuestionTimeout) clearTimeout(nextQuestionTimeout);
-
-        cardList.classList.remove('is-animated');
-
-        shuffleDeck();
-
-        score = 0;
-        answeredCount = 0;
-        currentQuestion = null;
-        isCardFlipped = false;
-        answerChosen = false;
-        answersEnabled = false;
-        gameLocked = false;
-
-        updateUIStats();
-
-        topCardDiv.classList.add('back-mode');
-        topCardDiv.classList.remove('flip-animation');
-
-        questionTextSpan.innerText = "???";
-
-        renderAnswerOptions();
-
-        stopShuffleBtn.disabled = false;
-        shuffleAnimBtn.disabled = false;
-
-        setIndicator('neutral', 'Waiting for answer');
-        hideExplanation();
-
-        gameMessageSpan.innerText = '🔄 GAME RESET! 20 fresh ICT questions. Click SHUFFLE ANIMATION to shuffle, then STOP to reveal.';
-    }
-
     stopShuffleBtn.addEventListener('click', stopAndReveal);
     shuffleAnimBtn.addEventListener('click', triggerShuffleAnimation);
-    resetGameBtn.addEventListener('click', resetFullGame);
 
     function init() {
         shuffleDeck();
@@ -989,7 +1052,7 @@
         setIndicator('neutral', 'Waiting for answer');
         hideExplanation();
 
-        gameMessageSpan.innerText = '🇵🇭 ICT SHS Edition | Click SHUFFLE ANIMATION to see cards stack one by one, then STOP to reveal a question!';
+        gameMessageSpan.innerText = '🇵🇭 ICT SHS Edition | Click SHUFFLE THE DECK, then FLIP THE CARD to reveal a question!';
     }
 
     init();
