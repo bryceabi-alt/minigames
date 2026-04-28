@@ -242,7 +242,18 @@
             color: white;
             display: inline-block;
         }
+        .card-badge.easy {
+            background: #22c55e;
+        }
 
+        .card-badge.medium {
+            background: #f59e0b;
+        }
+
+        .card-badge.hard {
+            background: #ef4444;
+        } 
+        
         .flip-animation {
             animation: flipCard 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
         }
@@ -573,7 +584,7 @@
             <li class="card-list__item" data-card="0">
                 <div class="card back-mode" id="topCard">
                     <div class="question-text" id="questionText">Ready?</div>
-                    <div class="card-badge">ICT QUESTION</div>
+                    <div class="card-badge" id="cardBadge">ICT QUESTION</div>
                 </div>
             </li>
 
@@ -800,7 +811,38 @@
     }
 
     function showRedirectNotification() {
-        let countdown = 5;
+    let countdown = 5;
+
+    redirectCountdown.innerText = countdown;
+    redirectNotification.style.display = 'flex';
+
+    // NEW: SHOW FINAL SCORE
+    const finalScoreDisplay = document.getElementById('finalScoreDisplay');
+    finalScoreDisplay.innerText = `${score} / 20`;
+
+    stopShuffleBtn.disabled = true;
+    shuffleAnimBtn.disabled = true;
+    answersEnabled = false;
+    gameLocked = true;
+
+    setIndicator('right', '🏁 COMPLETED');
+    gameMessageSpan.innerHTML = '🎉 You completed all 20 questions! Redirecting to the game hub...';
+
+    if (redirectTimer) {
+        clearInterval(redirectTimer);
+    }
+
+    redirectTimer = setInterval(() => {
+        countdown--;
+        redirectCountdown.innerText = countdown;
+
+        if (countdown <= 0) {
+            clearInterval(redirectTimer);
+            window.location.href = HUB_URL;
+        }
+    }, 1000);
+}
+        let countdown = 3;
 
         redirectCountdown.innerText = countdown;
         redirectNotification.style.display = 'flex';
