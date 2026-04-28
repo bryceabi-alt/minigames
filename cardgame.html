@@ -1,250 +1,991 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICT SHS Quiz</title>
-
-<style>
-body {
-    font-family: Arial;
-    background: #e0f2fe;
-    text-align: center;
-}
-
-.game-header {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:20px;
-}
-
-.button {
-    padding:10px 20px;
-    background:#3b82f6;
-    color:white;
-    border:none;
-    border-radius:10px;
-    cursor:pointer;
-}
-
-.card {
-    width:300px;
-    height:220px;
-    margin:auto;
-    background:white;
-    border-radius:20px;
-    padding:20px;
-    transition: transform 0.6s;
-}
-
-.flip {
-    transform: rotateY(180deg);
-}
-
-.card-badge {
-    background:#3b82f6;
-    color:white;
-    padding:5px 15px;
-    border-radius:20px;
-    display:inline-block;
-    margin-top:10px;
-}
-
-.card-badge.easy { background:#22c55e; }
-.card-badge.medium { background:#f59e0b; }
-.card-badge.hard { background:#ef4444; }
-
-.answer-option {
-    margin:5px;
-    padding:10px;
-    border:1px solid #ccc;
-    cursor:pointer;
-}
-</style>
-</head>
-
-<body>
-
-<div class="game-header">
-    <button class="button" onclick="window.location.href='hub.html'">🔙 BACK TO HUB</button>
-    <h2>ICT 20 QUESTIONS</h2>
-    <div>Score: <span id="score">0</span></div>
-</div>
-
-<div class="card" id="card">
-    <div id="question">Press Shuffle</div>
-    <div class="card-badge" id="badge">ICT</div>
-</div>
-
-<br>
-
-<button class="button" onclick="shuffle()">Shuffle</button>
-<button class="button" onclick="flip()">Flip</button>
-
-<div id="answers"></div>
-<div id="explanation" style="margin-top:10px;"></div>
-
-<div id="endScreen" style="display:none;">
-    <h1>🎉 FINISHED</h1>
-    <h2 style="font-size:40px;">🏆 SCORE: <span id="finalScore"></span></h2>
-</div>
-
-<script>
-
-const questions = [
-{ text:"What does ICT stand for?", correct:"Information and Communications Technology",
-options:["Information Computer Technology","Internet Communication Technology","Information and Communications Technology","Integrated Computer Training"],
-difficulty:"Easy", explanation:"ICT covers tools used to create, store, and share information like computers and networks."},
-
-{ text:"Which component is the brain of the computer?", correct:"CPU",
-options:["RAM","Hard Drive","CPU","GPU"],
-difficulty:"Easy", explanation:"The CPU processes instructions and controls how the computer performs tasks."},
-
-{ text:"What type of software manages hardware?", correct:"Operating System",
-options:["Application","Compiler","Operating System","Utility"],
-difficulty:"Easy", explanation:"The OS manages hardware, runs programs, and handles memory and files."},
-
-{ text:"Which is a web browser?", correct:"Google Chrome",
-options:["Explorer","Google Chrome","Word","Photoshop"],
-difficulty:"Easy", explanation:"Browsers allow users to access and view websites on the internet."},
-
-{ text:"What does URL mean?", correct:"Uniform Resource Locator",
-options:["Universal Link","Uniform Resource Locator","Resource Link","Web Code"],
-difficulty:"Medium", explanation:"A URL is the address used to locate a webpage online."},
-
-{ text:"Which law protects data privacy?", correct:"Data Privacy Act of 2012 (RA 10173)",
-options:["Cybercrime Act","E-Commerce Act","Data Privacy Act","FOI"],
-difficulty:"Hard", explanation:"This law protects personal information and ensures responsible data handling."},
-
-{ text:"What does a firewall do?", correct:"Monitors and controls network traffic",
-options:["Stores files","Controls traffic","Manages RAM","Encrypts"],
-difficulty:"Medium", explanation:"Firewalls block harmful access and protect systems from threats."},
-
-{ text:"Which language structures web pages?", correct:"HTML",
-options:["Python","Java","C++","HTML"],
-difficulty:"Easy", explanation:"HTML defines the structure of webpages using tags and elements."},
-
-{ text:"What is phishing?", correct:"Fake emails/websites to steal information",
-options:["Hacking servers","Fake emails/websites to steal info","Antivirus","Encryption"],
-difficulty:"Medium", explanation:"Phishing tricks users into giving passwords or personal data."},
-
-{ text:"Which is cloud storage?", correct:"Google Drive",
-options:["RAM","Google Drive","CPU","SSD"],
-difficulty:"Easy", explanation:"Cloud storage allows access to files anytime using the internet."},
-
-{ text:"What is an algorithm?", correct:"Step-by-step problem solving",
-options:["Design tool","Step-by-step solution","Internet tool","Storage"],
-difficulty:"Medium", explanation:"Algorithms are ordered steps used to solve problems or complete tasks."},
-
-{ text:"Which memory is temporary?", correct:"RAM",
-options:["ROM","HDD","RAM","SSD"],
-difficulty:"Easy", explanation:"RAM stores temporary data and clears when power is turned off."},
-
-{ text:"What does LAN mean?", correct:"Local Area Network",
-options:["Large Network","Local Area Network","Linked Net","Access Node"],
-difficulty:"Easy", explanation:"LAN connects devices within a small area like a school or office."},
-
-{ text:"Role of ICT graduate?", correct:"Develop and manage tech solutions",
-options:["Teach","Develop tech","Drive","Build"],
-difficulty:"Medium", explanation:"ICT graduates build, manage, and troubleshoot technology systems."},
-
-{ text:"Secure web protocol?", correct:"HTTPS",
-options:["HTTP","FTP","HTTPS","SMTP"],
-difficulty:"Medium", explanation:"HTTPS encrypts data to keep communication secure online."},
-
-{ text:"What does SQL do?", correct:"Manage databases",
-options:["Create sites","Manage databases","Edit videos","Design"],
-difficulty:"Hard", explanation:"SQL is used to store, retrieve, and manage structured data."},
-
-{ text:"ICT agency in PH?", correct:"DICT",
-options:["DepEd","DOH","DICT","DSWD"],
-difficulty:"Medium", explanation:"DICT leads ICT development and cybersecurity programs."},
-
-{ text:"What is bandwidth?", correct:"Maximum data transfer rate",
-options:["Storage","Speed","Max data rate","Resolution"],
-difficulty:"Hard", explanation:"Bandwidth measures how much data can pass through a network."},
-
-{ text:"Programming language?", correct:"Python",
-options:["Windows","Excel","Python","Photoshop"],
-difficulty:"Easy", explanation:"Python is used for coding, automation, and building applications."},
-
-{ text:"What is UI/UX?", correct:"User Interface / User Experience",
-options:["Input","User Interface / User Experience","Integration","Units"],
-difficulty:"Medium", explanation:"UI is visual design, UX is how users feel when using a system."}
-];
-
-let deck = [];
-let current = null;
-let score = 0;
-
-function shuffle(){
-    deck = [...questions].sort(()=>Math.random()-0.5);
-    document.getElementById("question").innerText="Ready!";
-}
-
-function flip(){
-    if(deck.length===0){
-        endGame();
-        return;
-    }
-
-    current = deck.pop();
-
-    let label = current.difficulty==="Easy" ? "🟢 EASY" :
-                current.difficulty==="Medium" ? "🟡 MEDIUM" : "🔴 HARD";
-
-    document.getElementById("card").classList.add("flip");
-
-    setTimeout(()=>{
-        document.getElementById("question").innerHTML =
-        `<b>${label}</b><br>${current.text}`;
-
-        let badge = document.getElementById("badge");
-        badge.className="card-badge";
-        badge.innerText = "ICT • " + current.difficulty.toUpperCase();
-        badge.classList.add(current.difficulty.toLowerCase());
-
-        showAnswers();
-
-        document.getElementById("card").classList.remove("flip");
-    },300);
-}
-
-function showAnswers(){
-    let div = document.getElementById("answers");
-    let exp = document.getElementById("explanation");
-
-    div.innerHTML="";
-    exp.innerHTML="";
-
-    current.options.forEach(opt=>{
-        let btn = document.createElement("div");
-        btn.className="answer-option";
-        btn.innerText=opt;
-
-        btn.onclick=()=>{
-            if(opt===current.correct){
-                score++;
-                document.getElementById("score").innerText=score;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>ICT SHS | 20 Questions - Stack Shuffle & Learn</title>
+    <style>
+        @import url('[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap)');
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #f8fafc, #e0f2fe);
+            font-family: 'Poppins', sans-serif;
+            padding: 1.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #1e293b;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .gadget-background {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .gadget {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.18;
+            animation: spinSide 20s linear infinite;
+        }
+        @keyframes spinSide {
+            0% {
+                transform: translateX(-30vw) rotate(0deg);
             }
-
-            exp.innerHTML = "💡 " + current.explanation;
-
-            setTimeout(()=>flip(),3000);
-        };
-
-        div.appendChild(btn);
+            100% {
+                transform: translateX(130vw) rotate(360deg);
+            }
+        }
+        .game-container {
+            max-width: 1400px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.82);
+            backdrop-filter: blur(12px);
+            border-radius: 3rem;
+            padding: 1.8rem;
+            box-shadow: 0 20px 40px rgba(30, 41, 59, 0.12);
+            border: 1px solid #bfdbfe;
+            position: relative;
+            z-index: 1;
+        }
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.8rem;
+            padding: 0 0.5rem;
+        }
+        .title h1 {
+            font-size: 1.9rem;
+            color: #1d4ed8;
+        }
+        .title p {
+            color: #475569;
+            font-size: 0.8rem;
+        }
+        .score-area {
+            background: #eff6ff;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            border: 1px solid #93c5fd;
+            color: #1e3a8a;
+        }
+        .score-area span {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2563eb;
+        }
+        .card-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: auto;
+            margin: 0.5rem 0 1rem;
+            position: relative;
+        }
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-height: 100%;
+            height: 420px;
+            margin: 0;
+            padding: 30px;
+            list-style: none;
+            position: relative;
+        }
+        .card-list__item {
+            position: absolute;
+            animation: none;
+            animation-fill-mode: forwards;
+            transition: margin-top 0.2s;
+        }
+        .card-list__item[data-card="0"] {
+            z-index: 6;
+            margin-top: 0;
+        }
+        .card-list__item[data-card="1"] {
+            z-index: 5;
+            margin-top: 8px;
+        }
+        .card-list__item[data-card="2"] {
+            z-index: 4;
+            margin-top: 16px;
+        }
+        .difficulty-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            z-index: 10;
+        }
+        .difficulty-easy {
+            background: #22c55e;
+            color: white;
+        }
+        .difficulty-medium {
+            background: #f59e0b;
+            color: white;
+        }
+        .difficulty-hard {
+            background: #ef4444;
+            color: white;
+        }
+        @keyframes shuffle {
+            0% {
+                transform: rotate(0) translateX(0) scale(1);
+            }
+            50% {
+                transform: rotate(5deg) translateX(105%) scale(0.96);
+            }
+            100% {
+                transform: rotate(0) translateX(0);
+            }
+        }
+        .card-list.is-animated .card-list__item[data-card="0"] {
+            animation: shuffle 0.9s ease-in-out 0s 1 normal;
+            z-index: 2;
+            transition: z-index 0s ease-in-out 0.45s;
+        }
+        .card-list.is-animated .card-list__item[data-card="1"] {
+            animation: shuffle 0.9s ease-in-out 0.9s 1 normal;
+            z-index: 1;
+            transition: z-index 0s ease-in-out 1.35s;
+        }
+        .card-list.is-animated .card-list__item[data-card="2"] {
+            animation: shuffle 0.9s ease-in-out 1.8s 1 normal;
+            z-index: 0;
+            transition: z-index 0s ease-in-out 2.25s;
+        }
+        .card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            max-width: 100%;
+            width: 300px;
+            height: 360px;
+            padding: 1.2rem;
+            border-radius: 28px;
+            box-shadow: 0 16px 32px rgba(0,0,0,0.08);
+            background: white;
+            border: 1px solid #bfdbfe;
+            transition: all 0.2s;
+            font-weight: 600;
+            color: #1e293b;
+            word-break: break-word;
+            position: relative;
+        }
+        .card.back-mode {
+            background: linear-gradient(135deg, #dbeafe, #93c5fd);
+            border: 2px solid #60a5fa;
+            justify-content: center;
+            box-shadow: inset 0 0 25px rgba(255,255,255,0.35);
+        }
+        .card.back-mode::before {
+            content: "📘 ICT SHS 📘";
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #1e3a8a;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .card.back-mode::after {
+            content: "?";
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #2563eb;
+        }
+        .card.back-mode .question-text,
+        .card.back-mode .card-badge,
+        .card.back-mode .difficulty-badge {
+            display: none;
+        }
+        .question-text {
+            font-size: 1.2rem;
+            line-height: 1.4;
+            background: #eff6ff;
+            padding: 0.7rem;
+            border-radius: 20px;
+            margin-bottom: 0.8rem;
+            color: #1e293b;
+        }
+        .card-badge {
+            font-size: 0.7rem;
+            background: #3b82f6;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+            color: white;
+            display: inline-block;
+        }
+        .flip-animation {
+            animation: flipCard 0.55s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
+        }
+        @keyframes flipCard {
+            0% {
+                transform: rotateY(0deg);
+            }
+            50% {
+                transform: rotateY(92deg);
+            }
+            100% {
+                transform: rotateY(0deg);
+            }
+        }
+        .button-wrapper {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 0.5rem 0 1.2rem;
+        }
+        .button {
+            padding: 0.8rem 2rem;
+            border: 0;
+            border-radius: 12px;
+            outline: 0;
+            background: #3b82f6;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.08s linear;
+            box-shadow: 0 6px 0 #1e40af;
+            font-family: 'Poppins', sans-serif;
+        }
+        .button:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #1e40af;
+        }
+        .button:disabled {
+            opacity: 0.6;
+            transform: none;
+            cursor: not-allowed;
+            background: #94a3b8;
+            box-shadow: 0 6px 0 #64748b;
+        }
+        .btn-stop {
+            background: #2563eb;
+            box-shadow: 0 6px 0 #1e3a8a;
+        }
+        .answers-panel {
+            background: rgba(255,255,255,0.78);
+            border-radius: 2rem;
+            padding: 1rem;
+            backdrop-filter: blur(8px);
+            border: 1px solid #bfdbfe;
+            margin-top: 1rem;
+        }
+        .answers-title {
+            text-align: center;
+            color: #1d4ed8;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+        }
+        .answers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 0.75rem;
+        }
+        .answer-option {
+            background: white;
+            padding: 0.6rem 0.5rem;
+            text-align: center;
+            border-radius: 60px;
+            color: #1e293b;
+            cursor: pointer;
+            transition: 0.15s;
+            border: 1px solid #93c5fd;
+            font-weight: 500;
+            font-size: 0.85rem;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+        }
+        .answer-option:hover {
+            background: #dbeafe;
+            color: #1e3a8a;
+            transform: scale(1.02);
+        }
+        .answer-option.disabled-answer {
+            opacity: 0.4;
+            text-decoration: line-through;
+            pointer-events: none;
+            filter: grayscale(0.2);
+        }
+        .answer-option.correct-highlight {
+            background: #22c55e;
+            color: white;
+            border-color: #16a34a;
+            opacity: 1;
+            text-decoration: none;
+            filter: none;
+        }
+        .answer-option.wrong-highlight {
+            background: #f97316;
+            color: white;
+            border-color: #ea580c;
+            opacity: 1;
+            text-decoration: none;
+            filter: none;
+        }
+        .feedback-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+        .message {
+            background: #eff6ff;
+            padding: 0.7rem 1rem;
+            border-radius: 16px;
+            color: #334155;
+            flex: 2;
+            font-size: 0.9rem;
+            border: 1px solid #bfdbfe;
+        }
+        .answer-indicator {
+            padding: 0.7rem 1rem;
+            border-radius: 16px;
+            font-weight: 700;
+            text-align: center;
+            min-width: 190px;
+            border: 2px solid transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+        .answer-indicator.neutral {
+            background: #f1f5f9;
+            color: #334155;
+            border-color: #cbd5e1;
+        }
+        .answer-indicator.right {
+            background: #dcfce7;
+            color: #166534;
+            border-color: #22c55e;
+        }
+        .answer-indicator.wrong {
+            background: #ffedd5;
+            color: #9a3412;
+            border-color: #f97316;
+        }
+        .explanation-box {
+            margin-top: 1rem;
+            background: #f8fafc;
+            border: 1px solid #bfdbfe;
+            border-left: 6px solid #2563eb;
+            color: #1e293b;
+            padding: 1rem;
+            border-radius: 18px;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            display: none;
+        }
+        .explanation-box strong {
+            color: #1d4ed8;
+        }
+        .redirect-notification {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .redirect-box {
+            background: white;
+            border-radius: 28px;
+            padding: 2.5rem;
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+            border: 2px solid #93c5fd;
+            box-shadow: 0 20px 50px rgba(15, 23, 42, 0.25);
+            animation: popNotif 0.35s ease-out;
+        }
+        .final-score {
+            font-size: 3.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #22c55e, #4ade80);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 1rem 0;
+            line-height: 1.2;
+        }
+        .redirect-box h2 {
+            color: #1d4ed8;
+            font-size: 1.7rem;
+            margin-bottom: 0.5rem;
+        }
+        .redirect-box p {
+            color: #334155;
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+        .redirect-countdown {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: #2563eb;
+            margin: 1rem 0;
+        }
+        .back-to-hub-btn {
+            background: #ef4444;
+            box-shadow: 0 6px 0 #dc2626;
+            margin-top: 1rem;
+            padding: 0.9rem 2.5rem;
+            font-size: 1.1rem;
+        }
+        .back-to-hub-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #dc2626;
+        }
+        @keyframes popNotif {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        footer {
+            text-align: center;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            color: #475569;
+        }
+        @media (max-width: 700px) {
+            .card {
+                width: 250px;
+                height: 310px;
+            }
+            .button {
+                padding: 0.5rem 1.2rem;
+                font-size: 1rem;
+            }
+            .answers-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            .final-score {
+                font-size: 2.5rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .gadget {
+                font-size: 2.2rem;
+            }
+            body {
+                padding: 0.8rem;
+            }
+            .game-container {
+                border-radius: 2rem;
+                padding: 1rem;
+            }
+            .title h1 {
+                font-size: 1.35rem;
+            }
+            .final-score {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="gadget-background">
+    <div class="gadget" style="top:3%; font-size:2.4rem; animation-duration:28s;">📚</div>
+    <div class="gadget" style="top:8%; font-size:3.1rem; animation-duration:22s; animation-delay:-5s;">💻</div>
+    <div class="gadget" style="top:14%; font-size:2.8rem; animation-duration:30s; animation-delay:-10s;">🧠</div>
+    <div class="gadget" style="top:20%; font-size:3.5rem; animation-duration:26s;">🎓</div>
+    <div class="gadget" style="top:26%; font-size:2.6rem; animation-duration:24s; animation-delay:-8s;">📱</div>
+    <div class="gadget" style="top:32%; font-size:3.4rem; animation-duration:32s;">🖥️</div>
+    <div class="gadget" style="top:38%; font-size:2.7rem; animation-duration:20s; animation-delay:-12s;">🧮</div>
+    <div class="gadget" style="top:44%; font-size:3.1rem; animation-duration:29s;">📊</div>
+    <div class="gadget" style="top:50%; font-size:2.9rem; animation-duration:25s; animation-delay:-6s;">🧑‍💻</div>
+    <div class="gadget" style="top:56%; font-size:3.6rem; animation-duration:34s;">🖱️</div>
+    <div class="gadget" style="top:62%; font-size:2.4rem; animation-duration:21s; animation-delay:-9s;">🔌</div>
+    <div class="gadget" style="top:68%; font-size:3.3rem; animation-duration:27s;">💾</div>
+    <div class="gadget" style="top:74%; font-size:2.8rem; animation-duration:31s; animation-delay:-14s;">📂</div>
+    <div class="gadget" style="top:80%; font-size:3.5rem; animation-duration:36s;">📎</div>
+    <div class="gadget" style="top:86%; font-size:2.6rem; animation-duration:23s;">⌨️</div>
+    <div class="gadget" style="top:92%; font-size:3.2rem; animation-duration:33s; animation-delay:-11s;">🛜</div>
+</div>
+<div class="game-container">
+    <div class="game-header">
+        <div class="title">
+            <h1>📱 ICT SHS • 20 QUESTIONS 📱</h1>
+            <p>Philippines Senior High | Stack Shuffle Animation | Flip to Answer</p>
+        </div>
+        <div class="score-area">
+            🏆 SCORE: <span id="scoreValue">0</span> / <span id="totalAnswered">0</span>
+        </div>
+    </div>
+    <div class="card-wrapper">
+        <ul class="card-list" id="cardList">
+            <li class="card-list__item" data-card="0">
+                <div class="card back-mode" id="topCard">
+                    <div class="question-text" id="questionText">Ready?</div>
+                    <div class="card-badge">ICT QUESTION</div>
+                    <div class="difficulty-badge" id="difficultyBadge"></div>
+                </div>
+            </li>
+            <li class="card-list__item" data-card="1">
+                <div class="card back-mode"></div>
+            </li>
+            <li class="card-list__item" data-card="2">
+                <div class="card back-mode"></div>
+            </li>
+        </ul>
+        <div class="button-wrapper">
+            <button class="button btn-stop" id="stopShuffleBtn">⏹️ FLIP THE CARD</button>
+            <button class="button" id="shuffleAnimBtn">🃏 SHUFFLE THE DECK</button>
+        </div>
+    </div>
+    <div class="answers-panel">
+        <div class="answers-title">🔽 SELECT THE CORRECT ANSWER | Each correct answer = +1 🔽</div>
+        <div class="answers-grid" id="answersGrid"></div>
+    </div>
+    <div class="feedback-row">
+        <div class="message" id="gameMessage">
+            🎴 Click SHUFFLE THE DECK, then press FLIP THE CARD to reveal a question.
+        </div>
+        <div class="answer-indicator neutral" id="answerIndicator">
+            Waiting for answer
+        </div>
+    </div>
+    <div class="explanation-box" id="explanationBox"></div>
+    <footer>
+        ICT CardGame | TVL ICT | Ares | Pangkat TATLO
+    </footer>
+</div>
+<div class="redirect-notification" id="redirectNotification">
+    <div class="redirect-box">
+        <h2>🎉 Great Job!</h2>
+        <div class="final-score" id="finalScoreDisplay">0/20</div>
+        <p>You answered all 20 ICT questions.</p>
+        <p>You will now be redirected to the game hub to choose another game.</p>
+        <p>Redirecting in</p>
+        <div class="redirect-countdown" id="redirectCountdown">5</div>
+        <button class="button back-to-hub-btn" id="backToHubBtn">🏠 BACK TO HUB</button>
+    </div>
+</div>
+<script>
+    const HUB_URL = "hub.html";
+    const FULL_QUESTION_SET = [
+        {
+            text: "What does ICT stand for in the Philippine K-12 curriculum?",
+            difficulty: "easy",
+            correct: "Information and Communications Technology",
+            options: ["Information Computer Technology", "Internet Communication Technology", "Information and Communications Technology", "Integrated Computer Training"],
+            explanation: "ICT means Information and Communications Technology. It covers technologies used to access, process, store, and communicate information, such as computers, mobile devices, networks, and the internet."
+        },
+        {
+            text: "Which component is considered the 'brain' of the computer?",
+            difficulty: "easy",
+            correct: "CPU",
+            options: ["RAM", "Hard Drive", "CPU", "GPU"],
+            explanation: "The CPU, or Central Processing Unit, is called the brain of the computer because it processes instructions and controls most operations of the system."
+        },
+        {
+            text: "What type of software manages hardware and software resources?",
+            difficulty: "easy",
+            correct: "Operating System",
+            options: ["Application Software", "Compiler", "Operating System", "Utility Software"],
+            explanation: "An Operating System manages the computer's hardware, memory, files, applications, and user interface. Examples include Windows, macOS, Linux, Android, and iOS."
+        },
+        {
+            text: "Which of the following is a web browser?",
+            difficulty: "easy",
+            correct: "Google Chrome",
+            options: ["Windows Explorer", "Google Chrome", "Microsoft Word", "Photoshop"],
+            explanation: "Google Chrome is a web browser. A browser is used to open websites and access information on the internet."
+        },
+        {
+            text: "What does URL stand for?",
+            difficulty: "easy",
+            correct: "Uniform Resource Locator",
+            options: ["Universal Reference Link", "Uniform Resource Locator", "Unified Resource Library", "Universal Retrieval Language"],
+            explanation: "URL stands for Uniform Resource Locator. It is the web address used to locate a webpage or online resource."
+        },
+        {
+            text: "Which Philippine law protects data privacy?",
+            difficulty: "medium",
+            correct: "Data Privacy Act of 2012 (RA 10173)",
+            options: ["Cybercrime Prevention Act", "E-Commerce Act", "Data Privacy Act of 2012 (RA 10173)", "Freedom of Information Order"],
+            explanation: "The Data Privacy Act of 2012, also known as Republic Act 10173, protects personal information and promotes responsible handling of personal data in the Philippines."
+        },
+        {
+            text: "What is the function of a firewall?",
+            difficulty: "medium",
+            correct: "Monitors and controls network traffic",
+            options: ["Stores files", "Monitors and controls network traffic", "Manages RAM", "Encrypts emails"],
+            explanation: "A firewall protects a computer or network by monitoring and controlling incoming and outgoing network traffic based on security rules."
+        },
+        {
+            text: "Which language is primarily used for web structure?",
+            difficulty: "easy",
+            correct: "HTML",
+            options: ["Python", "Java", "C++", "HTML"],
+            explanation: "HTML, or HyperText Markup Language, is used to create the structure and content of web pages."
+        },
+        {
+            text: "What does 'phishing' refer to?",
+            difficulty: "medium",
+            correct: "Fake emails/websites to steal information",
+            options: ["Hacking physical servers", "Fake emails/websites to steal information", "Antivirus method", "Encryption algorithm"],
+            explanation: "Phishing is a cyberattack where fake emails, messages, or websites trick people into giving personal information such as passwords or account credentials."
+        },
+        {
+            text: "Which is a cloud storage service?",
+            difficulty: "easy",
+            correct: "Google Drive",
+            options: ["CPU Cache", "Google Drive", "RAM Disk", "Solid State Drive"],
+            explanation: "Google Drive is a cloud storage service. It lets users store files online and access them using the internet from different devices."
+        },
+        {
+            text: "What is the primary purpose of an algorithm?",
+            difficulty: "medium",
+            correct: "Step-by-step problem solving",
+            options: ["Design graphics", "Step-by-step problem solving", "Connect to internet", "Store files"],
+            explanation: "An algorithm is a step-by-step procedure for solving a problem or completing a task."
+        },
+        {
+            text: "Which memory is temporary and volatile?",
+            difficulty: "easy",
+            correct: "RAM",
+            options: ["ROM", "HDD", "RAM", "SSD"],
+            explanation: "RAM, or Random Access Memory, is temporary and volatile. This means its data is lost when the computer is turned off."
+        },
+        {
+            text: "What does LAN stand for?",
+            difficulty: "easy",
+            correct: "Local Area Network",
+            options: ["Large Area Network", "Local Access Node", "Local Area Network", "Linked Array Network"],
+            explanation: "LAN stands for Local Area Network. It connects computers and devices within a small area such as a classroom, home, or office."
+        },
+        {
+            text: "What is the main role of an ICT strand graduate?",
+            difficulty: "medium",
+            correct: "Develop and manage tech solutions",
+            options: ["Teach English", "Develop and manage tech solutions", "Drive vehicles", "Construction work"],
+            explanation: "An ICT strand graduate is trained to develop, use, troubleshoot, and manage technology-based solutions such as websites, systems, networks, and digital tools."
+        },
+        {
+            text: "Which protocol ensures secure web browsing?",
+            difficulty: "medium",
+            correct: "HTTPS",
+            options: ["HTTP", "FTP", "HTTPS", "SMTP"],
+            explanation: "HTTPS means HyperText Transfer Protocol Secure. It encrypts data between the browser and the website, making browsing safer."
+        },
+        {
+            text: "What does SQL allow you to do?",
+            difficulty: "hard",
+            correct: "Manage databases",
+            options: ["Create websites", "Manage databases", "Design graphics", "Edit videos"],
+            explanation: "SQL, or Structured Query Language, is used to create, read, update, and manage data stored in databases."
+        },
+        {
+            text: "Which agency handles cybercrime in the Philippines?",
+            difficulty: "hard",
+            correct: "DICT",
+            options: ["DepEd", "DOH", "DICT", "DSWD"],
+            explanation: "DICT stands for Department of Information and Communications Technology. It helps develop ICT policies and programs, including cybersecurity initiatives in the Philippines."
+        },
+        {
+            text: "What is bandwidth in networking?",
+            difficulty: "hard",
+            correct: "Maximum data transfer rate",
+            options: ["Storage capacity", "Processor speed", "Maximum data transfer rate", "Screen resolution"],
+            explanation: "Bandwidth refers to the maximum amount of data that can be transmitted over a network connection in a given time."
+        },
+        {
+            text: "Which of these is a programming language?",
+            difficulty: "easy",
+            correct: "Python",
+            options: ["Windows", "Excel", "Python", "Photoshop"],
+            explanation: "Python is a programming language used to create programs, websites, automation scripts, data analysis tools, and many other software applications."
+        },
+        {
+            text: "What does UI/UX stand for in design?",
+            difficulty: "medium",
+            correct: "User Interface / User Experience",
+            options: ["Universal Input/Utility X", "User Interface / User Experience", "Underlying Integration", "Unit Interchange"],
+            explanation: "UI means User Interface, which focuses on the visual layout. UX means User Experience, which focuses on how easy and enjoyable it is to use."
+        }
+    ];
+    let remainingDeck = [];
+    let currentQuestion = null;
+    let isCardFlipped = false;
+    let score = 0;
+    let answeredCount = 0;
+    let answerChosen = false;
+    let answersEnabled = false;
+    let gameLocked = false;
+    let animationTimeout = null;
+    let nextQuestionTimeout = null;
+    let redirectTimer = null;
+    const cardList = document.getElementById('cardList');
+    const stopShuffleBtn = document.getElementById('stopShuffleBtn');
+    const shuffleAnimBtn = document.getElementById('shuffleAnimBtn');
+    const topCardDiv = document.getElementById('topCard');
+    const questionTextSpan = document.getElementById('questionText');
+    const difficultyBadge = document.getElementById('difficultyBadge');
+    const answersGridDiv = document.getElementById('answersGrid');
+    const gameMessageSpan = document.getElementById('gameMessage');
+    const scoreSpan = document.getElementById('scoreValue');
+    const totalAnsweredSpan = document.getElementById('totalAnswered');
+    const answerIndicator = document.getElementById('answerIndicator');
+    const explanationBox = document.getElementById('explanationBox');
+    const redirectNotification = document.getElementById('redirectNotification');
+    const redirectCountdown = document.getElementById('redirectCountdown');
+    const finalScoreDisplay = document.getElementById('finalScoreDisplay');
+    const backToHubBtn = document.getElementById('backToHubBtn');
+    function updateUIStats() {
+        scoreSpan.innerText = score;
+        totalAnsweredSpan.innerText = answeredCount;
+    }
+    function setIndicator(type, text) {
+        answerIndicator.className = 'answer-indicator ' + type;
+        answerIndicator.innerText = text;
+    }
+    function hideExplanation() {
+        explanationBox.style.display = 'none';
+        explanationBox.innerHTML = '';
+    }
+    function showExplanation(question) {
+        explanationBox.style.display = 'block';
+        explanationBox.innerHTML = `
+            <strong>Correct Answer:</strong> ${question.correct}<br>
+            <strong>Explanation:</strong> ${question.explanation}
+        `;
+    }
+    function showRedirectNotification() {
+        finalScoreDisplay.innerText = `${score}/20`;
+        let countdown = 5;
+        redirectCountdown.innerText = countdown;
+        redirectNotification.style.display = 'flex';
+        stopShuffleBtn.disabled = true;
+        shuffleAnimBtn.disabled = true;
+        answersEnabled = false;
+        gameLocked = true;
+        setIndicator('right', '🏁 COMPLETED');
+        gameMessageSpan.innerHTML = '🎉 You completed all 20 questions! Redirecting to the game hub...';
+        if (redirectTimer) {
+            clearInterval(redirectTimer);
+        }
+        redirectTimer = setInterval(() => {
+            countdown--;
+            redirectCountdown.innerText = countdown;
+            if (countdown <= 0) {
+                clearInterval(redirectTimer);
+                window.location.href = HUB_URL;
+            }
+        }, 1000);
+    }
+    backToHubBtn.addEventListener('click', () => {
+        if (redirectTimer) {
+            clearInterval(redirectTimer);
+        }
+        window.location.href = HUB_URL;
     });
-}
-
-function endGame(){
-    document.getElementById("endScreen").style.display="block";
-    document.getElementById("finalScore").innerText =
-        score + " / " + questions.length;
-}
-
+    function shuffleDeck() {
+        remainingDeck = FULL_QUESTION_SET.map(q => ({ ...q }));
+        for (let i = remainingDeck.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [remainingDeck[i], remainingDeck[j]] = [remainingDeck[j], remainingDeck[i]];
+        }
+    }
+    function renderAnswerOptions() {
+        if (!currentQuestion) {
+            answersGridDiv.innerHTML = '<div style="grid-column:1 / -1; text-align:center;">❓ Press FLIP THE CARD to reveal a question</div>';
+            return;
+        }
+        answersGridDiv.innerHTML = '';
+        currentQuestion.options.forEach(opt => {
+            const ansDiv = document.createElement('div');
+            ansDiv.className = 'answer-option';
+            ansDiv.innerText = opt;
+            if (!answersEnabled || answerChosen || gameLocked) {
+                ansDiv.classList.add('disabled-answer');
+            }
+            ansDiv.addEventListener('click', () => {
+                if (!answersEnabled || answerChosen || gameLocked || !currentQuestion) {
+                    return;
+                }
+                const isCorrect = opt === currentQuestion.correct;
+                if (isCorrect) {
+                    ansDiv.classList.add('correct-highlight');
+                    score++;
+                    setIndicator('right', '✅ RIGHT');
+                    gameMessageSpan.innerHTML = `✅ CORRECT! "${opt}" is right. +1 point.`;
+                } else {
+                    ansDiv.classList.add('wrong-highlight');
+                    setIndicator('wrong', '❌ WRONG');
+                    gameMessageSpan.innerHTML = `❌ WRONG! The correct answer is "${currentQuestion.correct}".`;
+                }
+                answeredCount++;
+                updateUIStats();
+                answerChosen = true;
+                answersEnabled = false;
+                gameLocked = true;
+                document.querySelectorAll('.answer-option').forEach(btn => {
+                    if (btn.innerText === currentQuestion.correct) {
+                        btn.classList.add('correct-highlight');
+                    }
+                    btn.classList.add('disabled-answer');
+                });
+                showExplanation(currentQuestion);
+                const idxInDeck = remainingDeck.findIndex(q => q.text === currentQuestion.text);
+                if (idxInDeck !== -1) {
+                    remainingDeck.splice(idxInDeck, 1);
+                }
+                if (remainingDeck.length === 0) {
+                    gameMessageSpan.innerHTML += ' 🎉 You answered all 20 questions!';
+                    showRedirectNotification();
+                    return;
+                }
+                gameMessageSpan.innerHTML += ' ⏳ Next card will be ready in 3 seconds...';
+                if (nextQuestionTimeout) {
+                    clearTimeout(nextQuestionTimeout);
+                }
+                nextQuestionTimeout = setTimeout(() => {
+                    resetAfterAnswer();
+                }, 3000);
+            });
+            answersGridDiv.appendChild(ansDiv);
+        });
+    }
+    function resetAfterAnswer() {
+        topCardDiv.classList.add('back-mode');
+        topCardDiv.classList.remove('flip-animation');
+        difficultyBadge.style.display = 'none';
+        currentQuestion = null;
+        isCardFlipped = false;
+        answerChosen = false;
+        answersEnabled = false;
+        gameLocked = false;
+        questionTextSpan.innerText = "???";
+        renderAnswerOptions();
+        stopShuffleBtn.disabled = false;
+        shuffleAnimBtn.disabled = false;
+        setIndicator('neutral', 'Waiting for answer');
+        hideExplanation();
+        gameMessageSpan.innerHTML = '✅ Answer recorded! Click SHUFFLE THE DECK, then FLIP THE CARD for the next question.';
+    }
+    function stopAndReveal() {
+        if (gameLocked) {
+            gameMessageSpan.innerText = '⏳ Please wait. The game is processing your answer.';
+            return;
+        }
+        if (remainingDeck.length === 0) {
+            showRedirectNotification();
+            return;
+        }
+        if (isCardFlipped) {
+            gameMessageSpan.innerText = 'Card already flipped! Answer the current question first.';
+            return;
+        }
+        cardList.classList.remove('is-animated');
+        if (animationTimeout) {
+            clearTimeout(animationTimeout);
+        }
+        const randIndex = Math.floor(Math.random() * remainingDeck.length);
+        currentQuestion = { ...remainingDeck[randIndex] };
+        questionTextSpan.innerText = currentQuestion.text;
+        difficultyBadge.textContent = currentQuestion.difficulty.toUpperCase();
+        difficultyBadge.className = `difficulty-badge difficulty-${currentQuestion.difficulty}`;
+        difficultyBadge.style.display = 'block';
+        topCardDiv.classList.remove('back-mode');
+        topCardDiv.classList.add('flip-animation');
+        setTimeout(() => {
+            topCardDiv.classList.remove('flip-animation');
+        }, 550);
+        isCardFlipped = true;
+        answersEnabled = true;
+        answerChosen = false;
+        gameLocked = false;
+        setIndicator('neutral', 'Choose an answer');
+        hideExplanation();
+        renderAnswerOptions();
+        gameMessageSpan.innerHTML = `📖 REVEALED: "${currentQuestion.text}" — Choose the correct answer below.`;
+        stopShuffleBtn.disabled = true;
+        shuffleAnimBtn.disabled = true;
+    }
+    function triggerShuffleAnimation() {
+        if (gameLocked) {
+            gameMessageSpan.innerText = 'Cannot shuffle while processing an answer or when the game is finished.';
+            return;
+        }
+        if (isCardFlipped) {
+            gameMessageSpan.innerText = 'Please answer the current question before shuffling again.';
+            return;
+        }
+        cardList.classList.remove('is-animated');
+        void cardList.offsetWidth;
+        cardList.classList.add('is-animated');
+        stopShuffleBtn.disabled = true;
+        shuffleAnimBtn.disabled = true;
+        setIndicator('neutral', 'Shuffling...');
+        hideExplanation();
+        gameMessageSpan.innerText = '🃏 Cards shuffling one by one to the top...';
+        if (animationTimeout) {
+            clearTimeout(animationTimeout);
+        }
+        animationTimeout = setTimeout(() => {
+            if (!gameLocked && !isCardFlipped) {
+                stopShuffleBtn.disabled = false;
+                shuffleAnimBtn.disabled = false;
+                setIndicator('neutral', 'Ready to reveal');
+                gameMessageSpan.innerText = '✨ Shuffle complete! Press FLIP THE CARD to reveal a question.';
+            }
+        }, 2800);
+    }
+    stopShuffleBtn.addEventListener('click', stopAndReveal);
+    shuffleAnimBtn.addEventListener('click', triggerShuffleAnimation);
+    function init() {
+        shuffleDeck();
+        score = 0;
+        answeredCount = 0;
+        currentQuestion = null;
+        isCardFlipped = false;
+        answerChosen = false;
+        answersEnabled = false;
+        gameLocked = false;
+        updateUIStats();
+        topCardDiv.classList.add('back-mode');
+        questionTextSpan.innerText = "???";
+        difficultyBadge.style.display = 'none';
+        renderAnswerOptions();
+        stopShuffleBtn.disabled = false;
+        shuffleAnimBtn.disabled = false;
+        setIndicator('neutral', 'Waiting for answer');
+        hideExplanation();
+        gameMessageSpan.innerText = '🇵🇭 ICT SHS Edition | Click SHUFFLE THE DECK, then FLIP THE CARD to reveal a question!';
+    }
+    init();
 </script>
-
 </body>
 </html>
